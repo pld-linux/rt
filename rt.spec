@@ -67,7 +67,7 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 %define		_noautoreq	'perl().*' 'perl(RT.*)' 'perl(Encode::compat)' 'perl(CGI::Fast)
 
 %define		_sysconfdir	/etc/rt3
-%define		_libdir		%{_datadir}/rt3
+%define		_libdir		%{perl_vendorlib}
 %define		htmldir		%{_datadir}/rt3/html
 %define		masonstatedir	%{_localstatedir}/cache/mason_data
 %define		masonsessiondir	%{_localstatedir}/cache/session_data
@@ -129,7 +129,7 @@ install %{SOURCE1} %{SOURCE2} $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}
 
 # *.in, tests
 find $RPM_BUILD_ROOT -type f -name \*.in -exec rm '{}' \;
-rm -r $RPM_BUILD_ROOT%{_datadir}/rt3/t
+rm -r $RPM_BUILD_ROOT%{_libdir}/t
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -145,8 +145,8 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/webmux.pl
 %attr(755,root,root) %{_sbindir}/rt-*
 %dir %{_datadir}/rt3
-%{_datadir}/rt3/RT*
 %{_datadir}/rt3/html
+%{_libdir}/*
 %dir %attr(660,root,http) %{masonstatedir}
 %{_examplesdir}/%{name}-%{version}
 
