@@ -59,6 +59,7 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 # workarounds for bug in perl.req ("perl()") and ,,famous'' rpm's feature (RT::*)
 %define		_noautoreq	'perl().*' 'perl(RT::.*)' 'perl(Encode::compat)'
 
+%define		varpath		%{_sharedstatedir}/rt
 %define		_sysconfdir	/etc/%{name}
 %define		_libdir		%{_prefix}/lib/%{name}
 
@@ -82,6 +83,8 @@ sk³adanymi przez u¿ytkowników.
 	--with-db-type=mysql
 
 %{__make} \
+	RT_VAR_PATH=%{varpath} \
+	RT_ETC_PATH=%{_sysconfdir} \
 	CONFIG_FILE_PATH=%{_sysconfdir}
 
 %install
