@@ -147,7 +147,7 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{_datadir}/rt3
 %{_datadir}/rt3/html
 %{_libdir}/*
-%dir %attr(660,root,http) %{masonstatedir}
+%dir %attr(770,root,http) %{masonstatedir}
 %{_examplesdir}/%{name}-%{version}
 
 %files cli
