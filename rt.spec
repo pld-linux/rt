@@ -1,0 +1,89 @@
+%include	/usr/lib/rpm/macros.perl
+%define	ver	3.0.5
+%define	orgver	%(echo %{ver} | tr '.' '-')
+Summary:	Request Tracker
+Name:		rt
+Version:	%{ver}
+Release:	1
+License:	GPL
+Group:		Aplications
+Source0:	http://fsck.com/pub/rt/release/%{name}-%{orgver}.tar.gz
+# Source0-md5:	62c4840de335cdf2f7ffff093569e3ce
+URL:		http://www.bestpractical.com/rt/
+BuildRequires:	perl-base >= 5.8.0
+BuildRequires:	perl-Cache-Cache
+BuildRequires:	perl-Exception-Class
+BuildRequires:	perl-HTML-Mason >= 0.896
+BuildRequires:	perl-HTML-Tree
+BuildRequires:	perl-Test-Inline
+BuildRequires:	perl-Class-ReturnValue
+BuildRequires:	perl-DBI >= 1.18
+BuildRequires:	perl-DBIx-DataSource >= 0.02
+BuildRequires:	perl-DBIx-SearchBuilder >= 0.47
+BuildRequires:	perl-HTML-Parser
+BuildRequires:	perl-Locale-Maketext >= 1.06
+BuildRequires:	perl-Locale-Maketext-Lexicon
+BuildRequires:	perl-Locale-Maketext-Fuzzy
+BuildRequires:	perl-MLDBM
+BuildRequires:	perl-libnet
+BuildRequires:	perl-CGI >= 2.78
+BuildRequires:	perl-Params-Validate >= 0.02
+BuildRequires:	perl-Apache-Session >= 1.53
+BuildRequires:	perl-MIME-tools >= 5.411
+BuildRequires:	perl-MailTools >= 1.20
+BuildRequires:	perl-Tie-IxHash
+BuildRequires:	perl-TimeDate
+BuildRequires:	perl-Time-HiRes
+BuildRequires:	perl-Time-modules
+BuildRequires:	perl-Text-Wrapper
+BuildRequires:	perl-Text-Quoted
+BuildRequires:	perl-Text-Template
+BuildRequires:	perl-Text-Autoformat
+BuildRequires:	perl-Term-ReadKey
+BuildRequires:	perl-File-Spec >= 0.8
+BuildRequires:	perl-FreezeThaw
+BuildRequires:	perl-Storable
+BuildRequires:	perl-File-Temp
+BuildRequires:	perl-Log-Dispatch >= 1.6
+BuildRequires:	perl-WWW-Mechanize
+BuildRequires:	perl-DBD-mysql
+BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
+
+%define		_sysconfdir	/etc/%{name}
+%define		_libdir		%{_prefix}/lib/%{name}
+
+%description
+RT is an enterprise-grade ticketing system which enables a group of
+people to intelligently and efficiently manage tasks, issues, and
+requests submitted by a community of users.
+
+%prep
+%setup -q -n %{name}-%{orgver}
+
+%build
+%configure \
+	--with-speedycgi=%{_bindir}/speedycgi \
+	--with-my-user-group \
+	--with-db-type=mysql
+
+%{__make} \
+	CONFIG_FILE_PATH=%{_sysconfdir}
+
+%install
+rm -rf $RPM_BUILD_ROOT
+
+%{__make} install \
+	DESTDIR=$RPM_BUILD_ROOT \
+	CONFIG_FILE_PATH=%{_sysconfdir}
+
+%clean
+rm -rf $RPM_BUILD_ROOT
+
+%files
+%defattr(644,root,root,755)
+%doc etc/{a*,i*,s*}
+
+%attr(755,root,root) %dir %{_sysconfdir}
+%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/*.pm
+%attr(755,root,root) %{_bindir}/*
+%{_libdir}
