@@ -5,17 +5,17 @@
 # - check BuildRequires
 
 %include	/usr/lib/rpm/macros.perl
-%define	ver	3.2.1
-%define	orgver	%(echo %{ver} | tr . -)
 Summary:	Request Tracker
 Summary(pl):	Request Tracker - system do ¶ledzenia zleceñ
 Name:		rt
-Version:	%{ver}
-Release:	0.2
+Version:	3.2.2
+%define	_ver	%(echo %{version} | tr . -)
+Release:	0.1
 License:	GPL
 Group:		Aplications
-Source0:	http://download.bestpractical.com/pub/rt/release/%{name}-%{ver}.tar.gz
-# Source0-md5:	adf0c77827c8f84829bb44e28752a1d8
+Source0:	http://download.bestpractical.com/pub/rt/release/%{name}-%{version}.tar.gz
+# Source0-md5:	3c74baff2c43e939d7ec3a367d7181a0
+# Source0-size:	1229103
 URL:		http://www.bestpractical.com/rt/
 BuildRequires:	perl-base >= 5.8.0
 BuildRequires:	perl-Cache-Cache
@@ -74,7 +74,7 @@ inteligentnie i wydajnie zarz±dzaæ zadaniami, problemami i zleceniami
 sk³adanymi przez u¿ytkowników.
 
 %prep
-%setup -q -n %{name}-%{ver}
+%setup -q -n %{name}-%{version}
 
 %build
 %configure \
@@ -96,6 +96,7 @@ install -d $RPM_BUILD_ROOT%{_libdir}
 	CONFIG_FILE_PATH=%{_sysconfdir} \
 	RT_LIB_PATH=%{_libdir} \
 	MASON_HTML_PATH=%{_datadir}/rt
+
 %clean
 rm -rf $RPM_BUILD_ROOT
 
