@@ -1,6 +1,6 @@
 %include	/usr/lib/rpm/macros.perl
 %define	ver	3.0.5
-%define	orgver	%(echo %{ver} | tr '.' '-')
+%define	orgver	%(echo %{ver} | tr . -)
 Summary:	Request Tracker
 Name:		rt
 Version:	%{ver}
