@@ -9,12 +9,14 @@ Summary:	Request Tracker
 Summary(pl):	Request Tracker - system do ¶ledzenia zleceñ
 Name:		rt
 Version:	3.2.2
-Release:	0.2
+Release:	0.3
 License:	GPL v2
 Group:		Aplications
 Source0:	http://download.bestpractical.com/pub/rt/release/%{name}-%{version}.tar.gz
 # Source0-md5:	3c74baff2c43e939d7ec3a367d7181a0
 # Source0-size:	1229103
+Source1:	%{name}-apache_dir.conf
+Source2:	%{name}-apache_vhost.conf
 Patch0:		%{name}-layout.patch
 URL:		http://www.bestpractical.com/rt/
 BuildRequires:	perl-Apache-Session >= 1.53
@@ -92,14 +94,16 @@ sk³adanymi przez u¿ytkowników.
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT%{_libdir}
+install -d $RPM_BUILD_ROOT%{_libdir} \
+	$RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}
 
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
 
-# tests, *.in, some crap from sysconfdir available as %%doc
+install %{SOURCE1} %{SOURCE2} $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}
+
+# tests, *.in
 rm -r $RPM_BUILD_ROOT%{_datadir}/rt3/t/
-rm -f $RPM_BUILD_ROOT%{_sysconfdir}/{acl,initial,schema}*
 find $RPM_BUILD_ROOT -type f -name \*.in -exec rm '{}' \;
 
 %clean
@@ -107,9 +111,10 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc etc/{a*,i*,s*} README HOWTO
+%doc README HOWTO
 %attr(755,root,root) %dir %{_sysconfdir}
 %attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/*
 %attr(755,root,root) %{_bindir}/*
 %attr(755,root,root) %{_sbindir}/*
 %{_datadir}/rt3
+%{_examplesdir}/%{name}-%{version}
