@@ -9,7 +9,7 @@ Summary:	Request Tracker
 Summary(pl):	Request Tracker - system do ¶ledzenia zleceñ
 Name:		rt
 Version:	3.2.2
-Release:	0.3
+Release:	0.4
 License:	GPL v2
 Group:		Aplications
 Source0:	http://download.bestpractical.com/pub/rt/release/%{name}-%{version}.tar.gz
@@ -58,6 +58,7 @@ BuildRequires:	perl-TimeDate
 BuildRequires:	perl-WWW-Mechanize
 BuildRequires:	perl-base >= 5.8.0
 BuildRequires:	perl-libnet
+BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 # workarounds for bug in perl.req ("perl()") and ,,famous'' rpm's feature (RT::*)
