@@ -9,7 +9,6 @@ Summary:	Request Tracker
 Summary(pl):	Request Tracker - system do ¶ledzenia zleceñ
 Name:		rt
 Version:	3.2.2
-%define	_ver	%(echo %{version} | tr . -)
 Release:	0.1
 License:	GPL
 Group:		Aplications
@@ -96,6 +95,9 @@ install -d $RPM_BUILD_ROOT%{_libdir}
 	CONFIG_FILE_PATH=%{_sysconfdir} \
 	RT_LIB_PATH=%{_libdir} \
 	MASON_HTML_PATH=%{_datadir}/rt
+
+# tests
+rm -r $RPM_BUILD_ROOT%{_libdir}/t/
 
 %clean
 rm -rf $RPM_BUILD_ROOT
