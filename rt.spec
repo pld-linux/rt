@@ -61,9 +61,11 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 # workarounds for bug in perl.req ("perl()") and ,,famous'' rpm's feature (RT::*)
 %define		_noautoreq	'perl().*' 'perl(RT::.*)' 'perl(Encode::compat)'
 
-%define		varpath		%{_sharedstatedir}/rt3
 %define		_sysconfdir	/etc/rt3
 %define		_libdir		%{_datadir}/rt3
+%define		htmldir		%{_datadir}/rt3/html
+%define		masonstatedir	%{_localstatedir}/cache/mason_data
+%define		masonsessiondir	%{_localstatedir}/cache/session_data
 
 %description
 RT is an enterprise-grade ticketing system which enables a group of
@@ -84,8 +86,10 @@ sk³adanymi przez u¿ytkowników.
 %{__autoconf}
 %configure \
 	--enable-layout=FHS \
-	htmldir=%{_datadir}/rt3/html \
-	exp_htmldir=%{_datadir}/rt3/html \
+	htmldir=%{htmldir} \
+	exp_htmldir=%{htmldir} \
+	masonstatedir=%{masonstatedir} \
+	masonsessiondir=%{masonstatedir} \
 	--with-speedycgi=%{_bindir}/speedycgi \
 	--with-my-user-group \
 	--with-db-type=mysql
@@ -95,6 +99,7 @@ sk³adanymi przez u¿ytkowników.
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT%{_libdir} \
+	$RPM_BUILD_ROOT%{masonstatedir} \
 	$RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}
 
 %{__make} install \
@@ -117,4 +122,5 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/*
 %attr(755,root,root) %{_sbindir}/*
 %{_datadir}/rt3
+%dir %attr(660,root,http) %{masonstatedir}
 %{_examplesdir}/%{name}-%{version}
