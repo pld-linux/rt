@@ -3,7 +3,6 @@
 # - add apache alias for /rt /usr/share/rt/
 # - check files in /usr/share/rt/
 # - check BuildRequires
-# WTF is perl() >= . in rpm --requires ?
 
 %include	/usr/lib/rpm/macros.perl
 %define	ver	3.2.1
@@ -12,7 +11,7 @@ Summary:	Request Tracker
 Summary(pl):	Request Tracker - system do ¶ledzenia zleceñ
 Name:		rt
 Version:	%{ver}
-Release:	0.1
+Release:	0.2
 License:	GPL
 Group:		Aplications
 Source0:	http://download.bestpractical.com/pub/rt/release/%{name}-%{ver}.tar.gz
@@ -56,6 +55,9 @@ BuildRequires:	perl-Log-Dispatch >= 1.6
 BuildRequires:	perl-WWW-Mechanize
 BuildRequires:	perl-DBD-mysql
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
+
+# workarounds for bug in perl.prov ("perl()") and ,,famous'' rpm's feature (RT::*)
+%define		_noautoreq	'perl().*' 'perl(RT::.*)'
 
 %define		_sysconfdir	/etc/%{name}
 %define		_libdir		%{_prefix}/lib/%{name}
