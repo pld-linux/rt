@@ -56,7 +56,7 @@ BuildRequires:	perl-WWW-Mechanize
 BuildRequires:	perl-DBD-mysql
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
-# workarounds for bug in perl.prov ("perl()") and ,,famous'' rpm's feature (RT::*)
+# workarounds for bug in perl.req ("perl()") and ,,famous'' rpm's feature (RT::*)
 %define		_noautoreq	'perl().*' 'perl(RT::.*)'
 
 %define		_sysconfdir	/etc/%{name}
