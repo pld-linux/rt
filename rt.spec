@@ -136,7 +136,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc README* HOWTO UPGRADING Changelog
+%doc README* HOWTO UPGRADING Changelog docs
 %attr(755,root,root) %dir %{_sysconfdir}
 %attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/*
 %attr(755,root,root) %{_bindir}/mason_handler.*
