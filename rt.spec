@@ -19,6 +19,8 @@ Source1:	%{name}-apache_dir.conf
 Source2:	%{name}-apache_vhost.conf
 Patch0:		%{name}-layout.patch
 URL:		http://www.bestpractical.com/rt/
+BuildRequires:	autoconf
+BuildRequires:	automake
 BuildRequires:	perl-Apache-Session >= 1.53
 BuildRequires:	perl-CGI >= 2.78
 BuildRequires:	perl-Cache-Cache
