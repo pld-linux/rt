@@ -9,12 +9,13 @@ Summary:	Request Tracker
 Summary(pl):	Request Tracker - system do ¶ledzenia zleceñ
 Name:		rt
 Version:	3.2.2
-Release:	0.1
-License:	GPL
+Release:	0.2
+License:	GPL v2
 Group:		Aplications
 Source0:	http://download.bestpractical.com/pub/rt/release/%{name}-%{version}.tar.gz
 # Source0-md5:	3c74baff2c43e939d7ec3a367d7181a0
 # Source0-size:	1229103
+Patch0:		%{name}-layout.patch
 URL:		http://www.bestpractical.com/rt/
 BuildRequires:	perl-Apache-Session >= 1.53
 BuildRequires:	perl-CGI >= 2.78
@@ -58,9 +59,9 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 # workarounds for bug in perl.req ("perl()") and ,,famous'' rpm's feature (RT::*)
 %define		_noautoreq	'perl().*' 'perl(RT::.*)' 'perl(Encode::compat)'
 
-%define		varpath		%{_sharedstatedir}/rt
-%define		_sysconfdir	/etc/%{name}
-%define		_libdir		%{_prefix}/lib/%{name}
+%define		varpath		%{_sharedstatedir}/rt3
+%define		_sysconfdir	/etc/rt3
+%define		_libdir		%{_datadir}/rt3
 
 %description
 RT is an enterprise-grade ticketing system which enables a group of
@@ -74,39 +75,41 @@ sk³adanymi przez u¿ytkowników.
 
 %prep
 %setup -q
+%patch0 -b .bak -p0
 
 %build
+%{__aclocal} -I m4
+%{__autoconf}
 %configure \
+	--enable-layout=FHS \
+	htmldir=%{_datadir}/rt3/html \
+	exp_htmldir=%{_datadir}/rt3/html \
 	--with-speedycgi=%{_bindir}/speedycgi \
 	--with-my-user-group \
 	--with-db-type=mysql
 
-%{__make} \
-	RT_VAR_PATH=%{varpath} \
-	RT_ETC_PATH=%{_sysconfdir} \
-	CONFIG_FILE_PATH=%{_sysconfdir}
+%{__make}
 
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT%{_libdir}
 
 %{__make} install \
-	DESTDIR=$RPM_BUILD_ROOT \
-	CONFIG_FILE_PATH=%{_sysconfdir} \
-	RT_LIB_PATH=%{_libdir} \
-	MASON_HTML_PATH=%{_datadir}/rt
+	DESTDIR=$RPM_BUILD_ROOT
 
-# tests
-rm -r $RPM_BUILD_ROOT%{_libdir}/t/
+# tests, *.in, some crap from sysconfdir available as %%doc
+rm -r $RPM_BUILD_ROOT%{_datadir}/rt3/t/
+rm -f $RPM_BUILD_ROOT%{_sysconfdir}/{acl,initial,schema}*
+find $RPM_BUILD_ROOT -type f -name \*.in -exec rm '{}' \;
 
 %clean
 rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc etc/{a*,i*,s*}
+%doc etc/{a*,i*,s*} README HOWTO
 %attr(755,root,root) %dir %{_sysconfdir}
 %attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/*
 %attr(755,root,root) %{_bindir}/*
-%{_libdir}
-%{_datadir}/rt
+%attr(755,root,root) %{_sbindir}/*
+%{_datadir}/rt3
