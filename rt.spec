@@ -1,15 +1,22 @@
+# TODO:
+# - check file permissions
+# - add apache alias for /rt /usr/share/rt/
+# - check files in /usr/share/rt/
+# - check BuildRequires
+# WTF is perl() >= . in rpm --requires ?
+
 %include	/usr/lib/rpm/macros.perl
-%define	ver	3.0.5
+%define	ver	3.2.1
 %define	orgver	%(echo %{ver} | tr . -)
 Summary:	Request Tracker
 Summary(pl):	Request Tracker - system do ¶ledzenia zleceñ
 Name:		rt
 Version:	%{ver}
-Release:	1
+Release:	0.1
 License:	GPL
 Group:		Aplications
-Source0:	http://fsck.com/pub/rt/release/%{name}-%{orgver}.tar.gz
-# Source0-md5:	62c4840de335cdf2f7ffff093569e3ce
+Source0:	http://download.bestpractical.com/pub/rt/release/%{name}-%{ver}.tar.gz
+# Source0-md5:	adf0c77827c8f84829bb44e28752a1d8
 URL:		http://www.bestpractical.com/rt/
 BuildRequires:	perl-base >= 5.8.0
 BuildRequires:	perl-Cache-Cache
@@ -64,7 +71,7 @@ inteligentnie i wydajnie zarz±dzaæ zadaniami, problemami i zleceniami
 sk³adanymi przez u¿ytkowników.
 
 %prep
-%setup -q -n %{name}-%{orgver}
+%setup -q -n %{name}-%{ver}
 
 %build
 %configure \
@@ -78,10 +85,12 @@ sk³adanymi przez u¿ytkowników.
 %install
 rm -rf $RPM_BUILD_ROOT
 
+install -d $RPM_BUILD_ROOT%{_libdir}
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT \
-	CONFIG_FILE_PATH=%{_sysconfdir}
-
+	CONFIG_FILE_PATH=%{_sysconfdir} \
+	RT_LIB_PATH=%{_libdir} \
+	MASON_HTML_PATH=%{_datadir}/rt
 %clean
 rm -rf $RPM_BUILD_ROOT
 
@@ -90,6 +99,7 @@ rm -rf $RPM_BUILD_ROOT
 %doc etc/{a*,i*,s*}
 
 %attr(755,root,root) %dir %{_sysconfdir}
-%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/*.pm
+%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/*
 %attr(755,root,root) %{_bindir}/*
 %{_libdir}
+%{_datadir}
