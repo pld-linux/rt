@@ -16,7 +16,6 @@ License:	GPL v2
 Group:		Aplications
 Source0:	http://download.bestpractical.com/pub/rt/release/%{name}-%{version}.tar.gz
 # Source0-md5:	3c74baff2c43e939d7ec3a367d7181a0
-# Source0-size:	1229103
 Source1:	%{name}-apache_dir.conf
 Source2:	%{name}-apache_vhost.conf
 Patch0:		%{name}-layout.patch
