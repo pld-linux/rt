@@ -89,8 +89,8 @@ sk³adanymi przez u¿ytkowników.
 
 %install
 rm -rf $RPM_BUILD_ROOT
-
 install -d $RPM_BUILD_ROOT%{_libdir}
+
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT \
 	CONFIG_FILE_PATH=%{_sysconfdir} \
@@ -102,9 +102,8 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 %doc etc/{a*,i*,s*}
-
 %attr(755,root,root) %dir %{_sysconfdir}
 %attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/*
 %attr(755,root,root) %{_bindir}/*
 %{_libdir}
-%{_datadir}
+%{_datadir}/rt
