@@ -2,6 +2,7 @@
 %define	ver	3.0.5
 %define	orgver	%(echo %{ver} | tr . -)
 Summary:	Request Tracker
+Summary(pl):	Request Tracker - system do ¶ledzenia zleceñ
 Name:		rt
 Version:	%{ver}
 Release:	1
@@ -56,6 +57,11 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 RT is an enterprise-grade ticketing system which enables a group of
 people to intelligently and efficiently manage tasks, issues, and
 requests submitted by a community of users.
+
+%description -l pl
+RT to profesjonalnej klasy system biletowy pozwalaj±cy grupie ludzi
+inteligentnie i wydajnie zarz±dzaæ zadaniami, problemami i zleceniami
+sk³adanymi przez u¿ytkowników.
 
 %prep
 %setup -q -n %{name}-%{orgver}
