@@ -13,7 +13,7 @@ Name:		rt
 Version:	3.2.2
 Release:	0.5
 License:	GPL v2
-Group:		Aplications
+Group:		Applications
 Source0:	http://download.bestpractical.com/pub/rt/release/%{name}-%{version}.tar.gz
 # Source0-md5:	3c74baff2c43e939d7ec3a367d7181a0
 Source1:	%{name}-apache_dir.conf
@@ -83,18 +83,14 @@ sk³adanymi przez u¿ytkowników.
 
 %package cli
 Summary:	Command-line interface to RT
-#Summary(pl):	
 Group:		Applications
 
 %description cli
 This package contains /usr/bin/rt, a command-line interface to RT 3.
 
 It allows you to interact with an RT server over HTTP, and offers an
-interface to RT's functionality that is better-suited to automation and
-integration with other tools.
-
-#%description cli -l pl
-#TODO
+interface to RT's functionality that is better-suited to automation
+and integration with other tools.
 
 %prep
 %setup -q
@@ -137,7 +133,7 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc README* HOWTO UPGRADING Changelog docs
 %attr(755,root,root) %dir %{_sysconfdir}
-%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/*
+%attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/*
 %attr(755,root,root) %{_bindir}/mason_handler.*
 %attr(755,root,root) %{_bindir}/rt-*
 %attr(755,root,root) %{_bindir}/standalone_httpd
