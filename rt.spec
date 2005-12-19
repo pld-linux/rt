@@ -83,6 +83,7 @@ sk³adanymi przez u¿ytkowników.
 
 %package cli
 Summary:	Command-line interface to RT
+Summary(pl):	Interfejs linii poleceñ dla RT
 Group:		Applications
 
 %description cli
@@ -92,9 +93,16 @@ It allows you to interact with an RT server over HTTP, and offers an
 interface to RT's functionality that is better-suited to automation
 and integration with other tools.
 
+%description cli -l pl
+Ten pakiet zawiera /usr/bin/rt - interfejs linii poleceñ do RT 3.
+
+Umo¿liwia on wspó³dzia³anie z serwerem RT po HTTP i oferuje interfejs
+do funkcjonalno¶ci RT bardziej dopasowany do automatyki i intergracji
+z innymi narzêdziami.
+
 %prep
 %setup -q
-%patch0 -b .bak -p0
+%patch0 -p0
 
 %build
 %{__aclocal} -I m4
