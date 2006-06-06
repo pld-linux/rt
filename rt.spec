@@ -19,6 +19,7 @@ Source0:	http://download.bestpractical.com/pub/rt/release/%{name}-%{version}.tar
 Source1:	%{name}-apache_dir.conf
 Source2:	%{name}-apache_vhost.conf
 Patch0:		%{name}-layout.patch
+Patch1:		%{name}-config.patch
 URL:		http://www.bestpractical.com/rt/
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -103,6 +104,7 @@ z innymi narzêdziami.
 %prep
 %setup -q
 %patch0 -p0
+%patch1 -p1
 
 %build
 %{__aclocal} -I m4
