@@ -10,12 +10,12 @@
 Summary:	Request Tracker
 Summary(pl):	Request Tracker - system do ¶ledzenia zleceñ
 Name:		rt
-Version:	3.2.2
-Release:	0.5
+Version:	3.4.5
+Release:	0.1
 License:	GPL v2
 Group:		Applications
 Source0:	http://download.bestpractical.com/pub/rt/release/%{name}-%{version}.tar.gz
-# Source0-md5:	3c74baff2c43e939d7ec3a367d7181a0
+# Source0-md5:	16c8007cba54669e6c9de95cfc680b2a
 Source1:	%{name}-apache_dir.conf
 Source2:	%{name}-apache_vhost.conf
 Patch0:		%{name}-layout.patch
@@ -139,7 +139,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc README* HOWTO UPGRADING Changelog docs
+%doc README* UPGRADING Changelog docs
 %attr(755,root,root) %dir %{_sysconfdir}
 %attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/*
 %attr(755,root,root) %{_bindir}/mason_handler.*
