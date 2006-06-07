@@ -107,7 +107,7 @@ diff -urN rt-3.4.5.org/lib/RT/I18N/pl.po rt-3.4.5/lib/RT/I18N/pl.po
  #: html/Admin/Global/CustomFields/index.html:83
  msgid "Select custom fields for transactions on tickets in all queues"
 -msgstr ""
-+msgstr "Wybór pól zdefiniowanych przez użytkownika dla zgłoszeń we wszystkich kolekcjach"
++msgstr "Wybór pól zdefiniowanych przez użytkownika dla zgłoszeń we wszystkich kolejkach"
  
  #: html/Admin/Elements/GroupTabs:75 html/User/Elements/GroupTabs:71
  msgid "Select group"
@@ -125,7 +125,7 @@ diff -urN rt-3.4.5.org/lib/RT/I18N/pl.po rt-3.4.5/lib/RT/I18N/pl.po
  #: html/Admin/Elements/GlobalCustomFieldTabs:69 html/Admin/Global/CustomFields/index.html:81 lib/RT/CustomField_Overlay.pm:1085
  msgid "Ticket Transactions"
 -msgstr "Transactions du ticket"
-+msgstr "Ticket Transactions"
++msgstr ""
  
  #: NOT FOUND IN SOURCE
  msgid "Ticket attachment"
