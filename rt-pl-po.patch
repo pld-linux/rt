@@ -1,0 +1,149 @@
+diff -urN rt-3.4.5.org/lib/RT/I18N/pl.po rt-3.4.5/lib/RT/I18N/pl.po
+--- rt-3.4.5.org/lib/RT/I18N/pl.po	2005-10-03 20:15:35.000000000 +0200
++++ rt-3.4.5/lib/RT/I18N/pl.po	2006-06-07 10:19:05.000000000 +0200
+@@ -212,12 +212,12 @@
+ #: lib/RT/Transaction_Overlay.pm:560
+ #. ($obj_type)
+ msgid "%1 created"
+-msgstr "%1 crĂŠĂŠ(e)"
++msgstr "%1 utworzono"
+ 
+ #: lib/RT/Transaction_Overlay.pm:565
+ #. ($obj_type)
+ msgid "%1 deleted"
+-msgstr "%1 supprimĂŠ(e)"
++msgstr "%1 skasowano"
+ 
+ #: html/Elements/MyTickets:47
+ #. ($rows)
+@@ -416,7 +416,7 @@
+ 
+ #: html/Admin/Elements/PickCustomFields:47 html/Admin/Elements/PickObjects:47
+ msgid "(None)"
+-msgstr "(Aucun)"
++msgstr "(Brak)"
+ 
+ #: html/Ticket/Update.html:88
+ msgid "(Sends a blind carbon-copy of this update to a comma-delimited list of email addresses. Does <b>not</b> change who will receive future updates.)"
+@@ -828,11 +828,11 @@
+ 
+ #: html/Search/Elements/EditQuery:56
+ msgid "And/Or"
+-msgstr ""
++msgstr "I/Lub"
+ 
+ #: html/Admin/CustomFields/Modify.html:73 html/Admin/Elements/CustomFieldTabs:83
+ msgid "Applies to"
+-msgstr "S'applique Ă "
++msgstr "Zastosuj do: "
+ 
+ #: html/Search/Edit.html:64
+ msgid "Apply"
+@@ -1108,7 +1108,7 @@
+ 
+ #: html/Elements/Submit:100
+ msgid "Check All"
+-msgstr "Tout vĂŠrifier"
++msgstr "Zaznacz wszystko"
+ 
+ #: html/SelfService/Update.html:78 html/Ticket/Create.html:131 html/Ticket/Update.html:95
+ msgid "Check box to delete"
+@@ -1144,7 +1144,7 @@
+ 
+ #: html/Elements/Submit:102
+ msgid "Clear All"
+-msgstr "Tout effacer"
++msgstr "Odznacz wszystko"
+ 
+ #: html/Ticket/Elements/ShowDates:68
+ msgid "Closed"
+@@ -2024,7 +2024,7 @@
+ 
+ #: html/Admin/Groups/index.html:61 html/Admin/Users/index.html:64
+ msgid "Download as a tab-delimited file"
+-msgstr "TĂŠlĂŠcharger en tant que fichier dĂŠlimitĂŠ par tabulations"
++msgstr "Pobierz jako listę [dane każdego użytkownika/grupy w jednej linii, odzielone tabulatorem]"
+ 
+ #: html/Elements/SelectDateType:53 html/Ticket/Create.html:197 html/Ticket/Elements/EditDates:66 html/Ticket/Elements/ShowDates:64 lib/RT/Ticket_Overlay.pm:1149
+ msgid "Due"
+@@ -2065,7 +2065,7 @@
+ 
+ #: html/Admin/Global/CustomFields/Queue-Tickets.html:9 html/Admin/Global/CustomFields/Queue-Transactions.html:9
+ msgid "Edit Custom Fields for tickets in all queues"
+-msgstr ""
++msgstr "Edycja zdefiniowanych przez użytkownia pól dla zgłoszeń we wszystkich kolejkach"
+ 
+ #: html/Search/Bulk.html:173 html/Ticket/ModifyLinks.html:57
+ msgid "Edit Links"
+@@ -2379,7 +2379,7 @@
+ 
+ #: html/Admin/Groups/index.html:72 html/Admin/Queues/People.html:82 html/Ticket/Elements/EditPeople:55
+ msgid "Find groups whose"
+-msgstr "Trouver les groupes dont"
++msgstr "Wyszukaj grupy, których:"
+ 
+ #: NOT FOUND IN SOURCE
+ msgid "Find new/open tickets"
+@@ -3007,7 +3007,7 @@
+ 
+ #: html/Admin/index.html:78
+ msgid "Manage custom fields and custom field values"
+-msgstr "GĂŠrer les champs personnalisĂŠs et leur valeurs"
++msgstr "Administracja polami zdefiniowanymi przez użytkownika "
+ 
+ #: html/Admin/index.html:69
+ msgid "Manage groups and group membership"
+@@ -3252,7 +3252,7 @@
+ 
+ #: html/Admin/Elements/GlobalCustomFieldTabs:65 html/Admin/Global/index.html:72
+ msgid "Modify global custom fields"
+-msgstr ""
++msgstr "Modyfikuj globalne pola definiowane przez użytkownika"
+ 
+ #: html/Admin/Elements/GlobalCustomFieldTabs:70 html/Admin/Global/GroupRights.html:46 html/Admin/Global/GroupRights.html:49 html/Admin/Global/index.html:77
+ msgid "Modify global group rights"
+@@ -4828,7 +4828,7 @@
+ 
+ #: html/Admin/Global/CustomFields/index.html:83
+ msgid "Select custom fields for transactions on tickets in all queues"
+-msgstr ""
++msgstr "Wybór pól zdefiniowanych przez użytkownika dla zgłoszeń we wszystkich kolekcjach"
+ 
+ #: html/Admin/Elements/GroupTabs:75 html/User/Elements/GroupTabs:71
+ msgid "Select group"
+@@ -4872,7 +4872,7 @@
+ 
+ #: html/Admin/Elements/EditCustomFields:58
+ msgid "Selected Custom Fields"
+-msgstr "Champs personnalisĂŠs sĂŠlectionnĂŠs"
++msgstr "Zaznaczone pola"
+ 
+ #: html/Admin/CustomFields/Objects.html:59
+ msgid "Selected objects"
+@@ -5520,7 +5520,7 @@
+ 
+ #: html/Admin/Elements/GlobalCustomFieldTabs:69 html/Admin/Global/CustomFields/index.html:81 lib/RT/CustomField_Overlay.pm:1085
+ msgid "Ticket Transactions"
+-msgstr "Transactions du ticket"
++msgstr "Ticket Transactions"
+ 
+ #: NOT FOUND IN SOURCE
+ msgid "Ticket attachment"
+@@ -5737,7 +5737,7 @@
+ 
+ #: html/Admin/Elements/EditCustomFields:60
+ msgid "Unselected Custom Fields"
+-msgstr "Champs personnalisĂŠs non sĂŠlectionnĂŠs"
++msgstr "Niezaznaczone Pola"
+ 
+ #: html/Admin/CustomFields/Objects.html:61
+ msgid "Unselected objects"
+@@ -5938,7 +5938,7 @@
+ 
+ #: html/Admin/Groups/index.html:99
+ msgid "User-defined groups"
+-msgstr "Groupe dĂŠfinis par l'utilisateur"
++msgstr "Grupy zdefiniowane przez użytkownika"
+ 
+ #: html/Admin/Users/Modify.html:69 html/Elements/Login:73 html/Ticket/Elements/AddWatchers:56
+ msgid "Username"
