@@ -1,21 +1,6 @@
 diff -urN rt-3.4.5.org/lib/RT/I18N/pl.po rt-3.4.5/lib/RT/I18N/pl.po
 --- rt-3.4.5.org/lib/RT/I18N/pl.po	2005-10-03 20:15:35.000000000 +0200
 +++ rt-3.4.5/lib/RT/I18N/pl.po	2006-06-07 10:19:05.000000000 +0200
-@@ -212,12 +212,12 @@
- #: lib/RT/Transaction_Overlay.pm:560
- #. ($obj_type)
- msgid "%1 created"
--msgstr "%1 crĂŠĂŠ(e)"
-+msgstr "%1 utworzono"
- 
- #: lib/RT/Transaction_Overlay.pm:565
- #. ($obj_type)
- msgid "%1 deleted"
--msgstr "%1 supprimĂŠ(e)"
-+msgstr "%1 skasowano"
- 
- #: html/Elements/MyTickets:47
- #. ($rows)
 @@ -416,7 +416,7 @@
  
  #: html/Admin/Elements/PickCustomFields:47 html/Admin/Elements/PickObjects:47
