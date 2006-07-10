@@ -145,7 +145,7 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc README* UPGRADING Changelog docs
 %attr(755,root,root) %dir %{_sysconfdir}
-%attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/*
+%attr(640,root,http) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/*
 %attr(755,root,root) %{_bindir}/mason_handler.*
 %attr(755,root,root) %{_bindir}/rt-*
 %attr(755,root,root) %{_bindir}/standalone_httpd
