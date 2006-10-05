@@ -61,6 +61,7 @@ BuildRequires:	perl-TimeDate
 BuildRequires:	perl-WWW-Mechanize
 BuildRequires:	perl-base >= 5.8.0
 BuildRequires:	perl-libnet
+Requires:	perl-Calendar-Simple
 BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
