@@ -10,17 +10,16 @@
 Summary:	Request Tracker
 Summary(pl):	Request Tracker - system do ¶ledzenia zleceñ
 Name:		rt
-Version:	3.6.1
+Version:	3.6.3
 Release:	0.1
 License:	GPL v2
 Group:		Applications
 Source0:	http://download.bestpractical.com/pub/rt/release/%{name}-%{version}.tar.gz
-# Source0-md5:	40c5a828fadaeef9e150255a517d0b17
+# Source0-md5:	d6b2fa930441f16b6530aa00665eb8c7
 Source1:	%{name}-apache_dir.conf
 Source2:	%{name}-apache_vhost.conf
 Patch0:		%{name}-layout.patch
 Patch1:		%{name}-config.patch
-Patch2:		%{name}-pl-po.patch
 URL:		http://www.bestpractical.com/rt/
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -107,7 +106,6 @@ z innymi narzêdziami.
 %setup -q
 %patch0 -p0
 %patch1 -p1
-%patch2 -p1
 
 %build
 %{__aclocal} -I m4
