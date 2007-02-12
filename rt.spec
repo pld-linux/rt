@@ -8,7 +8,7 @@
 #
 %include	/usr/lib/rpm/macros.perl
 Summary:	Request Tracker
-Summary(pl.UTF-8):   Request Tracker - system do śledzenia zleceń
+Summary(pl.UTF-8):	Request Tracker - system do śledzenia zleceń
 Name:		rt
 Version:	3.6.3
 Release:	0.1
@@ -85,7 +85,7 @@ składanymi przez użytkowników.
 
 %package cli
 Summary:	Command-line interface to RT
-Summary(pl.UTF-8):   Interfejs linii poleceń dla RT
+Summary(pl.UTF-8):	Interfejs linii poleceń dla RT
 Group:		Applications
 
 %description cli
