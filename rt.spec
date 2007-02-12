@@ -8,7 +8,7 @@
 #
 %include	/usr/lib/rpm/macros.perl
 Summary:	Request Tracker
-Summary(pl):	Request Tracker - system do ¶ledzenia zleceñ
+Summary(pl.UTF-8):   Request Tracker - system do Å›ledzenia zleceÅ„
 Name:		rt
 Version:	3.6.3
 Release:	0.1
@@ -78,14 +78,14 @@ RT is an enterprise-grade ticketing system which enables a group of
 people to intelligently and efficiently manage tasks, issues, and
 requests submitted by a community of users.
 
-%description -l pl
-RT to profesjonalnej klasy system biletowy pozwalaj±cy grupie ludzi
-inteligentnie i wydajnie zarz±dzaæ zadaniami, problemami i zleceniami
-sk³adanymi przez u¿ytkowników.
+%description -l pl.UTF-8
+RT to profesjonalnej klasy system biletowy pozwalajÄ…cy grupie ludzi
+inteligentnie i wydajnie zarzÄ…dzaÄ‡ zadaniami, problemami i zleceniami
+skÅ‚adanymi przez uÅ¼ytkownikÃ³w.
 
 %package cli
 Summary:	Command-line interface to RT
-Summary(pl):	Interfejs linii poleceñ dla RT
+Summary(pl.UTF-8):   Interfejs linii poleceÅ„ dla RT
 Group:		Applications
 
 %description cli
@@ -95,12 +95,12 @@ It allows you to interact with an RT server over HTTP, and offers an
 interface to RT's functionality that is better-suited to automation
 and integration with other tools.
 
-%description cli -l pl
-Ten pakiet zawiera /usr/bin/rt - interfejs linii poleceñ do RT 3.
+%description cli -l pl.UTF-8
+Ten pakiet zawiera /usr/bin/rt - interfejs linii poleceÅ„ do RT 3.
 
-Umo¿liwia on wspó³dzia³anie z serwerem RT po HTTP i oferuje interfejs
-do funkcjonalno¶ci RT bardziej dopasowany do automatyki i intergracji
-z innymi narzêdziami.
+UmoÅ¼liwia on wspÃ³Å‚dziaÅ‚anie z serwerem RT po HTTP i oferuje interfejs
+do funkcjonalnoÅ›ci RT bardziej dopasowany do automatyki i intergracji
+z innymi narzÄ™dziami.
 
 %prep
 %setup -q
