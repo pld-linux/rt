@@ -25,6 +25,7 @@ BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	perl-Apache-Session >= 1.53
 BuildRequires:	perl-CGI >= 2.78
+BuildRequires:	perl-CGI-SpeedyCGI
 BuildRequires:	perl-Cache-Cache
 BuildRequires:	perl-Class-ReturnValue
 BuildRequires:	perl-DBD-mysql
