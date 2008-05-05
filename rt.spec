@@ -62,6 +62,7 @@ BuildRequires:	perl-WWW-Mechanize
 BuildRequires:	perl-base >= 5.8.0
 BuildRequires:	perl-libnet
 Requires:	perl-Calendar-Simple
+Requires:	perl-CSS-Squish
 Suggests:	perl-FCGI
 BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
