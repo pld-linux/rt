@@ -62,9 +62,9 @@ BuildRequires:	perl-WWW-Mechanize
 BuildRequires:	perl-base >= 5.8.0
 BuildRequires:	perl-libnet
 Requires:	perl-Calendar-Simple
+Suggests:	perl-FCGI
 BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
-Suggests:	perl-FCGI
 
 # workarounds for bug in perl.req ("perl()") and ,,famous'' rpm's feature (RT::*)
 %define		_noautoreq	'perl().*' 'perl(RT.*)' 'perl(Encode::compat)' 'perl(CGI::Fast)
@@ -145,7 +145,7 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 %doc README* UPGRADING Changelog docs
-%attr(755,root,root) %dir %{_sysconfdir}
+%dir %{_sysconfdir}
 %attr(640,root,http) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/*
 %attr(755,root,root) %{_bindir}/mason_handler.*
 %attr(755,root,root) %{_bindir}/rt-*
