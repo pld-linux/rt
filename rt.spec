@@ -64,6 +64,7 @@ BuildRequires:	perl-libnet
 Requires:	perl-Calendar-Simple
 BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
+Suggests:	perl-FCGI
 
 # workarounds for bug in perl.req ("perl()") and ,,famous'' rpm's feature (RT::*)
 %define		_noautoreq	'perl().*' 'perl(RT.*)' 'perl(Encode::compat)' 'perl(CGI::Fast)
