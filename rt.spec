@@ -63,6 +63,7 @@ BuildRequires:	perl-base >= 5.8.0
 BuildRequires:	perl-libnet
 Requires:	perl-CSS-Squish
 Requires:	perl-Calendar-Simple
+Requires:	perl-Module-Versions-Report
 Suggests:	perl-FCGI
 BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
