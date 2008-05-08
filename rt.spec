@@ -64,6 +64,7 @@ BuildRequires:	perl-libnet
 Requires:	perl-CSS-Squish
 Requires:	perl-Calendar-Simple
 Requires:	perl-Module-Versions-Report
+Requires:	perl-Tree-Simple
 Suggests:	perl-FCGI
 BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
