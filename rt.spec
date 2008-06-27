@@ -10,12 +10,12 @@
 Summary:	Request Tracker
 Summary(pl.UTF-8):	Request Tracker - system do śledzenia zleceń
 Name:		rt
-Version:	3.6.6
+Version:	3.6.7
 Release:	1
 License:	GPL v2
 Group:		Applications
 Source0:	http://download.bestpractical.com/pub/rt/release/%{name}-%{version}.tar.gz
-# Source0-md5:	b626c906e7b33c8d1879c15ed744f7e3
+# Source0-md5:	46c0b29cd14010ee6a3f181743aeb6ef
 Source1:	%{name}-apache_dir.conf
 Source2:	%{name}-apache_vhost.conf
 Patch0:		%{name}-layout.patch
@@ -24,14 +24,14 @@ URL:		http://www.bestpractical.com/rt/
 BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	perl-Apache-Session >= 1.53
-BuildRequires:	perl-CGI >= 2.78
+BuildRequires:	perl-CGI >= 3.10
 BuildRequires:	perl-CGI-SpeedyCGI
 BuildRequires:	perl-Cache-Cache
 BuildRequires:	perl-Class-ReturnValue
 BuildRequires:	perl-DBD-mysql
 BuildRequires:	perl-DBI >= 1.18
 BuildRequires:	perl-DBIx-DataSource >= 0.02
-BuildRequires:	perl-DBIx-SearchBuilder >= 0.47
+BuildRequires:	perl-DBIx-SearchBuilder >= 0.53
 BuildRequires:	perl-Exception-Class
 BuildRequires:	perl-File-Spec >= 0.8
 BuildRequires:	perl-File-Temp
