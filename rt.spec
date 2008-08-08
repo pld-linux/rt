@@ -8,35 +8,49 @@
 #
 %include	/usr/lib/rpm/macros.perl
 Summary:	Request Tracker
-Summary(pl):	Request Tracker - system do ¶ledzenia zleceñ
+Summary(pl.UTF-8):	Request Tracker - system do Å›ledzenia zleceÅ„
 Name:		rt
-Version:	3.4.5
-Release:	0.1
+Version:	3.8.0
+Release:	1
 License:	GPL v2
 Group:		Applications
 Source0:	http://download.bestpractical.com/pub/rt/release/%{name}-%{version}.tar.gz
-# Source0-md5:	16c8007cba54669e6c9de95cfc680b2a
+# Source0-md5:	2803bc974a71bfc1c84fc2ee6ce18d22
 Source1:	%{name}-apache_dir.conf
 Source2:	%{name}-apache_vhost.conf
 Patch0:		%{name}-layout.patch
+Patch1:		%{name}-config.patch
 URL:		http://www.bestpractical.com/rt/
 BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	perl-Apache-Session >= 1.53
-BuildRequires:	perl-CGI >= 2.78
+BuildRequires:	perl-CGI >= 3.38
+BuildRequires:	perl-CGI-SpeedyCGI
 BuildRequires:	perl-Cache-Cache
+BuildRequires:	perl-Calendar-Simple
 BuildRequires:	perl-Class-ReturnValue
+BuildRequires:	perl-Data-ICal
+BuildRequires:	perl-CSS-Squish >= 0.06
 BuildRequires:	perl-DBD-mysql
 BuildRequires:	perl-DBI >= 1.18
 BuildRequires:	perl-DBIx-DataSource >= 0.02
-BuildRequires:	perl-DBIx-SearchBuilder >= 0.47
+BuildRequires:	perl-DBIx-SearchBuilder >= 1.53
+BuildRequires:	perl-Devel-StackTrace >= 1.19
 BuildRequires:	perl-Exception-Class
 BuildRequires:	perl-File-Spec >= 0.8
+BuildRequires:	perl-File-ShareDir
 BuildRequires:	perl-File-Temp
 BuildRequires:	perl-FreezeThaw
+BuildRequires:	perl-GD
+BuildRequires:	perl-GD-TextUtil
+BuildRequires:	perl-GD-Graph
+BuildRequires:	perl-GnuPG-Interface
 BuildRequires:	perl-HTML-Mason >= 0.896
 BuildRequires:	perl-HTML-Parser
+BuildRequires:	perl-HTML-Scrubber
 BuildRequires:	perl-HTML-Tree
+BuildRequires:	perl-HTTP-Server-Simple >= 0.34
+BuildRequires:	perl-HTTP-Server-Simple-Mason >= 0.09
 BuildRequires:	perl-Locale-Maketext >= 1.06
 BuildRequires:	perl-Locale-Maketext-Fuzzy
 BuildRequires:	perl-Locale-Maketext-Lexicon
@@ -44,21 +58,33 @@ BuildRequires:	perl-Log-Dispatch >= 1.6
 BuildRequires:	perl-MIME-tools >= 5.411
 BuildRequires:	perl-MLDBM
 BuildRequires:	perl-MailTools >= 1.20
+BuildRequires:	perl-Module-Versions-Report >= 1.05
+BuildRequires:	perl-Net-Server >= 0.34
 BuildRequires:	perl-Params-Validate >= 0.02
+BuildRequires:	perl-PerlIO-eol
+BuildRequires:	perl-HTML-RewriteAttributes >= 0.02
 BuildRequires:	perl-Storable
 BuildRequires:	perl-Term-ReadKey
 BuildRequires:	perl-Test-Inline
 BuildRequires:	perl-Text-Autoformat
 BuildRequires:	perl-Text-Quoted
 BuildRequires:	perl-Text-Template
+BuildRequires:	perl-Text-WikiFormat >= 0.76
 BuildRequires:	perl-Text-Wrapper
 BuildRequires:	perl-Tie-IxHash
 BuildRequires:	perl-Time-HiRes
 BuildRequires:	perl-Time-modules
 BuildRequires:	perl-TimeDate
+BuildRequires:	perl-Tree-Simple
 BuildRequires:	perl-WWW-Mechanize
+BuildRequires:	perl-XML-RSS >= 1.05
 BuildRequires:	perl-base >= 5.8.0
 BuildRequires:	perl-libnet
+Requires:	perl-CSS-Squish >= 0.06
+Requires:	perl-Calendar-Simple
+Requires:	perl-Module-Versions-Report
+Requires:	perl-Tree-Simple
+Suggests:	perl-FCGI
 BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -76,14 +102,14 @@ RT is an enterprise-grade ticketing system which enables a group of
 people to intelligently and efficiently manage tasks, issues, and
 requests submitted by a community of users.
 
-%description -l pl
-RT to profesjonalnej klasy system biletowy pozwalaj±cy grupie ludzi
-inteligentnie i wydajnie zarz±dzaæ zadaniami, problemami i zleceniami
-sk³adanymi przez u¿ytkowników.
+%description -l pl.UTF-8
+RT to profesjonalnej klasy system biletowy pozwalajÄ…cy grupie ludzi
+inteligentnie i wydajnie zarzÄ…dzaÄ‡ zadaniami, problemami i zleceniami
+skÅ‚adanymi przez uÅ¼ytkownikÃ³w.
 
 %package cli
 Summary:	Command-line interface to RT
-Summary(pl):	Interfejs linii poleceñ dla RT
+Summary(pl.UTF-8):	Interfejs linii poleceÅ„ dla RT
 Group:		Applications
 
 %description cli
@@ -93,16 +119,17 @@ It allows you to interact with an RT server over HTTP, and offers an
 interface to RT's functionality that is better-suited to automation
 and integration with other tools.
 
-%description cli -l pl
-Ten pakiet zawiera /usr/bin/rt - interfejs linii poleceñ do RT 3.
+%description cli -l pl.UTF-8
+Ten pakiet zawiera /usr/bin/rt - interfejs linii poleceÅ„ do RT 3.
 
-Umo¿liwia on wspó³dzia³anie z serwerem RT po HTTP i oferuje interfejs
-do funkcjonalno¶ci RT bardziej dopasowany do automatyki i intergracji
-z innymi narzêdziami.
+UmoÅ¼liwia on wspÃ³Å‚dziaÅ‚anie z serwerem RT po HTTP i oferuje interfejs
+do funkcjonalnoÅ›ci RT bardziej dopasowany do automatyki i intergracji
+z innymi narzÄ™dziami.
 
 %prep
 %setup -q
 %patch0 -p0
+%patch1 -p1
 
 %build
 %{__aclocal} -I m4
@@ -132,16 +159,15 @@ install %{SOURCE1} %{SOURCE2} $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}
 
 # *.in, tests
 find $RPM_BUILD_ROOT -type f -name \*.in -exec rm '{}' \;
-rm -r $RPM_BUILD_ROOT%{_libdir}/t
 
 %clean
 rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc README* UPGRADING Changelog docs
-%attr(755,root,root) %dir %{_sysconfdir}
-%attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/*
+%doc README* UPGRADING docs
+%dir %{_sysconfdir}
+%attr(640,root,http) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/*
 %attr(755,root,root) %{_bindir}/mason_handler.*
 %attr(755,root,root) %{_bindir}/rt-*
 %attr(755,root,root) %{_bindir}/standalone_httpd
