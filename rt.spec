@@ -30,6 +30,7 @@ BuildRequires:	perl-Cache-Cache
 BuildRequires:	perl-Calendar-Simple
 BuildRequires:	perl-Class-ReturnValue
 BuildRequires:	perl-Data-ICal
+BuildRequires:	perl-CSS-Squish >= 0.06
 BuildRequires:	perl-DBD-mysql
 BuildRequires:	perl-DBI >= 1.18
 BuildRequires:	perl-DBIx-DataSource >= 0.02
@@ -48,6 +49,8 @@ BuildRequires:	perl-HTML-Mason >= 0.896
 BuildRequires:	perl-HTML-Parser
 BuildRequires:	perl-HTML-Scrubber
 BuildRequires:	perl-HTML-Tree
+BuildRequires:	perl-HTTP-Server-Simple >= 0.34
+BuildRequires:	perl-HTTP-Server-Simple-Mason >= 0.09
 BuildRequires:	perl-Locale-Maketext >= 1.06
 BuildRequires:	perl-Locale-Maketext-Fuzzy
 BuildRequires:	perl-Locale-Maketext-Lexicon
@@ -55,8 +58,11 @@ BuildRequires:	perl-Log-Dispatch >= 1.6
 BuildRequires:	perl-MIME-tools >= 5.411
 BuildRequires:	perl-MLDBM
 BuildRequires:	perl-MailTools >= 1.20
+BuildRequires:	perl-Module-Versions-Report >= 1.05
 BuildRequires:	perl-Net-Server >= 0.34
 BuildRequires:	perl-Params-Validate >= 0.02
+BuildRequires:	perl-PerlIO-eol
+BuildRequires:	perl-HTML-RewriteAttributes >= 0.02
 BuildRequires:	perl-Storable
 BuildRequires:	perl-Term-ReadKey
 BuildRequires:	perl-Test-Inline
@@ -71,6 +77,7 @@ BuildRequires:	perl-Time-modules
 BuildRequires:	perl-TimeDate
 BuildRequires:	perl-Tree-Simple
 BuildRequires:	perl-WWW-Mechanize
+BuildRequires:	perl-XML-RSS >= 1.05
 BuildRequires:	perl-base >= 5.8.0
 BuildRequires:	perl-libnet
 Requires:	perl-CSS-Squish >= 0.06
