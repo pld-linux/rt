@@ -1,12 +1,13 @@
 diff -urN rt-3.4.5.org/bin/webmux.pl.in rt-3.4.5/bin/webmux.pl.in
 --- rt-3.4.5.org/bin/webmux.pl.in	2005-08-24 04:33:47.000000000 +0200
 +++ rt-3.4.5/bin/webmux.pl.in	2006-06-06 14:37:37.330487213 +0200
-@@ -62,7 +62,7 @@
+@@ -67,7 +67,7 @@
+ # fix lib paths, some may be relative
+ BEGIN {
+     require File::Spec;
+-    my @libs = ("@RT_LIB_PATH@", "@LOCAL_LIB_PATH@");
++    my @libs = ("/etc/rt3/", "@RT_LIB_PATH@", "@LOCAL_LIB_PATH@");
+     my $bin_path;
  
- }
- 
--use lib ( "@LOCAL_LIB_PATH@", "@RT_LIB_PATH@" );
-+use lib ( "/etc/rt3/", "@LOCAL_LIB_PATH@", "@RT_LIB_PATH@" );
- use RT;
- 
- package RT::Mason;
+     for my $lib (@libs) {
+
