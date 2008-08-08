@@ -10,12 +10,12 @@
 Summary:	Request Tracker
 Summary(pl.UTF-8):	Request Tracker - system do śledzenia zleceń
 Name:		rt
-Version:	3.6.7
+Version:	3.8.0
 Release:	1
 License:	GPL v2
 Group:		Applications
 Source0:	http://download.bestpractical.com/pub/rt/release/%{name}-%{version}.tar.gz
-# Source0-md5:	46c0b29cd14010ee6a3f181743aeb6ef
+# Source0-md5:	2803bc974a71bfc1c84fc2ee6ce18d22
 Source1:	%{name}-apache_dir.conf
 Source2:	%{name}-apache_vhost.conf
 Patch0:		%{name}-layout.patch
@@ -24,20 +24,29 @@ URL:		http://www.bestpractical.com/rt/
 BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	perl-Apache-Session >= 1.53
-BuildRequires:	perl-CGI >= 3.10
+BuildRequires:	perl-CGI >= 3.38
 BuildRequires:	perl-CGI-SpeedyCGI
 BuildRequires:	perl-Cache-Cache
+BuildRequires:	perl-Calendar-Simple
 BuildRequires:	perl-Class-ReturnValue
+BuildRequires:	perl-Data-ICal
 BuildRequires:	perl-DBD-mysql
 BuildRequires:	perl-DBI >= 1.18
 BuildRequires:	perl-DBIx-DataSource >= 0.02
-BuildRequires:	perl-DBIx-SearchBuilder >= 0.53
+BuildRequires:	perl-DBIx-SearchBuilder >= 1.53
+BuildRequires:	perl-Devel-StackTrace >= 1.19
 BuildRequires:	perl-Exception-Class
 BuildRequires:	perl-File-Spec >= 0.8
+BuildRequires:	perl-File-ShareDir
 BuildRequires:	perl-File-Temp
 BuildRequires:	perl-FreezeThaw
+BuildRequires:	perl-GD
+BuildRequires:	perl-GD-TextUtil
+BuildRequires:	perl-GD-Graph
+BuildRequires:	perl-GnuPG-Interface
 BuildRequires:	perl-HTML-Mason >= 0.896
 BuildRequires:	perl-HTML-Parser
+BuildRequires:	perl-HTML-Scrubber
 BuildRequires:	perl-HTML-Tree
 BuildRequires:	perl-Locale-Maketext >= 1.06
 BuildRequires:	perl-Locale-Maketext-Fuzzy
@@ -46,6 +55,7 @@ BuildRequires:	perl-Log-Dispatch >= 1.6
 BuildRequires:	perl-MIME-tools >= 5.411
 BuildRequires:	perl-MLDBM
 BuildRequires:	perl-MailTools >= 1.20
+BuildRequires:	perl-Net-Server >= 0.34
 BuildRequires:	perl-Params-Validate >= 0.02
 BuildRequires:	perl-Storable
 BuildRequires:	perl-Term-ReadKey
@@ -53,15 +63,17 @@ BuildRequires:	perl-Test-Inline
 BuildRequires:	perl-Text-Autoformat
 BuildRequires:	perl-Text-Quoted
 BuildRequires:	perl-Text-Template
+BuildRequires:	perl-Text-WikiFormat >= 0.76
 BuildRequires:	perl-Text-Wrapper
 BuildRequires:	perl-Tie-IxHash
 BuildRequires:	perl-Time-HiRes
 BuildRequires:	perl-Time-modules
 BuildRequires:	perl-TimeDate
+BuildRequires:	perl-Tree-Simple
 BuildRequires:	perl-WWW-Mechanize
 BuildRequires:	perl-base >= 5.8.0
 BuildRequires:	perl-libnet
-Requires:	perl-CSS-Squish
+Requires:	perl-CSS-Squish >= 0.06
 Requires:	perl-Calendar-Simple
 Requires:	perl-Module-Versions-Report
 Requires:	perl-Tree-Simple
@@ -140,14 +152,13 @@ install %{SOURCE1} %{SOURCE2} $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}
 
 # *.in, tests
 find $RPM_BUILD_ROOT -type f -name \*.in -exec rm '{}' \;
-rm -r $RPM_BUILD_ROOT%{_libdir}/t
 
 %clean
 rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc README* UPGRADING Changelog docs
+%doc README* UPGRADING docs
 %dir %{_sysconfdir}
 %attr(640,root,http) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/*
 %attr(755,root,root) %{_bindir}/mason_handler.*
