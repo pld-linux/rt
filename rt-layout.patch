@@ -4,7 +4,7 @@
    customlibdir:		${customdir}/lib
  </Layout>
  
-+<Layout FHS>
++<Layout PLDFHS>
 +  prefix:		/usr/local
 +  exec_prefix:		${prefix}
 +  bindir:		${prefix}/bin
