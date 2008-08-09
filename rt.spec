@@ -10,11 +10,11 @@
 Summary:	Request Tracker
 Summary(pl.UTF-8):	Request Tracker - system do śledzenia zleceń
 Name:		rt
-Version:	3.8.0
-Release:	2
+Version:	3.8.1
+Release:	0.1
 License:	GPL v2
 Group:		Applications
-Source0:	http://download.bestpractical.com/pub/rt/release/%{name}-%{version}.tar.gz
+Source0:	http://download.bestpractical.com/pub/rt/release/%{name}-%{version}rc2.tar.gz
 # Source0-md5:	2803bc974a71bfc1c84fc2ee6ce18d22
 Source1:	%{name}-apache_dir.conf
 Source2:	%{name}-apache_vhost.conf
@@ -127,15 +127,19 @@ do funkcjonalności RT bardziej dopasowany do automatyki i intergracji
 z innymi narzędziami.
 
 %prep
-%setup -q
+%setup -q -n %{name}-%{version}rc2
 %patch0 -p0
 %patch1 -p1
+
+mv aclocal.m4 acinclude.m4
+
+sed -i -e 's#libdir:.*#libdir:	%{_libdir}#g' config.layout
 
 %build
 %{__aclocal} -I m4
 %{__autoconf}
 %configure \
-	--enable-layout=FHS \
+	--enable-layout=PLDFHS \
 	htmldir=%{htmldir} \
 	exp_htmldir=%{htmldir} \
 	masonstatedir=%{masonstatedir} \
