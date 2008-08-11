@@ -14,8 +14,8 @@ Version:	3.8.1
 Release:	0.1
 License:	GPL v2
 Group:		Applications
-Source0:	http://download.bestpractical.com/pub/rt/release/%{name}-%{version}rc2.tar.gz
-# Source0-md5:	2803bc974a71bfc1c84fc2ee6ce18d22
+Source0:	http://download.bestpractical.com/pub/rt/devel/%{name}-%{version}rc2.tar.gz
+# Source0-md5:	f91cce62c4a281fd5597cf36dd217d2a
 Source1:	%{name}-apache_dir.conf
 Source2:	%{name}-apache_vhost.conf
 Patch0:		%{name}-layout.patch
@@ -26,27 +26,28 @@ BuildRequires:	automake
 BuildRequires:	perl-Apache-Session >= 1.53
 BuildRequires:	perl-CGI >= 3.38
 BuildRequires:	perl-CGI-SpeedyCGI
+BuildRequires:	perl-CSS-Squish >= 0.06
 BuildRequires:	perl-Cache-Cache
 BuildRequires:	perl-Calendar-Simple
 BuildRequires:	perl-Class-ReturnValue
-BuildRequires:	perl-Data-ICal
-BuildRequires:	perl-CSS-Squish >= 0.06
 BuildRequires:	perl-DBD-mysql
 BuildRequires:	perl-DBI >= 1.18
 BuildRequires:	perl-DBIx-DataSource >= 0.02
 BuildRequires:	perl-DBIx-SearchBuilder >= 1.53
+BuildRequires:	perl-Data-ICal
 BuildRequires:	perl-Devel-StackTrace >= 1.19
 BuildRequires:	perl-Exception-Class
-BuildRequires:	perl-File-Spec >= 0.8
 BuildRequires:	perl-File-ShareDir
+BuildRequires:	perl-File-Spec >= 0.8
 BuildRequires:	perl-File-Temp
 BuildRequires:	perl-FreezeThaw
 BuildRequires:	perl-GD
-BuildRequires:	perl-GD-TextUtil
 BuildRequires:	perl-GD-Graph
+BuildRequires:	perl-GD-TextUtil
 BuildRequires:	perl-GnuPG-Interface
 BuildRequires:	perl-HTML-Mason >= 0.896
 BuildRequires:	perl-HTML-Parser
+BuildRequires:	perl-HTML-RewriteAttributes >= 0.02
 BuildRequires:	perl-HTML-Scrubber
 BuildRequires:	perl-HTML-Tree
 BuildRequires:	perl-HTTP-Server-Simple >= 0.34
@@ -62,7 +63,6 @@ BuildRequires:	perl-Module-Versions-Report >= 1.05
 BuildRequires:	perl-Net-Server >= 0.34
 BuildRequires:	perl-Params-Validate >= 0.02
 BuildRequires:	perl-PerlIO-eol
-BuildRequires:	perl-HTML-RewriteAttributes >= 0.02
 BuildRequires:	perl-Storable
 BuildRequires:	perl-Term-ReadKey
 BuildRequires:	perl-Test-Inline
