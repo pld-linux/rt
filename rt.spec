@@ -38,7 +38,7 @@ Summary:	Request Tracker
 Summary(pl.UTF-8):	Request Tracker - system do śledzenia zleceń
 Name:		rt
 Version:	3.8.1
-Release:	3
+Release:	4
 License:	GPL v2
 Group:		Applications
 Source0:	http://download.bestpractical.com/pub/rt/release/%{name}-%{version}.tar.gz
@@ -66,6 +66,7 @@ BuildRequires:	perl-Devel-StackTrace >= %{perl_devel_stacktrace_ver}
 BuildRequires:	perl-Digest-MD5 >= %{perl_digest_md5_ver}
 BuildRequires:	perl-Email-Address
 BuildRequires:	perl-Exception-Class
+BuildRequires:	perl-FCGI
 BuildRequires:	perl-File-ShareDir
 BuildRequires:	perl-File-Spec >= %{perl_file_spec_ver}
 BuildRequires:	perl-File-Temp
