@@ -33,7 +33,7 @@ BuildRequires:	perl-Class-ReturnValue
 BuildRequires:	perl-DBD-mysql
 BuildRequires:	perl-DBI >= 1.18
 BuildRequires:	perl-DBIx-DataSource >= 0.02
-BuildRequires:	perl-DBIx-SearchBuilder >= 1.53
+BuildRequires:	perl-DBIx-SearchBuilder >= 1.54
 BuildRequires:	perl-Data-ICal
 BuildRequires:	perl-Devel-StackTrace >= 1.19
 BuildRequires:	perl-Exception-Class
