@@ -64,6 +64,7 @@ BuildRequires:	perl-DBIx-SearchBuilder >= %{perl_dbix_searchbuilder_ver}
 BuildRequires:	perl-Data-ICal
 BuildRequires:	perl-Devel-StackTrace >= %{perl_devel_stacktrace_ver}
 BuildRequires:	perl-Digest-MD5 >= %{perl_digest_md5_ver}
+BuildRequires:	perl-Email-Address
 BuildRequires:	perl-Exception-Class
 BuildRequires:	perl-File-ShareDir
 BuildRequires:	perl-File-Spec >= %{perl_file_spec_ver}
@@ -84,6 +85,7 @@ BuildRequires:	perl-Locale-Maketext >= %{perl_locale_maketext_ver}
 BuildRequires:	perl-Locale-Maketext-Fuzzy
 BuildRequires:	perl-Locale-Maketext-Lexicon >= %{perl_locale_maketext_lexicon_ver}
 BuildRequires:	perl-Log-Dispatch >= %{perl_log_dispatch_ver}
+BuildRequires:	perl-MIME-Types
 BuildRequires:	perl-MIME-tools >= %{perl_mime_tools_ver}
 BuildRequires:	perl-MLDBM
 BuildRequires:	perl-MailTools >= %{perl_mailtools_ver}
@@ -91,6 +93,7 @@ BuildRequires:	perl-Module-Versions-Report >= %{perl_module_versions_report_ver}
 BuildRequires:	perl-Net-Server >= 0.34
 BuildRequires:	perl-Params-Validate >= 0.02
 BuildRequires:	perl-PerlIO-eol
+BuildRequires:	perl-Regexp-Common
 BuildRequires:	perl-Storable >= %{perl_storable_ver}
 BuildRequires:	perl-Term-ReadKey
 BuildRequires:	perl-Test-Inline
@@ -104,6 +107,7 @@ BuildRequires:	perl-Time-HiRes
 BuildRequires:	perl-Time-modules
 BuildRequires:	perl-TimeDate
 BuildRequires:	perl-Tree-Simple >= %{perl_tree_simple_ver}
+BuildRequires:	perl-UNIVERSAL-require
 BuildRequires:	perl-WWW-Mechanize
 BuildRequires:	perl-XML-RSS >= %{perl_xml_rss_ver}
 BuildRequires:	perl-base >= 5.8.0
