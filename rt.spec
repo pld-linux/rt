@@ -82,6 +82,7 @@ BuildRequires:	perl-base >= 5.8.0
 BuildRequires:	perl-libnet
 Requires:	perl-CSS-Squish >= 0.06
 Requires:	perl-Calendar-Simple
+Requires:	perl-DBIx-SearchBuilder >= 1.54
 Requires:	perl-Module-Versions-Report
 Requires:	perl-Tree-Simple
 Suggests:	perl-FCGI
