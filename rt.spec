@@ -31,18 +31,21 @@
 %define	perl_text_quoted_ver			2.02
 %define	perl_text_wikiformat_ver		0.76
 %define	perl_tree_simple_ver			1.04
+%define	perl_text_template_ver			1.45
 %define	perl_xml_rss_ver			1.05
+#
+%define	snap	rc2
 #
 %include	/usr/lib/rpm/macros.perl
 Summary:	Request Tracker
 Summary(pl.UTF-8):	Request Tracker - system do śledzenia zleceń
 Name:		rt
-Version:	3.8.1
-Release:	5
+Version:	3.8.2
+Release:	0.%{snap}.1
 License:	GPL v2
 Group:		Applications
-Source0:	http://download.bestpractical.com/pub/rt/release/%{name}-%{version}.tar.gz
-# Source0-md5:	72b4419816e43bde6b50ba68374882e3
+Source0:	http://download.bestpractical.com/pub/rt/devel/%{name}-%{version}%{snap}.tar.gz
+# Source0-md5:	0876eea0d7903567bd4c1cd639e12563
 Source1:	%{name}-apache_dir.conf
 Source2:	%{name}-apache_vhost.conf
 Patch0:		%{name}-layout.patch
@@ -100,7 +103,7 @@ BuildRequires:	perl-Term-ReadKey
 BuildRequires:	perl-Test-Inline
 BuildRequires:	perl-Text-Autoformat
 BuildRequires:	perl-Text-Quoted >= %{perl_text_quoted_ver}
-BuildRequires:	perl-Text-Template
+BuildRequires:	perl-Text-Template >= %{perl_text_template_ver}
 BuildRequires:	perl-Text-WikiFormat >= %{perl_text_wikiformat_ver}
 BuildRequires:	perl-Text-Wrapper
 BuildRequires:	perl-Tie-IxHash
@@ -184,7 +187,7 @@ do funkcjonalności RT bardziej dopasowany do automatyki i intergracji
 z innymi narzędziami.
 
 %prep
-%setup -q
+%setup -q -n %{name}-%{version}%{snap}
 %patch0 -p0
 %patch1 -p1
 
