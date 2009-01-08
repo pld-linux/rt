@@ -34,18 +34,16 @@
 %define	perl_text_template_ver			1.45
 %define	perl_xml_rss_ver			1.05
 #
-%define	snap	rc2
-#
 %include	/usr/lib/rpm/macros.perl
 Summary:	Request Tracker
 Summary(pl.UTF-8):	Request Tracker - system do śledzenia zleceń
 Name:		rt
 Version:	3.8.2
-Release:	0.%{snap}.1
+Release:	1
 License:	GPL v2
 Group:		Applications
-Source0:	http://download.bestpractical.com/pub/rt/devel/%{name}-%{version}%{snap}.tar.gz
-# Source0-md5:	0876eea0d7903567bd4c1cd639e12563
+Source0:	http://download.bestpractical.com/pub/rt/release/%{name}-%{version}.tar.gz
+# Source0-md5:	100b1fd791e229c4338c0d056c65c12f
 Source1:	%{name}-apache_dir.conf
 Source2:	%{name}-apache_vhost.conf
 Patch0:		%{name}-layout.patch
@@ -187,7 +185,7 @@ do funkcjonalności RT bardziej dopasowany do automatyki i intergracji
 z innymi narzędziami.
 
 %prep
-%setup -q -n %{name}-%{version}%{snap}
+%setup -q
 %patch0 -p0
 %patch1 -p1
 
