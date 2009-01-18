@@ -219,6 +219,9 @@ install -d $RPM_BUILD_ROOT%{_libdir} \
 
 install %{SOURCE1} %{SOURCE2} $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}
 
+# unneeded in installed copy
+rm -f $RPM_BUILD_ROOT%{_sbindir}/rt-test-dependencies
+
 # *.in, tests
 find $RPM_BUILD_ROOT -type f -name \*.in -exec rm '{}' \;
 
