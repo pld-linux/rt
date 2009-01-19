@@ -132,6 +132,7 @@ Requires:	perl-HTML-Scrubber >= %{perl_html_scrubber_ver}
 Requires:	perl-HTTP-Server-Simple >= %{perl_http_server_simple_ver}
 Requires:	perl-HTTP-Server-Simple-Mason >= %{perl_http_server_simple_mason_ver}
 Requires:	perl-Locale-Maketext >= %{perl_locale_maketext_ver}
+Requires:	perl-Locale-Maketext-Fuzzy >= %{perl_locale_maketext_lexicon_ver}
 Requires:	perl-Locale-Maketext-Lexicon >= %{perl_locale_maketext_lexicon_ver}
 Requires:	perl-Log-Dispatch >= %{perl_log_dispatch_ver}
 Requires:	perl-MIME-tools >= %{perl_mime_tools_ver}
