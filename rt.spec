@@ -123,16 +123,18 @@ Requires:	perl-Class-ReturnValue >= %{perl_class_returnvalue_ver}
 Requires:	perl-DBD-mysql >= %{perl_dbd_mysql}
 Requires:	perl-DBI >= %{perl_dbi_ver}
 Requires:	perl-DBIx-SearchBuilder >= %{perl_dbix_searchbuilder_ver}
+Requires:	perl-Data-ICal
 Requires:	perl-Devel-StackTrace >= %{perl_devel_stacktrace_ver}
 Requires:	perl-Digest-MD5 >= %{perl_digest_md5_ver}
 Requires:	perl-File-Spec >= %{perl_file_spec_ver}
+Requires:	perl-GD-Graph
 Requires:	perl-HTML-Mason >= %{perl_html_mason_ver}
 Requires:	perl-HTML-RewriteAttributes >= %{perl_html_rewriteattributes_ver}
 Requires:	perl-HTML-Scrubber >= %{perl_html_scrubber_ver}
 Requires:	perl-HTTP-Server-Simple >= %{perl_http_server_simple_ver}
 Requires:	perl-HTTP-Server-Simple-Mason >= %{perl_http_server_simple_mason_ver}
 Requires:	perl-Locale-Maketext >= %{perl_locale_maketext_ver}
-Requires:	perl-Locale-Maketext-Fuzzy >= %{perl_locale_maketext_lexicon_ver}
+Requires:	perl-Locale-Maketext-Fuzzy
 Requires:	perl-Locale-Maketext-Lexicon >= %{perl_locale_maketext_lexicon_ver}
 Requires:	perl-Log-Dispatch >= %{perl_log_dispatch_ver}
 Requires:	perl-MIME-tools >= %{perl_mime_tools_ver}
@@ -147,8 +149,8 @@ Suggests:	perl-FCGI
 BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
-# workarounds for bug in perl.req ("perl()") and ,,famous'' rpm's feature (RT::*)
 %define		_noautoreq	'perl().*' 'perl(RT.*)' 'perl(Encode::compat)' 'perl(CGI::Fast)' 'perl(Exception::Class::Base)'
+# workarounds for bug in perl.req ("perl()") and ,,famous'' rpm's feature (RT::*)
 
 %define		_sysconfdir	/etc/rt3
 %define		_libdir		%{perl_vendorlib}
