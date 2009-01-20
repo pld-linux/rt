@@ -245,8 +245,9 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 %doc README* UPGRADING docs
-%dir %attr(750,root,http) %{_sysconfdir}
+%dir %{_sysconfdir}
 %attr(640,root,http) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/*
+%dir %attr(750,root,http) %{_webappsdir}
 %attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) %{_webappsdir}/httpd.conf
 %attr(755,root,root) %{_bindir}/mason_handler.*
 %attr(755,root,root) %{_bindir}/rt-*
