@@ -39,13 +39,14 @@ Summary:	Request Tracker
 Summary(pl.UTF-8):	Request Tracker - system do śledzenia zleceń
 Name:		rt
 Version:	3.8.2
-Release:	1.1
+Release:	1.2
 License:	GPL v2
 Group:		Applications
 Source0:	http://download.bestpractical.com/pub/rt/release/%{name}-%{version}.tar.gz
 # Source0-md5:	100b1fd791e229c4338c0d056c65c12f
 Source1:	%{name}-apache_dir.conf
 Source2:	%{name}-apache_vhost.conf
+Source3:	%{name}-apache.conf
 Patch0:		%{name}-layout.patch
 Patch1:		%{name}-config.patch
 URL:		http://www.bestpractical.com/rt/
@@ -115,6 +116,9 @@ BuildRequires:	perl-XML-RSS >= %{perl_xml_rss_ver}
 BuildRequires:	perl-base >= 5.8.0
 BuildRequires:	perl-libnet
 Requires:	apache-base >= 2.2.0
+Requires:	apache-mod_authz_host >= 2.2.0
+Requires:	apache-mod_perl >= 2.0
+Requires:	perl-Apache-DBI
 Requires:	perl-Apache-Session >= %{perl_apache_session_ver}
 Requires:	perl-CGI >= %{perl_cgi_ver}
 Requires:	perl-CSS-Squish >= %{perl_css_squish_ver}
@@ -220,12 +224,14 @@ sed -i -e 's#libdir:.*#libdir:	%{_libdir}#g' config.layout
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT%{_libdir} \
 	$RPM_BUILD_ROOT%{masonstatedir} \
+	$RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version} \
 	$RPM_BUILD_ROOT%{_webappsdir}
 
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
 
-cat %{SOURCE1} %{SOURCE2} > $RPM_BUILD_ROOT%{_webappsdir}/httpd.conf
+install %{SOURCE1} %{SOURCE2} $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}
+install %{SOURCE3} $RPM_BUILD_ROOT%{_webappsdir}/httpd.conf
 
 # unneeded in installed copy
 rm -f $RPM_BUILD_ROOT%{_sbindir}/rt-test-dependencies
@@ -258,6 +264,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/rt3/html
 %{_libdir}/*
 %dir %attr(770,root,http) %{masonstatedir}
+%{_examplesdir}/%{name}-%{version}
 
 %files cli
 %defattr(644,root,root,755)
