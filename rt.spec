@@ -39,7 +39,7 @@ Summary:	Request Tracker
 Summary(pl.UTF-8):	Request Tracker - system do śledzenia zleceń
 Name:		rt
 Version:	3.8.2
-Release:	1
+Release:	1.1
 License:	GPL v2
 Group:		Applications
 Source0:	http://download.bestpractical.com/pub/rt/release/%{name}-%{version}.tar.gz
@@ -114,6 +114,7 @@ BuildRequires:	perl-WWW-Mechanize
 BuildRequires:	perl-XML-RSS >= %{perl_xml_rss_ver}
 BuildRequires:	perl-base >= 5.8.0
 BuildRequires:	perl-libnet
+Requires:	apache-base >= 2.2.0
 Requires:	perl-Apache-Session >= %{perl_apache_session_ver}
 Requires:	perl-CGI >= %{perl_cgi_ver}
 Requires:	perl-CSS-Squish >= %{perl_css_squish_ver}
@@ -153,6 +154,9 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 %define		_noautoreq	'perl().*' 'perl(RT.*)' 'perl(Encode::compat)' 'perl(CGI::Fast)' 'perl(Exception::Class::Base)'
 # workarounds for bug in perl.req ("perl()") and ,,famous'' rpm's feature (RT::*)
 
+%define         _webapps        /etc/webapps
+%define         _webapp         %{name}
+%define         _webappsdir     %{_webapps}/%{_webapp}
 %define		_sysconfdir	/etc/rt3
 %define		_libdir		%{perl_vendorlib}
 %define		htmldir		%{_datadir}/rt3/html
@@ -216,12 +220,12 @@ sed -i -e 's#libdir:.*#libdir:	%{_libdir}#g' config.layout
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT%{_libdir} \
 	$RPM_BUILD_ROOT%{masonstatedir} \
-	$RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}
+	$RPM_BUILD_ROOT%{_webappsdir}
 
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
 
-install %{SOURCE1} %{SOURCE2} $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}
+cat %{SOURCE1} %{SOURCE2} > $RPM_BUILD_ROOT%{_webappsdir}/httpd.conf
 
 # unneeded in installed copy
 rm -f $RPM_BUILD_ROOT%{_sbindir}/rt-test-dependencies
@@ -229,14 +233,21 @@ rm -f $RPM_BUILD_ROOT%{_sbindir}/rt-test-dependencies
 # *.in, tests
 find $RPM_BUILD_ROOT -type f -name \*.in -exec rm '{}' \;
 
+%triggerin -- apache < 2.2.0, apache-base
+%webapp_register httpd %{_webapp}
+
+%triggerun -- apache < 2.2.0, apache-base
+%webapp_unregister httpd %{_webapp}
+
 %clean
 rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
 %doc README* UPGRADING docs
-%dir %{_sysconfdir}
+%dir %attr(750,root,http) %{_sysconfdir}
 %attr(640,root,http) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/*
+%attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) %{_webappsdir}/httpd.conf
 %attr(755,root,root) %{_bindir}/mason_handler.*
 %attr(755,root,root) %{_bindir}/rt-*
 %attr(755,root,root) %{_bindir}/standalone_httpd
@@ -246,7 +257,6 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/rt3/html
 %{_libdir}/*
 %dir %attr(770,root,http) %{masonstatedir}
-%{_examplesdir}/%{name}-%{version}
 
 %files cli
 %defattr(644,root,root,755)
