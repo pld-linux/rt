@@ -151,6 +151,7 @@ Requires:	perl-Text-Quoted >= %{perl_text_quoted_ver}
 Requires:	perl-Text-WikiFormat >= %{perl_text_wikiformat_ver}
 Requires:	perl-Tree-Simple >= %{perl_tree_simple_ver}
 Requires:	perl-XML-RSS >= %{perl_xml_rss_ver}
+Requires:	webapps
 Suggests:	perl-FCGI
 BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
