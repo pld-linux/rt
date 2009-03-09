@@ -208,6 +208,7 @@ sed -i -e 's#libdir:.*#libdir:	%{_libdir}#g' config.layout
 %build
 %{__aclocal} -I m4
 %{__autoconf}
+USER=$(id -un) \
 %configure \
 	--enable-layout=PLDFHS \
 	htmldir=%{htmldir} \
@@ -228,10 +229,7 @@ install -d $RPM_BUILD_ROOT%{_libdir} \
 	$RPM_BUILD_ROOT%{_webappsdir}
 
 %{__make} install \
-	DESTDIR=$RPM_BUILD_ROOT \
-	BIN_OWNER=$(id -un) \
-	LIBS_OWNER=$(id -un) \
-	WEB_USER=$(id -un)
+	DESTDIR=$RPM_BUILD_ROOT
 
 install %{SOURCE1} %{SOURCE2} $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}
 install %{SOURCE3} $RPM_BUILD_ROOT%{_webappsdir}/httpd.conf
