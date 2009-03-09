@@ -1,7 +1,6 @@
 # TODO:
 # - check file permissions
 # - check files in /usr/share/rt3/
-# - check BuildRequires
 # - check Requires (meta-packages for configurations with mod_perl/fcgi,
 #   apache[12]/standalone server...?)
 # - separate standalone server
@@ -39,7 +38,7 @@ Summary:	Request Tracker
 Summary(pl.UTF-8):	Request Tracker - system do śledzenia zleceń
 Name:		rt
 Version:	3.8.2
-Release:	1.2
+Release:	1.3
 License:	GPL v2
 Group:		Applications
 Source0:	http://download.bestpractical.com/pub/rt/release/%{name}-%{version}.tar.gz
@@ -229,7 +228,10 @@ install -d $RPM_BUILD_ROOT%{_libdir} \
 	$RPM_BUILD_ROOT%{_webappsdir}
 
 %{__make} install \
-	DESTDIR=$RPM_BUILD_ROOT
+	DESTDIR=$RPM_BUILD_ROOT \
+	BIN_OWNER=$(id -un) \
+	LIBS_OWNER=$(id -un) \
+	WEB_USER=$(id -un)
 
 install %{SOURCE1} %{SOURCE2} $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}
 install %{SOURCE3} $RPM_BUILD_ROOT%{_webappsdir}/httpd.conf
