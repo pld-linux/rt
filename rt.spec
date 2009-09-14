@@ -37,12 +37,12 @@
 Summary:	Request Tracker
 Summary(pl.UTF-8):	Request Tracker - system do śledzenia zleceń
 Name:		rt
-Version:	3.8.4
+Version:	3.8.5
 Release:	1
 License:	GPL v2
 Group:		Applications
 Source0:	http://download.bestpractical.com/pub/rt/release/%{name}-%{version}.tar.gz
-# Source0-md5:	cdfdbd954203a8bc2c663a6847218ccc
+# Source0-md5:	177addb62ec3c7ee7335b696dcb0b0a1
 Source1:	%{name}-apache_dir.conf
 Source2:	%{name}-apache_vhost.conf
 Source3:	%{name}-apache.conf
