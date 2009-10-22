@@ -222,7 +222,7 @@ USER=$(id -un) \
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT%{_libdir} \
+install -d $RPM_BUILD_ROOT{/etc/cron.daily,%{_libdir}} \
 	$RPM_BUILD_ROOT%{masonstatedir} \
 	$RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version} \
 	$RPM_BUILD_ROOT%{_webappsdir}
@@ -232,6 +232,8 @@ install -d $RPM_BUILD_ROOT%{_libdir} \
 
 install %{SOURCE1} %{SOURCE2} $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}
 install %{SOURCE3} $RPM_BUILD_ROOT%{_webappsdir}/httpd.conf
+
+ln -s %{_sbindir}/rt-clean-sessions $RPM_BUILD_ROOT/etc/cron.daily/rt-clean-sessions
 
 # unneeded in installed copy
 rm -f $RPM_BUILD_ROOT%{_sbindir}/rt-test-dependencies
@@ -255,6 +257,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(640,root,http) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/*
 %dir %attr(750,root,http) %{_webappsdir}
 %attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) %{_webappsdir}/httpd.conf
+%attr(755,root,root) /etc/cron.daily/rt-clean-sessions
 %attr(755,root,root) %{_bindir}/mason_handler.*
 %attr(755,root,root) %{_bindir}/rt-*
 %attr(755,root,root) %{_bindir}/standalone_httpd
