@@ -114,6 +114,7 @@ BuildRequires:	perl-WWW-Mechanize
 BuildRequires:	perl-XML-RSS >= %{perl_xml_rss_ver}
 BuildRequires:	perl-base >= 5.8.0
 BuildRequires:	perl-libnet
+BuildRequires:	rpm-perlprov
 Requires:	apache-base >= 2.2.0
 Requires:	apache-mod_authz_host >= 2.2.0
 Requires:	apache-mod_perl >= 2.0
@@ -215,6 +216,7 @@ USER=$(id -un) \
 	exp_htmldir=%{htmldir} \
 	masonstatedir=%{masonstatedir} \
 	masonsessiondir=%{masonstatedir} \
+	--with-apachectl=%{_sbindir}/apachectl \
 	--with-speedycgi=%{_bindir}/speedycgi \
 	--with-my-user-group \
 	--with-db-type=mysql
