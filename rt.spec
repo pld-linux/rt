@@ -29,7 +29,7 @@
 %define	perl_storable_ver			2.08
 %define	perl_text_quoted_ver			2.02
 %define	perl_text_wikiformat_ver		0.76
-%define	perl_tree_simple_ver			1.04
+%define	perl_tree_simple_ver			1.18
 %define	perl_text_template_ver			1.45
 %define	perl_xml_rss_ver			1.05
 #
@@ -129,6 +129,7 @@ Requires:	perl-DBIx-SearchBuilder >= %{perl_dbix_searchbuilder_ver}
 Requires:	perl-Data-ICal
 Requires:	perl-Devel-StackTrace >= %{perl_devel_stacktrace_ver}
 Requires:	perl-Digest-MD5 >= %{perl_digest_md5_ver}
+Requires:	perl-Encode >= 2.38
 Requires:	perl-File-Spec >= %{perl_file_spec_ver}
 Requires:	perl-GD-Graph
 Requires:	perl-HTML-Mason >= %{perl_html_mason_ver}
@@ -227,7 +228,8 @@ install -d $RPM_BUILD_ROOT{/etc/cron.daily,%{_libdir}} \
 	$RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version} \
 	$RPM_BUILD_ROOT%{_webappsdir}
 
-%{__make} install \
+# this is make install minus fixperms
+%{__make} config-install dirs files-install instruct \
 	DESTDIR=$RPM_BUILD_ROOT
 
 install %{SOURCE1} %{SOURCE2} $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}
