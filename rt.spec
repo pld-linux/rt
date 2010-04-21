@@ -112,9 +112,14 @@ z innymi narzędziami.
 %patch0 -p0
 %patch1 -p1
 
+mv aclocal.m4 acinclude.m4                                                                                                                                   
+                                                                                                                                                             
+sed -i -e 's#libdir:.*#libdir:  %{_libdir}#g' config.layout
+
 %build
 %{__aclocal} -I m4
 %{__autoconf}
+USER=$(id -un) \
 %configure \
 	--enable-layout=PLDFHS \
 	htmldir=%{htmldir} \
@@ -147,7 +152,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc README* UPGRADING Changelog docs
+%doc README* UPGRADING docs
 %dir %{_sysconfdir}
 %attr(640,root,http) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/*
 %attr(755,root,root) %{_bindir}/mason_handler.*
