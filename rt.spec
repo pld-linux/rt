@@ -37,12 +37,12 @@
 Summary:	Request Tracker
 Summary(pl.UTF-8):	Request Tracker - system do śledzenia zleceń
 Name:		rt
-Version:	3.8.7
+Version:	3.8.8
 Release:	1
 License:	GPL v2
 Group:		Applications
 Source0:	http://download.bestpractical.com/pub/rt/release/%{name}-%{version}.tar.gz
-# Source0-md5:	1e269e88cb03a94f7992b115d4d0828a
+# Source0-md5:	de062840ce6e2fdb323d77dddf8ff485
 Source1:	%{name}-apache_dir.conf
 Source2:	%{name}-apache_vhost.conf
 Source3:	%{name}-apache.conf
@@ -262,6 +262,7 @@ rm -rf $RPM_BUILD_ROOT
 %dir %attr(750,root,http) %{_webappsdir}
 %attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) %{_webappsdir}/httpd.conf
 %attr(755,root,root) /etc/cron.daily/rt-clean-sessions
+%attr(755,root,root) %{_bindir}/fastcgi_server
 %attr(755,root,root) %{_bindir}/mason_handler.*
 %attr(755,root,root) %{_bindir}/rt-*
 %attr(755,root,root) %{_bindir}/standalone_httpd
