@@ -145,6 +145,7 @@ Requires:	perl-Log-Dispatch >= %{perl_log_dispatch_ver}
 Requires:	perl-MIME-tools >= %{perl_mime_tools_ver}
 Requires:	perl-MailTools >= %{perl_mailtools_ver}
 Requires:	perl-Module-Versions-Report >= %{perl_module_versions_report_ver}
+Requires:	perl-Moose
 Requires:	perl-PerlIO-eol
 Requires:	perl-Storable >= %{perl_storable_ver}
 Requires:	perl-Text-Quoted >= %{perl_text_quoted_ver}
