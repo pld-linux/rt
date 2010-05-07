@@ -38,7 +38,7 @@ Summary:	Request Tracker
 Summary(pl.UTF-8):	Request Tracker - system do śledzenia zleceń
 Name:		rt
 Version:	3.8.8
-Release:	1
+Release:	2
 License:	GPL v2
 Group:		Applications
 Source0:	http://download.bestpractical.com/pub/rt/release/%{name}-%{version}.tar.gz
@@ -258,8 +258,14 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 %doc README* UPGRADING docs
+
 %dir %{_sysconfdir}
-%attr(640,root,http) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/*
+%attr(640,root,http) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/[a-z]*
+# this is local config
+%attr(640,root,http) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/RT_SiteConfig.pm
+# this is generic config that SHOULDN'T BE TOUCHED. Change settings in your local (site) config.
+%attr(640,root,http) %config %{_sysconfdir}/RT_Config.pm
+
 %dir %attr(750,root,http) %{_webappsdir}
 %attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) %{_webappsdir}/httpd.conf
 %attr(755,root,root) /etc/cron.daily/rt-clean-sessions
