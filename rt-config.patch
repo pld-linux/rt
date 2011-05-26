@@ -1,7 +1,6 @@
-diff -urN rt-3.4.5.org/bin/webmux.pl.in rt-3.4.5/bin/webmux.pl.in
---- rt-3.4.5.org/bin/webmux.pl.in	2005-08-24 04:33:47.000000000 +0200
-+++ rt-3.4.5/bin/webmux.pl.in	2006-06-06 14:37:37.330487213 +0200
-@@ -67,7 +67,7 @@
+--- rt-4.0.0/sbin/rt-server.in~	2011-04-14 03:21:41.000000000 +0200
++++ rt-4.0.0/sbin/rt-server.in	2011-05-26 15:31:32.609679385 +0200
+@@ -52,7 +52,7 @@
  # fix lib paths, some may be relative
  BEGIN {
      require File::Spec;
@@ -10,4 +9,3 @@ diff -urN rt-3.4.5.org/bin/webmux.pl.in rt-3.4.5/bin/webmux.pl.in
      my $bin_path;
  
      for my $lib (@libs) {
-

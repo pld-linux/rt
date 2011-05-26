@@ -37,12 +37,12 @@
 Summary:	Request Tracker
 Summary(pl.UTF-8):	Request Tracker - system do śledzenia zleceń
 Name:		rt
-Version:	3.8.10
-Release:	1
+Version:	4.0.0
+Release:	0.1
 License:	GPL v2
 Group:		Applications
 Source0:	http://download.bestpractical.com/pub/rt/release/%{name}-%{version}.tar.gz
-# Source0-md5:	00c147d71476d032d33dbad76bdc06ff
+# Source0-md5:	bd6045421a6f2d0e8c18923f80726e4a
 Source1:	%{name}-apache_dir.conf
 Source2:	%{name}-apache_vhost.conf
 Source3:	%{name}-apache.conf
@@ -218,9 +218,9 @@ USER=$(id -un) \
 	masonstatedir=%{masonstatedir} \
 	masonsessiondir=%{masonstatedir} \
 	--with-apachectl=%{_sbindir}/apachectl \
-	--with-speedycgi=%{_bindir}/speedycgi \
 	--with-my-user-group \
-	--with-db-type=mysql
+	--with-db-type=mysql \
+	--with-web-handler=fastcgi,modperl2
 
 %{__make}
 
@@ -257,7 +257,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc README* UPGRADING docs
+%doc README* docs
 
 %dir %{_sysconfdir}
 %attr(640,root,http) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/[a-z]*
@@ -269,11 +269,8 @@ rm -rf $RPM_BUILD_ROOT
 %dir %attr(750,root,http) %{_webappsdir}
 %attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) %{_webappsdir}/httpd.conf
 %attr(755,root,root) /etc/cron.daily/rt-clean-sessions
-%attr(755,root,root) %{_bindir}/fastcgi_server
-%attr(755,root,root) %{_bindir}/mason_handler.*
 %attr(755,root,root) %{_bindir}/rt-*
-%attr(755,root,root) %{_bindir}/standalone_httpd
-%attr(755,root,root) %{_bindir}/webmux.pl
+%attr(755,root,root) %{_sbindir}/standalone_httpd
 %attr(755,root,root) %{_sbindir}/rt-*
 %dir %{_datadir}/rt3
 %{_datadir}/rt3/html
