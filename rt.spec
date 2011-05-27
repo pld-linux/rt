@@ -5,18 +5,19 @@
 #   apache[12]/standalone server...?)
 # - separate standalone server
 #
+%define	perl_ver				5.8.3
 %define	perl_apache_session_ver			1.53
 %define	perl_cgi_ver				3.38
 %define	perl_class_returnvalue_ver		0.40
 %define	perl_css_squish_ver			0.06
 %define	perl_dbd_mysql				2.1018
 %define	perl_dbi_ver				1.37
-%define	perl_dbix_searchbuilder_ver		1.54
+%define	perl_dbix_searchbuilder_ver		1.59
 %define	perl_devel_stacktrace_ver		1.19
 %define	perl_digest_md5_ver			2.27
 %define	perl_file_spec_ver			0.8
-%define	perl_html_mason_ver			1.36
-%define	perl_html_rewriteattributes_ver		0.02
+%define	perl_html_mason_ver			1.43
+%define	perl_html_rewriteattributes_ver		0.04
 %define	perl_html_scrubber_ver			0.08
 %define	perl_http_server_simple_mason_ver	0.09
 %define	perl_http_server_simple_ver		0.34
@@ -32,6 +33,8 @@
 %define	perl_tree_simple_ver			1.18
 %define	perl_text_template_ver			1.45
 %define	perl_xml_rss_ver			1.05
+#
+%bcond_with	testdeps	# used for checking dependencies
 #
 %include	/usr/lib/rpm/macros.perl
 Summary:	Request Tracker
@@ -51,23 +54,29 @@ Patch1:		%{name}-config.patch
 URL:		http://www.bestpractical.com/rt/
 BuildRequires:	autoconf
 BuildRequires:	automake
+%if %{with testdeps}
+BuildRequires:	perl-Apache-DBI
 BuildRequires:	perl-Apache-Session >= %{perl_apache_session_ver}
 BuildRequires:	perl-CGI >= %{perl_cgi_ver}
+BuildRequires:	perl-CGI-Emulate-PSGI
 BuildRequires:	perl-CGI-SpeedyCGI
 BuildRequires:	perl-CSS-Squish >= %{perl_css_squish_ver}
 BuildRequires:	perl-Cache-Cache
 BuildRequires:	perl-Calendar-Simple
 BuildRequires:	perl-Class-ReturnValue >= %{perl_class_returnvalue_ver}
+BuildRequires:	perl-Convert-Color
 BuildRequires:	perl-DBD-mysql >= %{perl_dbd_mysql}
 BuildRequires:	perl-DBI >= %{perl_dbi_ver}
 BuildRequires:	perl-DBIx-DataSource >= 0.02
 BuildRequires:	perl-DBIx-SearchBuilder >= %{perl_dbix_searchbuilder_ver}
 BuildRequires:	perl-Data-ICal
+BuildRequires:	perl-Devel-GlobalDestruction
 BuildRequires:	perl-Devel-StackTrace >= %{perl_devel_stacktrace_ver}
 BuildRequires:	perl-Digest-MD5 >= %{perl_digest_md5_ver}
 BuildRequires:	perl-Email-Address
 BuildRequires:	perl-Exception-Class
 BuildRequires:	perl-FCGI
+BuildRequires:	perl-FCGI-ProcManager
 BuildRequires:	perl-File-ShareDir
 BuildRequires:	perl-File-Spec >= %{perl_file_spec_ver}
 BuildRequires:	perl-File-Temp
@@ -78,11 +87,14 @@ BuildRequires:	perl-GD-TextUtil
 BuildRequires:	perl-GnuPG-Interface
 BuildRequires:	perl-HTML-Mason >= %{perl_html_mason_ver}
 BuildRequires:	perl-HTML-Parser
+BuildRequires:	perl-HTML-Quoted
 BuildRequires:	perl-HTML-RewriteAttributes >= %{perl_html_rewriteattributes_ver}
 BuildRequires:	perl-HTML-Scrubber >= %{perl_html_scrubber_ver}
 BuildRequires:	perl-HTML-Tree
 BuildRequires:	perl-HTTP-Server-Simple >= %{perl_http_server_simple_ver}
 BuildRequires:	perl-HTTP-Server-Simple-Mason >= %{perl_http_server_simple_mason_ver}
+BuildRequires:	perl-IPC-Run3
+BuildRequires:	perl-JavaScript-Minifier
 BuildRequires:	perl-Locale-Maketext >= %{perl_locale_maketext_ver}
 BuildRequires:	perl-Locale-Maketext-Fuzzy
 BuildRequires:	perl-Locale-Maketext-Lexicon >= %{perl_locale_maketext_lexicon_ver}
@@ -92,14 +104,20 @@ BuildRequires:	perl-MIME-tools >= %{perl_mime_tools_ver}
 BuildRequires:	perl-MLDBM
 BuildRequires:	perl-MailTools >= %{perl_mailtools_ver}
 BuildRequires:	perl-Module-Versions-Report >= %{perl_module_versions_report_ver}
+BuildRequires:	perl-Net-CIDR
 BuildRequires:	perl-Net-Server >= 0.34
+BuildRequires:	perl-PSGI
 BuildRequires:	perl-Params-Validate >= 0.02
 BuildRequires:	perl-PerlIO-eol
+BuildRequires:	perl-Plack
 BuildRequires:	perl-Regexp-Common
+BuildRequires:	perl-Regexp-Common-net-CIDR
+BuildRequires:	perl-Starlet
 BuildRequires:	perl-Storable >= %{perl_storable_ver}
 BuildRequires:	perl-Term-ReadKey
 BuildRequires:	perl-Test-Inline
 BuildRequires:	perl-Text-Autoformat
+BuildRequires:	perl-Text-Password-Pronounceable
 BuildRequires:	perl-Text-Quoted >= %{perl_text_quoted_ver}
 BuildRequires:	perl-Text-Template >= %{perl_text_template_ver}
 BuildRequires:	perl-Text-WikiFormat >= %{perl_text_wikiformat_ver}
@@ -112,32 +130,42 @@ BuildRequires:	perl-Tree-Simple >= %{perl_tree_simple_ver}
 BuildRequires:	perl-UNIVERSAL-require
 BuildRequires:	perl-WWW-Mechanize
 BuildRequires:	perl-XML-RSS >= %{perl_xml_rss_ver}
-BuildRequires:	perl-base >= 5.8.0
 BuildRequires:	perl-libnet
+%endif
+BuildRequires:	perl-base >= %{perl_ver}
 BuildRequires:	rpm-perlprov
 Requires:	apache-base >= 2.2.0
 Requires:	apache-mod_authz_host >= 2.2.0
 Requires:	apache-mod_perl >= 2.0
+Requires:	fonts-TTF-Google-Droid
 Requires:	perl-Apache-DBI
 Requires:	perl-Apache-Session >= %{perl_apache_session_ver}
 Requires:	perl-CGI >= %{perl_cgi_ver}
+Requires:	perl-CGI-Emulate-PSGI
 Requires:	perl-CSS-Squish >= %{perl_css_squish_ver}
 Requires:	perl-Calendar-Simple
 Requires:	perl-Class-ReturnValue >= %{perl_class_returnvalue_ver}
+Requires:	perl-Convert-Color
 Requires:	perl-DBD-mysql >= %{perl_dbd_mysql}
 Requires:	perl-DBI >= %{perl_dbi_ver}
 Requires:	perl-DBIx-SearchBuilder >= %{perl_dbix_searchbuilder_ver}
 Requires:	perl-Data-ICal
+Requires:	perl-Devel-GlobalDestruction
 Requires:	perl-Devel-StackTrace >= %{perl_devel_stacktrace_ver}
 Requires:	perl-Digest-MD5 >= %{perl_digest_md5_ver}
 Requires:	perl-Encode >= 2.38
+Requires:	perl-FCGI-ProcManager
 Requires:	perl-File-Spec >= %{perl_file_spec_ver}
 Requires:	perl-GD-Graph
+Requires:	perl-GnuPG-Interface
 Requires:	perl-HTML-Mason >= %{perl_html_mason_ver}
+Requires:	perl-HTML-Quoted
 Requires:	perl-HTML-RewriteAttributes >= %{perl_html_rewriteattributes_ver}
 Requires:	perl-HTML-Scrubber >= %{perl_html_scrubber_ver}
 Requires:	perl-HTTP-Server-Simple >= %{perl_http_server_simple_ver}
 Requires:	perl-HTTP-Server-Simple-Mason >= %{perl_http_server_simple_mason_ver}
+Requires:	perl-IPC-Run3
+Requires:	perl-JavaScript-Minifier
 Requires:	perl-Locale-Maketext >= %{perl_locale_maketext_ver}
 Requires:	perl-Locale-Maketext-Fuzzy
 Requires:	perl-Locale-Maketext-Lexicon >= %{perl_locale_maketext_lexicon_ver}
@@ -146,12 +174,20 @@ Requires:	perl-MIME-tools >= %{perl_mime_tools_ver}
 Requires:	perl-MailTools >= %{perl_mailtools_ver}
 Requires:	perl-Module-Versions-Report >= %{perl_module_versions_report_ver}
 Requires:	perl-Moose
+Requires:	perl-Net-CIDR
+Requires:	perl-PSGI
 Requires:	perl-PerlIO-eol
+Requires:	perl-Plack
+Requires:	perl-Regexp-Common-net-CIDR
+Requires:	perl-Regexp-IPv6
+Requires:	perl-Starlet
 Requires:	perl-Storable >= %{perl_storable_ver}
+Requires:	perl-Text-Password-Pronounceable
 Requires:	perl-Text-Quoted >= %{perl_text_quoted_ver}
 Requires:	perl-Text-WikiFormat >= %{perl_text_wikiformat_ver}
 Requires:	perl-Tree-Simple >= %{perl_tree_simple_ver}
 Requires:	perl-XML-RSS >= %{perl_xml_rss_ver}
+Requires:	perl-base >= %{perl_ver}
 Requires:	webapps
 Suggests:	perl-FCGI
 BuildArch:	noarch
@@ -222,6 +258,7 @@ USER=$(id -un) \
 	--with-db-type=mysql \
 	--with-web-handler=fastcgi,modperl2
 
+%{with_testdeps:%{__make} testdeps}
 %{__make}
 
 %install
@@ -241,7 +278,10 @@ install %{SOURCE3} $RPM_BUILD_ROOT%{_webappsdir}/httpd.conf
 ln -s %{_sbindir}/rt-clean-sessions $RPM_BUILD_ROOT/etc/cron.daily/rt-clean-sessions
 
 # unneeded in installed copy
-rm -f $RPM_BUILD_ROOT%{_sbindir}/rt-test-dependencies
+rm $RPM_BUILD_ROOT%{_sbindir}/rt-test-dependencies
+
+# we use fonts-TTF-Google-Droid
+rm -r $RPM_BUILD_ROOT%{_datadir}/fonts/TTF
 
 # *.in, tests
 find $RPM_BUILD_ROOT -type f -name \*.in -exec rm '{}' \;
@@ -272,8 +312,9 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/rt-*
 %attr(755,root,root) %{_sbindir}/standalone_httpd
 %attr(755,root,root) %{_sbindir}/rt-*
-%dir %{_datadir}/rt3
-%{_datadir}/rt3/html
+%dir %{_datadir}/rt
+%{_datadir}/rt/html
+%{_datadir}/rt/po
 %{_libdir}/*
 %dir %attr(770,root,http) %{masonstatedir}
 %{_examplesdir}/%{name}-%{version}
