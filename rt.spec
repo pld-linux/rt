@@ -16,7 +16,7 @@
 %define	perl_devel_stacktrace_ver		1.19
 %define	perl_digest_md5_ver			2.27
 %define	perl_file_spec_ver			0.8
-%define	perl_html_mason_ver			1.43
+%define	perl_html_mason_ver			3:1.43
 %define	perl_html_rewriteattributes_ver		0.04
 %define	perl_html_scrubber_ver			0.08
 %define	perl_http_server_simple_mason_ver	0.09
@@ -27,6 +27,7 @@
 %define	perl_mailtools_ver			1.57
 %define	perl_mime_tools_ver			5.425
 %define	perl_module_versions_report_ver		1.05
+%define	perl_cgi_psgi				0.12
 %define	perl_storable_ver			2.08
 %define	perl_text_quoted_ver			2.02
 %define	perl_text_wikiformat_ver		0.76
@@ -40,12 +41,12 @@
 Summary:	Request Tracker
 Summary(pl.UTF-8):	Request Tracker - system do śledzenia zleceń
 Name:		rt
-Version:	4.0.0
+Version:	4.0.1
 Release:	0.1
 License:	GPL v2
 Group:		Applications
 Source0:	http://download.bestpractical.com/pub/rt/release/%{name}-%{version}.tar.gz
-# Source0-md5:	bd6045421a6f2d0e8c18923f80726e4a
+# Source0-md5:	bde89fbdadf7b709fb13f32638848b9d
 Source1:	%{name}-apache_dir.conf
 Source2:	%{name}-apache_vhost.conf
 Source3:	%{name}-apache.conf
@@ -59,10 +60,12 @@ BuildRequires:	perl-Apache-DBI
 BuildRequires:	perl-Apache-Session >= %{perl_apache_session_ver}
 BuildRequires:	perl-CGI >= %{perl_cgi_ver}
 BuildRequires:	perl-CGI-Emulate-PSGI
+BuildRequires:	perl-CGI-PSGI >= %{perl_cgi_psgi}
 BuildRequires:	perl-CGI-SpeedyCGI
 BuildRequires:	perl-CSS-Squish >= %{perl_css_squish_ver}
 BuildRequires:	perl-Cache-Cache
 BuildRequires:	perl-Calendar-Simple
+BuildRequires:	perl-Class-ISA
 BuildRequires:	perl-Class-ReturnValue >= %{perl_class_returnvalue_ver}
 BuildRequires:	perl-Convert-Color
 BuildRequires:	perl-DBD-mysql >= %{perl_dbd_mysql}
@@ -86,6 +89,7 @@ BuildRequires:	perl-GD-Graph
 BuildRequires:	perl-GD-TextUtil
 BuildRequires:	perl-GnuPG-Interface
 BuildRequires:	perl-HTML-Mason >= %{perl_html_mason_ver}
+BuildRequires:	perl-HTML-Mason-PSGIHandler
 BuildRequires:	perl-HTML-Parser
 BuildRequires:	perl-HTML-Quoted
 BuildRequires:	perl-HTML-RewriteAttributes >= %{perl_html_rewriteattributes_ver}
@@ -94,6 +98,7 @@ BuildRequires:	perl-HTML-Tree
 BuildRequires:	perl-HTTP-Server-Simple >= %{perl_http_server_simple_ver}
 BuildRequires:	perl-HTTP-Server-Simple-Mason >= %{perl_http_server_simple_mason_ver}
 BuildRequires:	perl-IPC-Run3
+BuildRequires:	perl-JSON
 BuildRequires:	perl-JavaScript-Minifier
 BuildRequires:	perl-Locale-Maketext >= %{perl_locale_maketext_ver}
 BuildRequires:	perl-Locale-Maketext-Fuzzy
@@ -112,6 +117,7 @@ BuildRequires:	perl-PerlIO-eol
 BuildRequires:	perl-Plack
 BuildRequires:	perl-Regexp-Common
 BuildRequires:	perl-Regexp-Common-net-CIDR
+BuildRequires:	perl-Regexp-IPv6
 BuildRequires:	perl-Starlet
 BuildRequires:	perl-Storable >= %{perl_storable_ver}
 BuildRequires:	perl-Term-ReadKey
@@ -142,8 +148,10 @@ Requires:	perl-Apache-DBI
 Requires:	perl-Apache-Session >= %{perl_apache_session_ver}
 Requires:	perl-CGI >= %{perl_cgi_ver}
 Requires:	perl-CGI-Emulate-PSGI
+Requires:	perl-CGI-PSGI >= %{perl_cgi_psgi}
 Requires:	perl-CSS-Squish >= %{perl_css_squish_ver}
 Requires:	perl-Calendar-Simple
+Requires:	perl-Class-ISA
 Requires:	perl-Class-ReturnValue >= %{perl_class_returnvalue_ver}
 Requires:	perl-Convert-Color
 Requires:	perl-DBD-mysql >= %{perl_dbd_mysql}
@@ -165,6 +173,7 @@ Requires:	perl-HTML-Scrubber >= %{perl_html_scrubber_ver}
 Requires:	perl-HTTP-Server-Simple >= %{perl_http_server_simple_ver}
 Requires:	perl-HTTP-Server-Simple-Mason >= %{perl_http_server_simple_mason_ver}
 Requires:	perl-IPC-Run3
+Requires:	perl-JSON
 Requires:	perl-JavaScript-Minifier
 Requires:	perl-Locale-Maketext >= %{perl_locale_maketext_ver}
 Requires:	perl-Locale-Maketext-Fuzzy
@@ -172,6 +181,7 @@ Requires:	perl-Locale-Maketext-Lexicon >= %{perl_locale_maketext_lexicon_ver}
 Requires:	perl-Log-Dispatch >= %{perl_log_dispatch_ver}
 Requires:	perl-MIME-tools >= %{perl_mime_tools_ver}
 Requires:	perl-MailTools >= %{perl_mailtools_ver}
+Requires:	perl-HTML-Mason-PSGIHandler
 Requires:	perl-Module-Versions-Report >= %{perl_module_versions_report_ver}
 Requires:	perl-Moose
 Requires:	perl-Net-CIDR
@@ -258,7 +268,7 @@ USER=$(id -un) \
 	--with-db-type=mysql \
 	--with-web-handler=fastcgi,modperl2
 
-%{with_testdeps:%{__make} testdeps}
+%{?with_testdeps:%{__make} testdeps}
 %{__make}
 
 %install
