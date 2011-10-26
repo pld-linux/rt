@@ -168,6 +168,7 @@ Requires:	perl-File-Spec >= %{perl_file_spec_ver}
 Requires:	perl-GD-Graph
 Requires:	perl-GnuPG-Interface
 Requires:	perl-HTML-Mason >= %{perl_html_mason_ver}
+Requires:	perl-HTML-Mason-PSGIHandler
 Requires:	perl-HTML-Quoted
 Requires:	perl-HTML-RewriteAttributes >= %{perl_html_rewriteattributes_ver}
 Requires:	perl-HTML-Scrubber >= %{perl_html_scrubber_ver}
@@ -182,7 +183,6 @@ Requires:	perl-Locale-Maketext-Lexicon >= %{perl_locale_maketext_lexicon_ver}
 Requires:	perl-Log-Dispatch >= %{perl_log_dispatch_ver}
 Requires:	perl-MIME-tools >= %{perl_mime_tools_ver}
 Requires:	perl-MailTools >= %{perl_mailtools_ver}
-Requires:	perl-HTML-Mason-PSGIHandler
 Requires:	perl-Module-Versions-Report >= %{perl_module_versions_report_ver}
 Requires:	perl-Moose
 Requires:	perl-Net-CIDR
@@ -309,7 +309,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc README* docs
+%doc README* docs etc/upgrade
 
 %dir %{_sysconfdir}
 %attr(640,root,http) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/[a-z]*
