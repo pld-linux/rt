@@ -150,6 +150,7 @@ Requires:	perl-CGI >= %{perl_cgi_ver}
 Requires:	perl-CGI-Emulate-PSGI
 Requires:	perl-CGI-PSGI >= %{perl_cgi_psgi}
 Requires:	perl-CSS-Squish >= %{perl_css_squish_ver}
+Requires:	perl-Cache-Cache
 Requires:	perl-Calendar-Simple
 Requires:	perl-Class-ISA
 Requires:	perl-Class-ReturnValue >= %{perl_class_returnvalue_ver}
