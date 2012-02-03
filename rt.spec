@@ -41,12 +41,12 @@
 Summary:	Request Tracker
 Summary(pl.UTF-8):	Request Tracker - system do śledzenia zleceń
 Name:		rt
-Version:	4.0.4
+Version:	4.0.5
 Release:	1
 License:	GPL v2
 Group:		Applications
 Source0:	http://download.bestpractical.com/pub/rt/release/%{name}-%{version}.tar.gz
-# Source0-md5:	7bbfe24c3e3b6fb64c62a43769780093
+# Source0-md5:	0dc4defc313c4c992ae1b3d630f5cd99
 Source1:	%{name}-apache_dir.conf
 Source2:	%{name}-apache_vhost.conf
 Source3:	%{name}-apache.conf
@@ -255,7 +255,7 @@ mv aclocal.m4 acinclude.m4
 sed -i -e 's#libdir:.*#libdir:	%{_libdir}#g' config.layout
 
 %build
-%{__aclocal} -I m4
+%{__aclocal}
 %{__autoconf}
 USER=$(id -un) \
 %configure \
