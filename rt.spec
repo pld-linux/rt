@@ -50,6 +50,7 @@ Source0:	http://download.bestpractical.com/pub/rt/release/%{name}-%{version}.tar
 Source1:	%{name}-apache_dir.conf
 Source2:	%{name}-apache_vhost.conf
 Source3:	%{name}-apache.conf
+Source4:	%{name}.logrotate
 Patch0:		%{name}-layout.patch
 Patch1:		%{name}-config.patch
 URL:		http://www.bestpractical.com/rt/
@@ -274,7 +275,7 @@ USER=$(id -un) \
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT{/etc/cron.daily,%{_libdir}} \
+install -d $RPM_BUILD_ROOT{/etc/{logrotate.d,cron.daily},%{_libdir}} \
 	$RPM_BUILD_ROOT%{masonstatedir} \
 	$RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version} \
 	$RPM_BUILD_ROOT%{_webappsdir}
@@ -285,6 +286,7 @@ install -d $RPM_BUILD_ROOT{/etc/cron.daily,%{_libdir}} \
 
 install %{SOURCE1} %{SOURCE2} $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}
 install %{SOURCE3} $RPM_BUILD_ROOT%{_webappsdir}/httpd.conf
+install %{SOURCE4} $RPM_BUILD_ROOT/etc/logrotate.d/%{name}
 
 ln -s %{_sbindir}/rt-clean-sessions $RPM_BUILD_ROOT/etc/cron.daily/rt-clean-sessions
 
@@ -319,6 +321,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %dir %attr(750,root,http) %{_webappsdir}
 %attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) %{_webappsdir}/httpd.conf
+%attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/logrotate.d/%{name}
 %attr(755,root,root) /etc/cron.daily/rt-clean-sessions
 %attr(755,root,root) %{_bindir}/rt-*
 %attr(755,root,root) %{_sbindir}/standalone_httpd

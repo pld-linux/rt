@@ -1,0 +1,5 @@
+/var/log/rt.log
+{
+	notifempty
+	missingok
+}
