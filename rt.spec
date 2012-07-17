@@ -42,7 +42,7 @@ Summary:	Request Tracker
 Summary(pl.UTF-8):	Request Tracker - system do śledzenia zleceń
 Name:		rt
 Version:	4.0.6
-Release:	1
+Release:	2
 License:	GPL v2
 Group:		Applications
 Source0:	http://download.bestpractical.com/pub/rt/release/%{name}-%{version}.tar.gz
@@ -205,7 +205,7 @@ Suggests:	perl-FCGI
 BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
-%define		_noautoreq	'perl().*' 'perl(RT.*)' 'perl(Encode::compat)' 'perl(CGI::Fast)' 'perl(Exception::Class::Base)'
+%define		_noautoreq	'perl().*' 'perl(RT.*)' 'perl(Encode::compat)' 'perl(CGI::Fast)' 'perl(Exception::Class::Base)' 'perl(HTML::Mason::Request::PSGI)'
 # workarounds for bug in perl.req ("perl()") and ,,famous'' rpm's feature (RT::*)
 
 %define         _webapps        /etc/webapps
