@@ -42,7 +42,7 @@ Summary:	Request Tracker
 Summary(pl.UTF-8):	Request Tracker - system do śledzenia zleceń
 Name:		rt
 Version:	4.0.12
-Release:	1
+Release:	2
 License:	GPL v2
 Group:		Applications
 Source0:	http://download.bestpractical.com/pub/rt/release/%{name}-%{version}.tar.gz
@@ -202,6 +202,7 @@ Requires:	perl-XML-RSS >= %{perl_xml_rss_ver}
 Requires:	perl-base >= %{perl_ver}
 Requires:	webapps
 Suggests:	perl-FCGI
+Conflicts:	apache-base < 2.4.0-1
 BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -299,10 +300,10 @@ rm -r $RPM_BUILD_ROOT%{_datadir}/fonts/TTF
 # *.in, tests
 find $RPM_BUILD_ROOT -type f -name \*.in -exec rm '{}' \;
 
-%triggerin -- apache < 2.2.0, apache-base
+%triggerin -- apache-base
 %webapp_register httpd %{_webapp}
 
-%triggerun -- apache < 2.2.0, apache-base
+%triggerun -- apache-base
 %webapp_unregister httpd %{_webapp}
 
 %clean
