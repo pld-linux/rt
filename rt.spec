@@ -36,13 +36,14 @@
 %define	perl_xml_rss_ver			1.05
 #
 %bcond_with	testdeps	# used for checking dependencies
+%bcond_without	apache		# no apache deps. TODO: make subpackage with apache config
 #
 %include	/usr/lib/rpm/macros.perl
 Summary:	Request Tracker
 Summary(pl.UTF-8):	Request Tracker - system do śledzenia zleceń
 Name:		rt
 Version:	4.0.12
-Release:	2
+Release:	1
 License:	GPL v2
 Group:		Applications
 Source0:	http://download.bestpractical.com/pub/rt/release/%{name}-%{version}.tar.gz
@@ -141,9 +142,11 @@ BuildRequires:	perl-libnet
 %endif
 BuildRequires:	perl-base >= %{perl_ver}
 BuildRequires:	rpm-perlprov
+%if %{with apache}
 Requires:	apache-base >= 2.2.0
 Requires:	apache-mod_authz_host >= 2.2.0
 Requires:	apache-mod_perl >= 2.0
+%endif
 Requires:	fonts-TTF-Google-Droid
 Requires:	perl-Apache-DBI
 Requires:	perl-Apache-Session >= %{perl_apache_session_ver}
@@ -320,8 +323,10 @@ rm -rf $RPM_BUILD_ROOT
 # this is generic config that SHOULDN'T BE TOUCHED. Change settings in your local (site) config.
 %attr(640,root,http) %config %{_sysconfdir}/RT_Config.pm
 
+%if %{with apache}
 %dir %attr(750,root,http) %{_webappsdir}
 %attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) %{_webappsdir}/httpd.conf
+%endif
 %attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/logrotate.d/%{name}
 %attr(755,root,root) /etc/cron.daily/rt-clean-sessions
 %attr(755,root,root) %{_bindir}/rt-*
