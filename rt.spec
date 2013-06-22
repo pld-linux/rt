@@ -15,7 +15,6 @@
 %define	perl_dbix_searchbuilder_ver		1.59
 %define	perl_devel_stacktrace_ver		1.19
 %define	perl_digest_md5_ver			2.27
-%define	perl_file_spec_ver			0.8
 %define	perl_html_mason_ver			3:1.43
 %define	perl_html_rewriteattributes_ver		0.05
 %define	perl_html_scrubber_ver			0.08
@@ -43,7 +42,7 @@ Summary:	Request Tracker
 Summary(pl.UTF-8):	Request Tracker - system do śledzenia zleceń
 Name:		rt
 Version:	4.0.13
-Release:	1
+Release:	2
 License:	GPL v2
 Group:		Applications
 Source0:	http://download.bestpractical.com/pub/rt/release/%{name}-%{version}.tar.gz
@@ -83,7 +82,6 @@ BuildRequires:	perl-Exception-Class
 BuildRequires:	perl-FCGI
 BuildRequires:	perl-FCGI-ProcManager
 BuildRequires:	perl-File-ShareDir
-BuildRequires:	perl-File-Spec >= %{perl_file_spec_ver}
 BuildRequires:	perl-File-Temp
 BuildRequires:	perl-FreezeThaw
 BuildRequires:	perl-GD
@@ -168,7 +166,6 @@ Requires:	perl-Devel-StackTrace >= %{perl_devel_stacktrace_ver}
 Requires:	perl-Digest-MD5 >= %{perl_digest_md5_ver}
 Requires:	perl-Encode >= 2.38
 Requires:	perl-FCGI-ProcManager
-Requires:	perl-File-Spec >= %{perl_file_spec_ver}
 Requires:	perl-GD-Graph
 Requires:	perl-GnuPG-Interface
 Requires:	perl-HTML-Mason >= %{perl_html_mason_ver}
