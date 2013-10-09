@@ -5,6 +5,12 @@
 #   apache[12]/standalone server...?)
 # - separate standalone server
 #
+# Crypt::Eksblowfish
+# Role::Basic
+# http://search.cpan.org/~doy/Stream-Buffered-0.02/
+# Apache::LogFormat::Compiler
+# Date::Extract
+# Symbol::Global::Name
 %define	perl_ver				5.8.3
 %define	perl_apache_session_ver			1.53
 %define	perl_cgi_ver				3.38
@@ -12,9 +18,10 @@
 %define	perl_css_squish_ver			0.06
 %define	perl_dbd_mysql				2.1018
 %define	perl_dbi_ver				1.37
-%define	perl_dbix_searchbuilder_ver		1.59
+%define	perl_dbix_searchbuilder_ver		1.65
 %define	perl_devel_stacktrace_ver		1.19
 %define	perl_digest_md5_ver			2.27
+%define	perl_gd_ver				1.48
 %define	perl_html_mason_ver			3:1.43
 %define	perl_html_rewriteattributes_ver		0.05
 %define	perl_html_scrubber_ver			0.08
@@ -22,13 +29,14 @@
 %define	perl_http_server_simple_ver		0.34
 %define	perl_locale_maketext_lexicon_ver	0.32
 %define	perl_locale_maketext_ver		1.06
-%define	perl_log_dispatch_ver			2.0
-%define	perl_mailtools_ver			1.57
+%define	perl_log_dispatch_ver			2.30
+%define	perl_mailtools_ver			2.12
 %define	perl_mime_tools_ver			5.425
 %define	perl_module_versions_report_ver		1.05
 %define	perl_cgi_psgi				0.12
+%define	perl_plack_ver				1.0002
 %define	perl_storable_ver			2.08
-%define	perl_text_quoted_ver			2.02
+%define	perl_text_quoted_ver			2.07
 %define	perl_text_wikiformat_ver		0.76
 %define	perl_tree_simple_ver			1.18
 %define	perl_text_template_ver			1.45
@@ -41,12 +49,12 @@
 Summary:	Request Tracker
 Summary(pl.UTF-8):	Request Tracker - system do śledzenia zleceń
 Name:		rt
-Version:	4.0.17
-Release:	1
+Version:	4.2.0
+Release:	0.1
 License:	GPL v2
 Group:		Applications
 Source0:	http://download.bestpractical.com/pub/rt/release/%{name}-%{version}.tar.gz
-# Source0-md5:	aad39ab243853f991d8f78e85c1181f8
+# Source0-md5:	98fcc484a37c62f0c202f3cc1fbefb89
 Source1:	%{name}-apache_dir.conf
 Source2:	%{name}-apache_vhost.conf
 Source3:	%{name}-apache.conf
@@ -69,11 +77,14 @@ BuildRequires:	perl-Calendar-Simple
 BuildRequires:	perl-Class-ISA
 BuildRequires:	perl-Class-ReturnValue >= %{perl_class_returnvalue_ver}
 BuildRequires:	perl-Convert-Color
+BuildRequires:	perl-Crypt-SSLeay
 BuildRequires:	perl-DBD-mysql >= %{perl_dbd_mysql}
 BuildRequires:	perl-DBI >= %{perl_dbi_ver}
 BuildRequires:	perl-DBIx-DataSource >= 0.02
 BuildRequires:	perl-DBIx-SearchBuilder >= %{perl_dbix_searchbuilder_ver}
+BuildRequires:	perl-Data-GUID
 BuildRequires:	perl-Data-ICal
+BuildRequires:	perl-DateTime-Format-Natural
 BuildRequires:	perl-Devel-GlobalDestruction
 BuildRequires:	perl-Devel-StackTrace >= %{perl_devel_stacktrace_ver}
 BuildRequires:	perl-Digest-MD5 >= %{perl_digest_md5_ver}
@@ -83,11 +94,13 @@ BuildRequires:	perl-FCGI
 BuildRequires:	perl-FCGI-ProcManager
 BuildRequires:	perl-File-ShareDir
 BuildRequires:	perl-File-Temp
+BuildRequires:	perl-File-Which
 BuildRequires:	perl-FreezeThaw
-BuildRequires:	perl-GD
+BuildRequires:	perl-GD >= %{perl_gd_ver}
 BuildRequires:	perl-GD-Graph
 BuildRequires:	perl-GD-TextUtil
 BuildRequires:	perl-GnuPG-Interface
+BuildRequires:	perl-HTML-FormatText-WithLinks-AndTables
 BuildRequires:	perl-HTML-Mason >= %{perl_html_mason_ver}
 BuildRequires:	perl-HTML-Mason-PSGIHandler
 BuildRequires:	perl-HTML-Parser
@@ -104,22 +117,25 @@ BuildRequires:	perl-Locale-Maketext >= %{perl_locale_maketext_ver}
 BuildRequires:	perl-Locale-Maketext-Fuzzy
 BuildRequires:	perl-Locale-Maketext-Lexicon >= %{perl_locale_maketext_lexicon_ver}
 BuildRequires:	perl-Log-Dispatch >= %{perl_log_dispatch_ver}
+BuildRequires:	perl-LWP-Protocol-https
 BuildRequires:	perl-MIME-Types
 BuildRequires:	perl-MIME-tools >= %{perl_mime_tools_ver}
 BuildRequires:	perl-MLDBM
 BuildRequires:	perl-MailTools >= %{perl_mailtools_ver}
 BuildRequires:	perl-Module-Versions-Report >= %{perl_module_versions_report_ver}
+BuildRequires:	perl-Mozilla-CA
 BuildRequires:	perl-Net-CIDR
 BuildRequires:	perl-Net-Server >= 0.34
 BuildRequires:	perl-PSGI
 BuildRequires:	perl-Params-Validate >= 0.02
 BuildRequires:	perl-PerlIO-eol
-BuildRequires:	perl-Plack
+BuildRequires:	perl-Plack >= %{perl_plack_ver}
 BuildRequires:	perl-Regexp-Common
 BuildRequires:	perl-Regexp-Common-net-CIDR
 BuildRequires:	perl-Regexp-IPv6
 BuildRequires:	perl-Starlet
 BuildRequires:	perl-Storable >= %{perl_storable_ver}
+BuildRequires:	perl-String-ShellQuote
 BuildRequires:	perl-Term-ReadKey
 BuildRequires:	perl-Test-Inline
 BuildRequires:	perl-Text-Autoformat
@@ -157,17 +173,23 @@ Requires:	perl-Calendar-Simple
 Requires:	perl-Class-ISA
 Requires:	perl-Class-ReturnValue >= %{perl_class_returnvalue_ver}
 Requires:	perl-Convert-Color
+Requires:	perl-Crypt-SSLeay
 Requires:	perl-DBD-mysql >= %{perl_dbd_mysql}
 Requires:	perl-DBI >= %{perl_dbi_ver}
 Requires:	perl-DBIx-SearchBuilder >= %{perl_dbix_searchbuilder_ver}
+Requires:	perl-Data-GUID
 Requires:	perl-Data-ICal
+Requires:	perl-DateTime-Format-Natural
 Requires:	perl-Devel-GlobalDestruction
 Requires:	perl-Devel-StackTrace >= %{perl_devel_stacktrace_ver}
 Requires:	perl-Digest-MD5 >= %{perl_digest_md5_ver}
 Requires:	perl-Encode >= 2.38
 Requires:	perl-FCGI-ProcManager
+Requires:	perl-File-Which
+Requires:	perl-GD >= %{perl_gd_ver}
 Requires:	perl-GD-Graph
 Requires:	perl-GnuPG-Interface
+Requires:	perl-HTML-FormatText-WithLinks-AndTables
 Requires:	perl-HTML-Mason >= %{perl_html_mason_ver}
 Requires:	perl-HTML-Mason-PSGIHandler
 Requires:	perl-HTML-Quoted
@@ -182,18 +204,21 @@ Requires:	perl-Locale-Maketext >= %{perl_locale_maketext_ver}
 Requires:	perl-Locale-Maketext-Fuzzy
 Requires:	perl-Locale-Maketext-Lexicon >= %{perl_locale_maketext_lexicon_ver}
 Requires:	perl-Log-Dispatch >= %{perl_log_dispatch_ver}
+Requires:	perl-LWP-Protocol-https
 Requires:	perl-MIME-tools >= %{perl_mime_tools_ver}
 Requires:	perl-MailTools >= %{perl_mailtools_ver}
 Requires:	perl-Module-Versions-Report >= %{perl_module_versions_report_ver}
 Requires:	perl-Moose
+Requires:	perl-Mozilla-CA
 Requires:	perl-Net-CIDR
 Requires:	perl-PSGI
 Requires:	perl-PerlIO-eol
-Requires:	perl-Plack
+Requires:	perl-Plack >= %{perl_plack_ver}
 Requires:	perl-Regexp-Common-net-CIDR
 Requires:	perl-Regexp-IPv6
 Requires:	perl-Starlet
 Requires:	perl-Storable >= %{perl_storable_ver}
+Requires:	perl-String-ShellQuote
 Requires:	perl-Text-Password-Pronounceable
 Requires:	perl-Text-Quoted >= %{perl_text_quoted_ver}
 Requires:	perl-Text-WikiFormat >= %{perl_text_wikiformat_ver}
@@ -266,7 +291,6 @@ USER=$(id -un) \
 	exp_htmldir=%{htmldir} \
 	masonstatedir=%{masonstatedir} \
 	masonsessiondir=%{masonstatedir} \
-	--with-apachectl=%{_sbindir}/apachectl \
 	--with-my-user-group \
 	--with-db-type=mysql \
 	--with-web-handler=fastcgi,modperl2

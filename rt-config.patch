@@ -1,9 +1,9 @@
---- rt-4.0.0/sbin/rt-server.in~	2011-04-14 03:21:41.000000000 +0200
-+++ rt-4.0.0/sbin/rt-server.in	2011-05-26 15:31:32.609679385 +0200
-@@ -52,7 +52,7 @@
- # fix lib paths, some may be relative
- BEGIN {
+--- rt-4.2.0/sbin/rt-server.in~	2013-09-27 23:02:34.000000000 +0200
++++ rt-4.2.0/sbin/rt-server.in	2013-10-09 14:33:23.247981874 +0200
+@@ -61,7 +61,7 @@
+ BEGIN { # BEGIN RT CMD BOILERPLATE
      require File::Spec;
+     require Cwd;
 -    my @libs = ("@RT_LIB_PATH@", "@LOCAL_LIB_PATH@");
 +    my @libs = ("/etc/rt3/", "@RT_LIB_PATH@", "@LOCAL_LIB_PATH@");
      my $bin_path;
