@@ -29,6 +29,7 @@
 %define	perl_module_versions_report_ver		1.05
 %define	perl_cgi_psgi				0.12
 %define	perl_plack_ver				1.0002
+%define	perl_starlet_ver			0.20
 %define	perl_storable_ver			2.08
 %define	perl_text_quoted_ver			2.07
 %define	perl_text_wikiformat_ver		0.76
@@ -81,6 +82,7 @@ BuildRequires:	perl-DBIx-SearchBuilder >= %{perl_dbix_searchbuilder_ver}
 BuildRequires:	perl-Data-GUID
 BuildRequires:	perl-Data-ICal
 BuildRequires:	perl-Date-Extract
+BuildRequires:	perl-Date-Manip
 BuildRequires:	perl-DateTime-Format-Natural
 BuildRequires:	perl-Devel-GlobalDestruction
 BuildRequires:	perl-Devel-StackTrace >= %{perl_devel_stacktrace_ver}
@@ -132,6 +134,7 @@ BuildRequires:	perl-Regexp-Common
 BuildRequires:	perl-Regexp-Common-net-CIDR
 BuildRequires:	perl-Regexp-IPv6
 BuildRequires:	perl-Role-Basic
+BuildRequires:	perl-Starlet >= %{perl_starlet_ver}
 BuildRequires:	perl-Storable >= %{perl_storable_ver}
 BuildRequires:	perl-String-ShellQuote
 BuildRequires:	perl-Symbol-Global-Name
@@ -181,6 +184,7 @@ Requires:	perl-DBIx-SearchBuilder >= %{perl_dbix_searchbuilder_ver}
 Requires:	perl-Data-GUID
 Requires:	perl-Data-ICal
 Requires:	perl-Date-Extract
+Requires:	perl-Date-Manip
 Requires:	perl-DateTime-Format-Natural
 Requires:	perl-Devel-GlobalDestruction
 Requires:	perl-Devel-StackTrace >= %{perl_devel_stacktrace_ver}
@@ -220,6 +224,7 @@ Requires:	perl-Plack >= %{perl_plack_ver}
 Requires:	perl-Regexp-Common-net-CIDR
 Requires:	perl-Regexp-IPv6
 Requires:	perl-Role-Basic
+Requires:	perl-Starlet >= %{perl_starlet_ver}
 Requires:	perl-Storable >= %{perl_storable_ver}
 Requires:	perl-String-ShellQuote
 Requires:	perl-Symbol-Global-Name
