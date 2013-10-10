@@ -9,7 +9,7 @@
 +  exec_prefix:		${prefix}
 +  bindir:		${prefix}/bin
 +  sbindir:		${prefix}/sbin
-+  sysconfdir:		/etc+
++  sysconfdir:		/etc/rt
 +  datadir:		${prefix}/share
 +# FIXME: missing support for lib64
 +  libdir:		${prefix}/lib

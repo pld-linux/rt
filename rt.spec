@@ -1,6 +1,6 @@
 # TODO:
 # - check file permissions
-# - check files in /usr/share/rt3/
+# - check files in /usr/share/rt/
 # - check Requires (meta-packages for configurations with mod_perl/fcgi,
 #   apache[12]/standalone server...?)
 # - separate standalone server
@@ -246,9 +246,9 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 %define         _webapps        /etc/webapps
 %define         _webapp         %{name}
 %define         _webappsdir     %{_webapps}/%{_webapp}
-%define		_sysconfdir	/etc/rt3
+%define		_sysconfdir	/etc/rt
 %define		_libdir		%{perl_vendorlib}
-%define		htmldir		%{_datadir}/rt3/html
+%define		htmldir		%{_datadir}/rt/html
 %define		masonstatedir	%{_localstatedir}/cache/mason_data
 %define		masonsessiondir	%{_localstatedir}/cache/session_data
 

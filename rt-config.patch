@@ -5,7 +5,7 @@
      require File::Spec;
      require Cwd;
 -    my @libs = ("@RT_LIB_PATH@", "@LOCAL_LIB_PATH@");
-+    my @libs = ("/etc/rt3/", "@RT_LIB_PATH@", "@LOCAL_LIB_PATH@");
++    my @libs = ("/etc/rt/", "@RT_LIB_PATH@", "@LOCAL_LIB_PATH@");
      my $bin_path;
  
      for my $lib (@libs) {
