@@ -132,7 +132,6 @@ BuildRequires:	perl-Regexp-Common
 BuildRequires:	perl-Regexp-Common-net-CIDR
 BuildRequires:	perl-Regexp-IPv6
 BuildRequires:	perl-Role-Basic
-BuildRequires:	perl-Starlet
 BuildRequires:	perl-Storable >= %{perl_storable_ver}
 BuildRequires:	perl-String-ShellQuote
 BuildRequires:	perl-Symbol-Global-Name
@@ -221,7 +220,6 @@ Requires:	perl-Plack >= %{perl_plack_ver}
 Requires:	perl-Regexp-Common-net-CIDR
 Requires:	perl-Regexp-IPv6
 Requires:	perl-Role-Basic
-Requires:	perl-Starlet
 Requires:	perl-Storable >= %{perl_storable_ver}
 Requires:	perl-String-ShellQuote
 Requires:	perl-Symbol-Global-Name
