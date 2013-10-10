@@ -5,12 +5,6 @@
 #   apache[12]/standalone server...?)
 # - separate standalone server
 #
-# Crypt::Eksblowfish
-# Role::Basic
-# http://search.cpan.org/~doy/Stream-Buffered-0.02/
-# Apache::LogFormat::Compiler
-# Date::Extract
-# Symbol::Global::Name
 %define	perl_ver				5.8.3
 %define	perl_apache_session_ver			1.53
 %define	perl_cgi_ver				3.38
@@ -77,18 +71,22 @@ BuildRequires:	perl-Calendar-Simple
 BuildRequires:	perl-Class-ISA
 BuildRequires:	perl-Class-ReturnValue >= %{perl_class_returnvalue_ver}
 BuildRequires:	perl-Convert-Color
+BuildRequires:	perl-Crypt-Eksblowfish
 BuildRequires:	perl-Crypt-SSLeay
+BuildRequires:	perl-Crypt-X509
 BuildRequires:	perl-DBD-mysql >= %{perl_dbd_mysql}
 BuildRequires:	perl-DBI >= %{perl_dbi_ver}
 BuildRequires:	perl-DBIx-DataSource >= 0.02
 BuildRequires:	perl-DBIx-SearchBuilder >= %{perl_dbix_searchbuilder_ver}
 BuildRequires:	perl-Data-GUID
 BuildRequires:	perl-Data-ICal
+BuildRequires:	perl-Date-Extract
 BuildRequires:	perl-DateTime-Format-Natural
 BuildRequires:	perl-Devel-GlobalDestruction
 BuildRequires:	perl-Devel-StackTrace >= %{perl_devel_stacktrace_ver}
 BuildRequires:	perl-Digest-MD5 >= %{perl_digest_md5_ver}
 BuildRequires:	perl-Email-Address
+BuildRequires:	perl-Email-Address-List
 BuildRequires:	perl-Exception-Class
 BuildRequires:	perl-FCGI
 BuildRequires:	perl-FCGI-ProcManager
@@ -133,9 +131,11 @@ BuildRequires:	perl-Plack >= %{perl_plack_ver}
 BuildRequires:	perl-Regexp-Common
 BuildRequires:	perl-Regexp-Common-net-CIDR
 BuildRequires:	perl-Regexp-IPv6
+BuildRequires:	perl-Role-Basic
 BuildRequires:	perl-Starlet
 BuildRequires:	perl-Storable >= %{perl_storable_ver}
 BuildRequires:	perl-String-ShellQuote
+BuildRequires:	perl-Symbol-Global-Name
 BuildRequires:	perl-Term-ReadKey
 BuildRequires:	perl-Test-Inline
 BuildRequires:	perl-Text-Autoformat
@@ -173,16 +173,20 @@ Requires:	perl-Calendar-Simple
 Requires:	perl-Class-ISA
 Requires:	perl-Class-ReturnValue >= %{perl_class_returnvalue_ver}
 Requires:	perl-Convert-Color
+Requires:	perl-Crypt-Eksblowfish
 Requires:	perl-Crypt-SSLeay
+Requires:	perl-Crypt-X509
 Requires:	perl-DBD-mysql >= %{perl_dbd_mysql}
 Requires:	perl-DBI >= %{perl_dbi_ver}
 Requires:	perl-DBIx-SearchBuilder >= %{perl_dbix_searchbuilder_ver}
 Requires:	perl-Data-GUID
 Requires:	perl-Data-ICal
+Requires:	perl-Date-Extract
 Requires:	perl-DateTime-Format-Natural
 Requires:	perl-Devel-GlobalDestruction
 Requires:	perl-Devel-StackTrace >= %{perl_devel_stacktrace_ver}
 Requires:	perl-Digest-MD5 >= %{perl_digest_md5_ver}
+Requires:	perl-Email-Address-List
 Requires:	perl-Encode >= 2.38
 Requires:	perl-FCGI-ProcManager
 Requires:	perl-File-Which
@@ -216,9 +220,11 @@ Requires:	perl-PerlIO-eol
 Requires:	perl-Plack >= %{perl_plack_ver}
 Requires:	perl-Regexp-Common-net-CIDR
 Requires:	perl-Regexp-IPv6
+Requires:	perl-Role-Basic
 Requires:	perl-Starlet
 Requires:	perl-Storable >= %{perl_storable_ver}
 Requires:	perl-String-ShellQuote
+Requires:	perl-Symbol-Global-Name
 Requires:	perl-Text-Password-Pronounceable
 Requires:	perl-Text-Quoted >= %{perl_text_quoted_ver}
 Requires:	perl-Text-WikiFormat >= %{perl_text_wikiformat_ver}
