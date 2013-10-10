@@ -326,6 +326,7 @@ ln -s %{_sbindir}/rt-clean-sessions $RPM_BUILD_ROOT/etc/cron.daily/rt-clean-sess
 
 # unneeded in installed copy
 rm $RPM_BUILD_ROOT%{_sbindir}/rt-test-dependencies
+rm -r $RPM_BUILD_ROOT%{_datadir}/doc
 
 # we use fonts-TTF-Google-Droid
 rm -r $RPM_BUILD_ROOT%{_datadir}/fonts/TTF
@@ -365,6 +366,7 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{_datadir}/rt
 %{_datadir}/rt/html
 %{_datadir}/rt/po
+%{_datadir}/rt/static
 %{_libdir}/*
 %dir %attr(770,root,http) %{masonstatedir}
 %{_examplesdir}/%{name}-%{version}
