@@ -53,6 +53,7 @@ Source1:	%{name}-apache_dir.conf
 Source2:	%{name}-apache_vhost.conf
 Source3:	%{name}-apache.conf
 Source4:	%{name}.logrotate
+Source5:	lighttpd.conf
 Patch0:		%{name}-layout.patch
 Patch1:		%{name}-config.patch
 URL:		http://www.bestpractical.com/rt/
@@ -228,6 +229,7 @@ Requires:	perl-Text-WikiFormat >= %{perl_text_wikiformat_ver}
 Requires:	perl-Tree-Simple >= %{perl_tree_simple_ver}
 Requires:	perl-XML-RSS >= %{perl_xml_rss_ver}
 Requires:	perl-base >= %{perl_ver}
+Requires:	webapps
 Suggests:	perl-FCGI
 BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -332,6 +334,7 @@ install -d $RPM_BUILD_ROOT{/etc/{logrotate.d,cron.daily},%{_libdir}} \
 
 install %{SOURCE1} %{SOURCE2} $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}
 install %{SOURCE3} $RPM_BUILD_ROOT%{_webappsdir}/httpd.conf
+install %{SOURCE5} $RPM_BUILD_ROOT%{_webappsdir}/lighttpd.conf
 install %{SOURCE4} $RPM_BUILD_ROOT/etc/logrotate.d/%{name}
 
 ln -s %{_sbindir}/rt-clean-sessions $RPM_BUILD_ROOT/etc/cron.daily/rt-clean-sessions
@@ -352,6 +355,12 @@ find $RPM_BUILD_ROOT -type f -name \*.in -exec rm '{}' \;
 %triggerun apache -- apache-base
 %webapp_unregister httpd %{_webapp}
 
+%triggerin -- lighttpd
+%webapp_register lighttpd %{_webapp}
+
+%triggerun -- lighttpd
+%webapp_unregister lighttpd %{_webapp}
+
 %clean
 rm -rf $RPM_BUILD_ROOT
 
@@ -365,6 +374,9 @@ rm -rf $RPM_BUILD_ROOT
 %attr(640,root,http) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/RT_SiteConfig.pm
 # this is generic config that SHOULDN'T BE TOUCHED. Change settings in your local (site) config.
 %attr(640,root,http) %config %{_sysconfdir}/RT_Config.pm
+
+# web server configs with no separate deps (so no need for subpackage)
+%attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) %{_webappsdir}/lighttpd.conf
 
 %attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/logrotate.d/%{name}
 %attr(755,root,root) /etc/cron.daily/rt-clean-sessions
