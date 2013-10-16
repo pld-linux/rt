@@ -38,7 +38,6 @@
 %define	perl_xml_rss_ver			1.05
 #
 %bcond_with	testdeps	# used for checking dependencies
-%bcond_without	apache		# no apache deps. TODO: make subpackage with apache config
 #
 %include	/usr/lib/rpm/macros.perl
 Summary:	Request Tracker
@@ -113,11 +112,11 @@ BuildRequires:	perl-HTTP-Server-Simple-Mason >= %{perl_http_server_simple_mason_
 BuildRequires:	perl-IPC-Run3
 BuildRequires:	perl-JSON
 BuildRequires:	perl-JavaScript-Minifier
+BuildRequires:	perl-LWP-Protocol-https
 BuildRequires:	perl-Locale-Maketext >= %{perl_locale_maketext_ver}
 BuildRequires:	perl-Locale-Maketext-Fuzzy
 BuildRequires:	perl-Locale-Maketext-Lexicon >= %{perl_locale_maketext_lexicon_ver}
 BuildRequires:	perl-Log-Dispatch >= %{perl_log_dispatch_ver}
-BuildRequires:	perl-LWP-Protocol-https
 BuildRequires:	perl-MIME-Types
 BuildRequires:	perl-MIME-tools >= %{perl_mime_tools_ver}
 BuildRequires:	perl-MLDBM
@@ -158,11 +157,6 @@ BuildRequires:	perl-libnet
 %endif
 BuildRequires:	perl-base >= %{perl_ver}
 BuildRequires:	rpm-perlprov
-%if %{with apache}
-Requires:	apache-base >= 2.2.0
-Requires:	apache-mod_authz_host >= 2.2.0
-Requires:	apache-mod_perl >= 2.0
-%endif
 Requires:	fonts-TTF-Google-Droid
 Requires:	perl-Apache-DBI
 Requires:	perl-Apache-Session >= %{perl_apache_session_ver}
@@ -207,11 +201,11 @@ Requires:	perl-HTTP-Server-Simple-Mason >= %{perl_http_server_simple_mason_ver}
 Requires:	perl-IPC-Run3
 Requires:	perl-JSON
 Requires:	perl-JavaScript-Minifier
+Requires:	perl-LWP-Protocol-https
 Requires:	perl-Locale-Maketext >= %{perl_locale_maketext_ver}
 Requires:	perl-Locale-Maketext-Fuzzy
 Requires:	perl-Locale-Maketext-Lexicon >= %{perl_locale_maketext_lexicon_ver}
 Requires:	perl-Log-Dispatch >= %{perl_log_dispatch_ver}
-Requires:	perl-LWP-Protocol-https
 Requires:	perl-MIME-tools >= %{perl_mime_tools_ver}
 Requires:	perl-MailTools >= %{perl_mailtools_ver}
 Requires:	perl-Module-Versions-Report >= %{perl_module_versions_report_ver}
@@ -234,9 +228,7 @@ Requires:	perl-Text-WikiFormat >= %{perl_text_wikiformat_ver}
 Requires:	perl-Tree-Simple >= %{perl_tree_simple_ver}
 Requires:	perl-XML-RSS >= %{perl_xml_rss_ver}
 Requires:	perl-base >= %{perl_ver}
-Requires:	webapps
 Suggests:	perl-FCGI
-Conflicts:	apache-base < 2.4.0-1
 BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -280,6 +272,22 @@ Ten pakiet zawiera /usr/bin/rt - interfejs linii poleceń do RT 3.
 Umożliwia on współdziałanie z serwerem RT po HTTP i oferuje interfejs
 do funkcjonalności RT bardziej dopasowany do automatyki i intergracji
 z innymi narzędziami.
+
+%package apache
+Summary:	Apache support files for RT
+Summary(pl.UTF-8):	Pliki wspomagające używanie RT z Apache
+Group:		Applications
+Requires:	apache-base >= 2.2.0
+Requires:	apache-mod_authz_host >= 2.2.0
+Requires:	apache-mod_perl >= 2.0
+Requires:	webapps
+Conflicts:	apache-base < 2.4.0-1
+
+%description apache
+Apache support files for RT.
+
+%description apache -l pl.UTF-8
+Pliki wspomagające używanie RT z Apache.
 
 %prep
 %setup -q
@@ -337,10 +345,10 @@ rm -r $RPM_BUILD_ROOT%{_datadir}/fonts/TTF
 # *.in, tests
 find $RPM_BUILD_ROOT -type f -name \*.in -exec rm '{}' \;
 
-%triggerin -- apache-base
+%triggerin apache -- apache-base
 %webapp_register httpd %{_webapp}
 
-%triggerun -- apache-base
+%triggerun apache -- apache-base
 %webapp_unregister httpd %{_webapp}
 
 %clean
@@ -377,3 +385,8 @@ rm -rf $RPM_BUILD_ROOT
 %files cli
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/rt
+
+%files apache
+%defattr(644,root,root,755)
+%dir %attr(750,root,http) %{_webappsdir}
+%attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) %{_webappsdir}/httpd.conf
