@@ -332,10 +332,6 @@ rm -rf $RPM_BUILD_ROOT
 # this is generic config that SHOULDN'T BE TOUCHED. Change settings in your local (site) config.
 %attr(640,root,http) %config %{_sysconfdir}/RT_Config.pm
 
-%if %{with apache}
-%dir %attr(750,root,http) %{_webappsdir}
-%attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) %{_webappsdir}/httpd.conf
-%endif
 %attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/logrotate.d/%{name}
 %attr(755,root,root) /etc/cron.daily/rt-clean-sessions
 %attr(755,root,root) %{_bindir}/rt-*
