@@ -290,6 +290,9 @@ mv aclocal.m4 acinclude.m4
 
 sed -i -e 's#libdir:.*#libdir:	%{_libdir}#g' config.layout
 
+# prevent configure from using git
+sed -i -e 's#git describe --tags#false#g' configure.ac
+
 %build
 %{__aclocal}
 %{__autoconf}
