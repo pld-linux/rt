@@ -374,7 +374,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(640,root,http) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/RT_SiteConfig.pm
 # this is generic config that SHOULDN'T BE TOUCHED. Change settings in your local (site) config.
 %attr(640,root,http) %config %{_sysconfdir}/RT_Config.pm
-
+%attr(750,root,http) %dir %{_webappsdir}
 # web server configs with no separate deps (so no need for subpackage)
 %attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) %{_webappsdir}/lighttpd.conf
 
@@ -388,7 +388,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/rt/po
 %{_datadir}/rt/static
 %{_libdir}/*
-%dir %attr(770,root,http) %{masonstatedir}
+%attr(770,root,http) %dir %{masonstatedir}
 %{_examplesdir}/%{name}-%{version}
 
 %files cli
@@ -397,5 +397,4 @@ rm -rf $RPM_BUILD_ROOT
 
 %files apache
 %defattr(644,root,root,755)
-%dir %attr(750,root,http) %{_webappsdir}
 %attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) %{_webappsdir}/httpd.conf
