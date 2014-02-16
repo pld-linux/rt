@@ -366,7 +366,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc README* docs etc/upgrade
+%doc README* docs
 
 %dir %{_sysconfdir}
 %attr(640,root,http) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/[a-z]*
