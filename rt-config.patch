@@ -9,3 +9,14 @@
      my $bin_path;
  
      for my $lib (@libs) {
+--- rt-4.2.2/sbin/rt-setup-database.in~	2014-01-08 21:31:41.000000000 +0100
++++ rt-4.2.2/sbin/rt-setup-database.in	2014-02-16 22:21:02.542677355 +0100
+@@ -414,7 +414,7 @@
+ 
+ sub action_upgrade {
+     my %args = @_;
+-    my $base_dir = $args{'datadir'} || "./etc/upgrade";
++    my $base_dir = $args{'datadir'} || "/etc/rt/upgrade";
+     return (0, "Couldn't read dir '$base_dir' with upgrade data")
+         unless -d $base_dir || -r _;
+ 
