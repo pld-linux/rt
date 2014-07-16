@@ -38,17 +38,18 @@
 %define	perl_xml_rss_ver			1.05
 #
 %bcond_with	testdeps	# used for checking dependencies
+%bcond_without	gumbo		# HTML5 parsing library
 #
 %include	/usr/lib/rpm/macros.perl
 Summary:	Request Tracker
 Summary(pl.UTF-8):	Request Tracker - system do śledzenia zleceń
 Name:		rt
-Version:	4.2.5
+Version:	4.2.6
 Release:	1
 License:	GPL v2
 Group:		Applications
 Source0:	http://download.bestpractical.com/pub/rt/release/%{name}-%{version}.tar.gz
-# Source0-md5:	a31747c5d86f4c637811bc13c5d62a2e
+# Source0-md5:	3d6fd7da8b397cd75865dbfbebe18dd7
 Source1:	%{name}-apache_dir.conf
 Source2:	%{name}-apache_vhost.conf
 Source3:	%{name}-apache.conf
@@ -100,7 +101,9 @@ BuildRequires:	perl-GD >= %{perl_gd_ver}
 BuildRequires:	perl-GD-Graph
 BuildRequires:	perl-GD-TextUtil
 BuildRequires:	perl-GnuPG-Interface
+BuildRequires:	perl-GraphViz
 BuildRequires:	perl-HTML-FormatText-WithLinks-AndTables
+%{?with_gumbo:BuildRequires:	perl-HTML-Gumbo}
 BuildRequires:	perl-HTML-Mason >= %{perl_html_mason_ver}
 BuildRequires:	perl-HTML-Mason-PSGIHandler
 BuildRequires:	perl-HTML-Parser
@@ -191,7 +194,9 @@ Requires:	perl-File-Which
 Requires:	perl-GD >= %{perl_gd_ver}
 Requires:	perl-GD-Graph
 Requires:	perl-GnuPG-Interface
+Requires:	perl-GraphViz
 Requires:	perl-HTML-FormatText-WithLinks-AndTables
+%{?with_gumbo:	Requires:	perl-HTML-Gumbo}
 Requires:	perl-HTML-Mason >= %{perl_html_mason_ver}
 Requires:	perl-HTML-Mason-PSGIHandler
 Requires:	perl-HTML-Quoted
