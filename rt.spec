@@ -38,7 +38,6 @@
 %define	perl_xml_rss_ver			1.05
 #
 %bcond_with	testdeps	# used for checking dependencies
-%bcond_without	gumbo		# HTML5 parsing library
 #
 %include	/usr/lib/rpm/macros.perl
 Summary:	Request Tracker
@@ -103,7 +102,7 @@ BuildRequires:	perl-GD-TextUtil
 BuildRequires:	perl-GnuPG-Interface
 BuildRequires:	perl-GraphViz
 BuildRequires:	perl-HTML-FormatText-WithLinks-AndTables
-%{?with_gumbo:BuildRequires:	perl-HTML-Gumbo}
+BuildRequires:	perl-HTML-Gumbo
 BuildRequires:	perl-HTML-Mason >= %{perl_html_mason_ver}
 BuildRequires:	perl-HTML-Mason-PSGIHandler
 BuildRequires:	perl-HTML-Parser
@@ -196,7 +195,7 @@ Requires:	perl-GD-Graph
 Requires:	perl-GnuPG-Interface
 Requires:	perl-GraphViz
 Requires:	perl-HTML-FormatText-WithLinks-AndTables
-%{?with_gumbo:	Requires:	perl-HTML-Gumbo}
+Requires:	perl-HTML-Gumbo
 Requires:	perl-HTML-Mason >= %{perl_html_mason_ver}
 Requires:	perl-HTML-Mason-PSGIHandler
 Requires:	perl-HTML-Quoted
