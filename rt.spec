@@ -31,6 +31,7 @@
 %define	perl_plack_ver				1.0002
 %define	perl_starlet_ver			0.20
 %define	perl_storable_ver			2.08
+%define	perl_symbol_global_name_ver		0.05
 %define	perl_text_quoted_ver			2.07
 %define	perl_text_wikiformat_ver		0.76
 %define	perl_tree_simple_ver			1.18
@@ -139,7 +140,7 @@ BuildRequires:	perl-Role-Basic
 BuildRequires:	perl-Starlet >= %{perl_starlet_ver}
 BuildRequires:	perl-Storable >= %{perl_storable_ver}
 BuildRequires:	perl-String-ShellQuote
-BuildRequires:	perl-Symbol-Global-Name
+BuildRequires:	perl-Symbol-Global-Name >= %{perl_symbol_global_name_ver}
 BuildRequires:	perl-Term-ReadKey
 BuildRequires:	perl-Test-Inline
 BuildRequires:	perl-Text-Autoformat
@@ -226,7 +227,7 @@ Requires:	perl-Role-Basic
 Requires:	perl-Starlet >= %{perl_starlet_ver}
 Requires:	perl-Storable >= %{perl_storable_ver}
 Requires:	perl-String-ShellQuote
-Requires:	perl-Symbol-Global-Name
+Requires:	perl-Symbol-Global-Name >= %{perl_symbol_global_name_ver}
 Requires:	perl-Text-Password-Pronounceable
 Requires:	perl-Text-Quoted >= %{perl_text_quoted_ver}
 Requires:	perl-Text-WikiFormat >= %{perl_text_wikiformat_ver}
