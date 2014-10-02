@@ -7,7 +7,7 @@
 #
 %define	perl_ver				5.8.3
 %define	perl_apache_session_ver			1.53
-%define	perl_cgi_ver				3.38
+%define	perl_cgi_ver				4.00
 %define	perl_class_returnvalue_ver		0.40
 %define	perl_css_squish_ver			0.06
 %define	perl_dbd_mysql				2.1018
@@ -45,7 +45,7 @@ Summary:	Request Tracker
 Summary(pl.UTF-8):	Request Tracker - system do śledzenia zleceń
 Name:		rt
 Version:	4.2.8
-Release:	1
+Release:	2
 License:	GPL v2
 Group:		Applications
 Source0:	http://download.bestpractical.com/pub/rt/release/%{name}-%{version}.tar.gz
