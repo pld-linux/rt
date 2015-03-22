@@ -45,7 +45,7 @@ Summary:	Request Tracker
 Summary(pl.UTF-8):	Request Tracker - system do śledzenia zleceń
 Name:		rt
 Version:	4.2.10
-Release:	1
+Release:	2
 License:	GPL v2
 Group:		Applications
 Source0:	http://download.bestpractical.com/pub/rt/release/%{name}-%{version}.tar.gz
@@ -235,6 +235,7 @@ Requires:	perl-Text-Password-Pronounceable
 Requires:	perl-Text-Quoted >= %{perl_text_quoted_ver}
 Requires:	perl-Text-WikiFormat >= %{perl_text_wikiformat_ver}
 Requires:	perl-Tree-Simple >= %{perl_tree_simple_ver}
+Requires:	perl-UNIVERSAL-require
 Requires:	perl-XML-RSS >= %{perl_xml_rss_ver}
 Requires:	perl-base >= %{perl_ver}
 Requires:	webapps
