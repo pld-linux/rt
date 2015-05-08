@@ -44,12 +44,12 @@
 Summary:	Request Tracker
 Summary(pl.UTF-8):	Request Tracker - system do śledzenia zleceń
 Name:		rt
-Version:	4.2.10
-Release:	2
+Version:	4.2.11
+Release:	1
 License:	GPL v2
 Group:		Applications
 Source0:	http://download.bestpractical.com/pub/rt/release/%{name}-%{version}.tar.gz
-# Source0-md5:	077f3ed99d36eb744fe25c2bfd70e996
+# Source0-md5:	f0b02b2f97ff346ca2d57a17b136b9d0
 Source1:	%{name}-apache_dir.conf
 Source2:	%{name}-apache_vhost.conf
 Source3:	%{name}-apache.conf
@@ -57,7 +57,6 @@ Source4:	%{name}.logrotate
 Source5:	lighttpd.conf
 Patch0:		%{name}-layout.patch
 Patch1:		%{name}-config.patch
-Patch2:		content-id.patch
 URL:		http://www.bestpractical.com/rt/
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -190,7 +189,7 @@ Requires:	perl-Devel-GlobalDestruction
 Requires:	perl-Devel-StackTrace >= %{perl_devel_stacktrace_ver}
 Requires:	perl-Digest-MD5 >= %{perl_digest_md5_ver}
 Requires:	perl-Email-Address-List
-Requires:	perl-Encode >= 2.64
+Requires:	perl-Encode >= 1:2.64
 Requires:	perl-FCGI-ProcManager
 Requires:	perl-File-Which
 Requires:	perl-GD >= %{perl_gd_ver}
@@ -305,7 +304,6 @@ Pliki wspomagające używanie RT z Apache.
 %setup -q
 %patch0 -p0
 %patch1 -p1
-%patch2 -p1
 
 mv aclocal.m4 acinclude.m4
 
