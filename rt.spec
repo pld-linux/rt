@@ -44,12 +44,12 @@
 Summary:	Request Tracker
 Summary(pl.UTF-8):	Request Tracker - system do śledzenia zleceń
 Name:		rt
-Version:	4.2.12
+Version:	4.4.0
 Release:	1
 License:	GPL v2
 Group:		Applications
 Source0:	http://download.bestpractical.com/pub/rt/release/%{name}-%{version}.tar.gz
-# Source0-md5:	0e205a65e4c967c782a4b80637b6bb52
+# Source0-md5:	c1da0620ff4a6c35c76bb63cd7309d75
 Source1:	%{name}-apache_dir.conf
 Source2:	%{name}-apache_vhost.conf
 Source3:	%{name}-apache.conf
@@ -63,10 +63,13 @@ BuildRequires:	automake
 %if %{with testdeps}
 BuildRequires:	perl-Apache-DBI
 BuildRequires:	perl-Apache-Session >= %{perl_apache_session_ver}
+BuildRequires:	perl-Business-Hours
 BuildRequires:	perl-CGI >= %{perl_cgi_ver}
 BuildRequires:	perl-CGI-Emulate-PSGI
 BuildRequires:	perl-CGI-PSGI >= %{perl_cgi_psgi}
 BuildRequires:	perl-CGI-SpeedyCGI
+BuildRequires:	perl-CSS-Minifier
+BuildRequires:	perl-CSS-Minifier-XS
 BuildRequires:	perl-CSS-Squish >= %{perl_css_squish_ver}
 BuildRequires:	perl-Cache-Cache
 BuildRequires:	perl-Calendar-Simple
@@ -84,6 +87,7 @@ BuildRequires:	perl-Data-GUID
 BuildRequires:	perl-Data-ICal
 BuildRequires:	perl-Date-Extract
 BuildRequires:	perl-Date-Manip
+BuildRequires:	perl-Data-Page-Pageset
 BuildRequires:	perl-DateTime-Format-Natural
 BuildRequires:	perl-Devel-GlobalDestruction
 BuildRequires:	perl-Devel-StackTrace >= %{perl_devel_stacktrace_ver}
@@ -117,6 +121,7 @@ BuildRequires:	perl-HTTP-Server-Simple-Mason >= %{perl_http_server_simple_mason_
 BuildRequires:	perl-IPC-Run3
 BuildRequires:	perl-JSON
 BuildRequires:	perl-JavaScript-Minifier
+BuildRequires:	perl-JavaScript-Minifier-XS
 BuildRequires:	perl-LWP-Protocol-https
 BuildRequires:	perl-Locale-Maketext >= %{perl_locale_maketext_ver}
 BuildRequires:	perl-Locale-Maketext-Fuzzy
@@ -129,6 +134,7 @@ BuildRequires:	perl-MailTools >= %{perl_mailtools_ver}
 BuildRequires:	perl-Module-Versions-Report >= %{perl_module_versions_report_ver}
 BuildRequires:	perl-Mozilla-CA
 BuildRequires:	perl-Net-CIDR
+BuildRequires:	perl-Net-IP
 BuildRequires:	perl-Net-Server >= 0.34
 BuildRequires:	perl-PSGI
 BuildRequires:	perl-Params-Validate >= 0.02
@@ -138,6 +144,7 @@ BuildRequires:	perl-Regexp-Common
 BuildRequires:	perl-Regexp-Common-net-CIDR
 BuildRequires:	perl-Regexp-IPv6
 BuildRequires:	perl-Role-Basic
+BuildRequires:	perl-Scope-Upper
 BuildRequires:	perl-Starlet >= %{perl_starlet_ver}
 BuildRequires:	perl-Storable >= %{perl_storable_ver}
 BuildRequires:	perl-String-ShellQuote
@@ -155,6 +162,7 @@ BuildRequires:	perl-Time-HiRes
 BuildRequires:	perl-Time-modules
 BuildRequires:	perl-TimeDate
 BuildRequires:	perl-Tree-Simple >= %{perl_tree_simple_ver}
+BuildRequires:	perl-Type-Tiny
 BuildRequires:	perl-UNIVERSAL-require
 BuildRequires:	perl-WWW-Mechanize
 BuildRequires:	perl-XML-RSS >= %{perl_xml_rss_ver}
@@ -165,9 +173,12 @@ BuildRequires:	rpm-perlprov
 Requires:	fonts-TTF-Google-Droid
 Requires:	perl-Apache-DBI
 Requires:	perl-Apache-Session >= %{perl_apache_session_ver}
+Requires:	perl-Business-Hours
 Requires:	perl-CGI >= %{perl_cgi_ver}
 Requires:	perl-CGI-Emulate-PSGI
 Requires:	perl-CGI-PSGI >= %{perl_cgi_psgi}
+Requires:	perl-CSS-Minifier
+Requires:	perl-CSS-Minifier-XS
 Requires:	perl-CSS-Squish >= %{perl_css_squish_ver}
 Requires:	perl-Cache-Cache
 Requires:	perl-Calendar-Simple
@@ -184,6 +195,7 @@ Requires:	perl-Data-GUID
 Requires:	perl-Data-ICal
 Requires:	perl-Date-Extract
 Requires:	perl-Date-Manip
+Requires:	perl-Data-Page-Pageset
 Requires:	perl-DateTime-Format-Natural
 Requires:	perl-Devel-GlobalDestruction
 Requires:	perl-Devel-StackTrace >= %{perl_devel_stacktrace_ver}
@@ -209,6 +221,7 @@ Requires:	perl-HTTP-Server-Simple-Mason >= %{perl_http_server_simple_mason_ver}
 Requires:	perl-IPC-Run3
 Requires:	perl-JSON
 Requires:	perl-JavaScript-Minifier
+Requires:	perl-JavaScript-Minifier-XS
 Requires:	perl-LWP-Protocol-https
 Requires:	perl-Locale-Maketext >= %{perl_locale_maketext_ver}
 Requires:	perl-Locale-Maketext-Fuzzy
@@ -220,12 +233,14 @@ Requires:	perl-Module-Versions-Report >= %{perl_module_versions_report_ver}
 Requires:	perl-Moose
 Requires:	perl-Mozilla-CA
 Requires:	perl-Net-CIDR
+Requires:	perl-Net-IP
 Requires:	perl-PSGI
 Requires:	perl-PerlIO-eol
 Requires:	perl-Plack >= %{perl_plack_ver}
 Requires:	perl-Regexp-Common-net-CIDR
 Requires:	perl-Regexp-IPv6
 Requires:	perl-Role-Basic
+Requires:	perl-Scope-Upper
 Requires:	perl-Starlet >= %{perl_starlet_ver}
 Requires:	perl-Storable >= %{perl_storable_ver}
 Requires:	perl-String-ShellQuote
@@ -234,6 +249,7 @@ Requires:	perl-Text-Password-Pronounceable
 Requires:	perl-Text-Quoted >= %{perl_text_quoted_ver}
 Requires:	perl-Text-WikiFormat >= %{perl_text_wikiformat_ver}
 Requires:	perl-Tree-Simple >= %{perl_tree_simple_ver}
+Requires:	perl-Type-Tiny
 Requires:	perl-UNIVERSAL-require
 Requires:	perl-XML-RSS >= %{perl_xml_rss_ver}
 Requires:	perl-base >= %{perl_ver}
