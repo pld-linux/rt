@@ -44,12 +44,12 @@
 Summary:	Request Tracker
 Summary(pl.UTF-8):	Request Tracker - system do śledzenia zleceń
 Name:		rt
-Version:	4.4.0
+Version:	4.4.1
 Release:	1
 License:	GPL v2
 Group:		Applications
 Source0:	http://download.bestpractical.com/pub/rt/release/%{name}-%{version}.tar.gz
-# Source0-md5:	c1da0620ff4a6c35c76bb63cd7309d75
+# Source0-md5:	3587522b92a02d3866e07dc9361ca1e2
 Source1:	%{name}-apache_dir.conf
 Source2:	%{name}-apache_vhost.conf
 Source3:	%{name}-apache.conf
@@ -61,7 +61,6 @@ URL:		http://www.bestpractical.com/rt/
 BuildRequires:	autoconf
 BuildRequires:	automake
 %if %{with testdeps}
-BuildRequires:	perl-Apache-DBI
 BuildRequires:	perl-Apache-Session >= %{perl_apache_session_ver}
 BuildRequires:	perl-Business-Hours
 BuildRequires:	perl-CGI >= %{perl_cgi_ver}
@@ -171,7 +170,6 @@ BuildRequires:	perl-libnet
 BuildRequires:	perl-base >= %{perl_ver}
 BuildRequires:	rpm-perlprov
 Requires:	fonts-TTF-Google-Droid
-Requires:	perl-Apache-DBI
 Requires:	perl-Apache-Session >= %{perl_apache_session_ver}
 Requires:	perl-Business-Hours
 Requires:	perl-CGI >= %{perl_cgi_ver}
