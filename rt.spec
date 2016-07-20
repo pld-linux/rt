@@ -61,7 +61,6 @@ URL:		http://www.bestpractical.com/rt/
 BuildRequires:	autoconf
 BuildRequires:	automake
 %if %{with testdeps}
-BuildRequires:	perl-Apache-DBI
 BuildRequires:	perl-Apache-Session >= %{perl_apache_session_ver}
 BuildRequires:	perl-CGI >= %{perl_cgi_ver}
 BuildRequires:	perl-CGI-Emulate-PSGI
@@ -163,7 +162,6 @@ BuildRequires:	perl-libnet
 BuildRequires:	perl-base >= %{perl_ver}
 BuildRequires:	rpm-perlprov
 Requires:	fonts-TTF-Google-Droid
-Requires:	perl-Apache-DBI
 Requires:	perl-Apache-Session >= %{perl_apache_session_ver}
 Requires:	perl-CGI >= %{perl_cgi_ver}
 Requires:	perl-CGI-Emulate-PSGI
