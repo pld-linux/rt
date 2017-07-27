@@ -44,12 +44,12 @@
 Summary:	Request Tracker
 Summary(pl.UTF-8):	Request Tracker - system do śledzenia zleceń
 Name:		rt
-Version:	4.2.13
-Release:	2
+Version:	4.2.14
+Release:	1
 License:	GPL v2
 Group:		Applications
 Source0:	http://download.bestpractical.com/pub/rt/release/%{name}-%{version}.tar.gz
-# Source0-md5:	e48d3c5409d34b1413aa6348df8ca5d1
+# Source0-md5:	2bdb4bde3afe78356e0b3b864ffb9435
 Source1:	%{name}-apache_dir.conf
 Source2:	%{name}-apache_vhost.conf
 Source3:	%{name}-apache.conf
@@ -57,7 +57,6 @@ Source4:	%{name}.logrotate
 Source5:	lighttpd.conf
 Patch0:		%{name}-layout.patch
 Patch1:		%{name}-config.patch
-Patch2:		rt-4.2.13.patch
 URL:		http://www.bestpractical.com/rt/
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -155,6 +154,7 @@ BuildRequires:	perl-Time-HiRes
 BuildRequires:	perl-Time-modules
 BuildRequires:	perl-TimeDate
 BuildRequires:	perl-Tree-Simple >= %{perl_tree_simple_ver}
+BuildRequires:	perl-Type-Tiny
 BuildRequires:	perl-UNIVERSAL-require
 BuildRequires:	perl-WWW-Mechanize
 BuildRequires:	perl-XML-RSS >= %{perl_xml_rss_ver}
@@ -233,6 +233,7 @@ Requires:	perl-Text-Password-Pronounceable
 Requires:	perl-Text-Quoted >= %{perl_text_quoted_ver}
 Requires:	perl-Text-WikiFormat >= %{perl_text_wikiformat_ver}
 Requires:	perl-Tree-Simple >= %{perl_tree_simple_ver}
+Requires:	perl-Type-Tiny
 Requires:	perl-UNIVERSAL-require
 Requires:	perl-XML-RSS >= %{perl_xml_rss_ver}
 Requires:	perl-base >= %{perl_ver}
@@ -303,7 +304,6 @@ Pliki wspomagające używanie RT z Apache.
 %setup -q
 %patch0 -p0
 %patch1 -p1
-%patch2 -p1
 
 mv aclocal.m4 acinclude.m4
 
