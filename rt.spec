@@ -181,6 +181,7 @@ Requires:	perl-DBI >= %{perl_dbi_ver}
 Requires:	perl-DBIx-SearchBuilder >= %{perl_dbix_searchbuilder_ver}
 Requires:	perl-Data-GUID
 Requires:	perl-Data-ICal
+Requires:	perl-Data-Page
 Requires:	perl-Date-Extract
 Requires:	perl-Date-Manip
 Requires:	perl-DateTime-Format-Natural
