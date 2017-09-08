@@ -193,6 +193,7 @@ Requires:	perl-Data-GUID
 Requires:	perl-Data-ICal
 Requires:	perl-Date-Extract
 Requires:	perl-Date-Manip
+Requires:	perl-Data-Page
 Requires:	perl-Data-Page-Pageset
 Requires:	perl-DateTime-Format-Natural
 Requires:	perl-Devel-GlobalDestruction
