@@ -1,0 +1,59 @@
+commit db6ef53164cc03d9e696f21664da0c092617b4bd
+Author: Shawn M Moore <shawn@bestpractical.com>
+Date:   Fri Aug 18 17:47:41 2017 +0000
+
+    Avoid spuriously unchecking all recipient checkboxes
+    
+    This 4.4.2 regression, introduced in
+    f0a7105da8bc8f00a54bcdb5bfd48d788bbb888b and
+    4b11cf37360ad5084f6428c62553ccc6858313a7, could happen if you caused a
+    second refresh while the first one was still running. serializeArray()
+    doesn't include disabled form fields, so what the AJAX request reported
+    to the server made it look like the user had explicitly unchecked
+    recipients.
+    
+    Fixes: I#33027
+
+diff --git a/share/html/Ticket/Update.html b/share/html/Ticket/Update.html
+index 075940306..8b4ba94c2 100644
+--- a/share/html/Ticket/Update.html
++++ b/share/html/Ticket/Update.html
+@@ -217,8 +217,18 @@ jQuery( function() {
+        jQuery('#recipients div.titlebox-content').addClass('refreshing');
+        jQuery('#previewscrips div.titlebox-content').addClass('refreshing');
+ 
++       /* temporarily re-enable the checkboxes so they will be included in
++          payload */
++       jQuery("#recipients input[name=TxnSendMailToAll], #recipients input[name=TxnSendMailTo]").attr('disabled', false);
++       jQuery("#previewscrips input[name=TxnSendMailToAll], #previewscrips input[name=TxnSendMailTo]").attr('disabled', false);
++
++       var payload = jQuery('form[name=TicketUpdate]').serializeArray();
++
++       jQuery("#recipients input[name=TxnSendMailToAll], #recipients input[name=TxnSendMailTo]").attr('disabled', true);
++       jQuery("#previewscrips input[name=TxnSendMailToAll], #previewscrips input[name=TxnSendMailTo]").attr('disabled', true);
++
+        jQuery('#recipients div.titlebox-content').load( '<% RT->Config->Get('WebPath')%>/Helpers/ShowSimplifiedRecipients',
+-           jQuery('form[name=TicketUpdate]').serializeArray(),
++           payload,
+            function() {
+                jQuery('#recipients div.titlebox-content').removeClass('refreshing');
+                var txn_send_field = jQuery("#recipients input[name=TxnSendMailTo]");
+@@ -232,7 +242,7 @@ jQuery( function() {
+        );
+ 
+        jQuery('#previewscrips div.titlebox-content').load( '<% RT->Config->Get('WebPath')%>/Helpers/PreviewScrips',
+-           jQuery('form[name=TicketUpdate]').serializeArray(),
++           payload,
+            function() {
+                jQuery('#previewscrips div.titlebox-content').removeClass('refreshing');
+                var txn_send_field = jQuery("#previewscrips input[name=TxnSendMailTo]");
+@@ -244,9 +254,6 @@ jQuery( function() {
+                }
+            }
+        );
+-
+-       jQuery("#recipients input[name=TxnSendMailToAll], #recipients input[name=TxnSendMailTo]").attr('disabled', true);
+-       jQuery("#previewscrips input[name=TxnSendMailToAll], #previewscrips input[name=TxnSendMailTo]").attr('disabled', true);
+    };
+    updateScrips();
+ 
