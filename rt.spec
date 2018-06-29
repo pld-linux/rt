@@ -44,12 +44,12 @@
 Summary:	Request Tracker
 Summary(pl.UTF-8):	Request Tracker - system do śledzenia zleceń
 Name:		rt
-Version:	4.4.2
-Release:	4
+Version:	4.4.3
+Release:	1
 License:	GPL v2
 Group:		Applications
 Source0:	http://download.bestpractical.com/pub/rt/release/%{name}-%{version}.tar.gz
-# Source0-md5:	ed8ecebd9029e143dfbfdb29036fada8
+# Source0-md5:	b30e71b60651c76af2a801ea48a89df0
 Source1:	%{name}-apache_dir.conf
 Source2:	%{name}-apache_vhost.conf
 Source3:	%{name}-apache.conf
@@ -57,9 +57,7 @@ Source4:	%{name}.logrotate
 Source5:	lighttpd.conf
 Patch0:		%{name}-layout.patch
 Patch1:		%{name}-config.patch
-Patch2:		%{name}-perl.patch
-Patch3:		rt-bug-33027.patch
-Patch4:		rt-bug-upload.patch
+Patch2:		rt-timeworked.patch
 URL:		http://www.bestpractical.com/rt/
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -228,6 +226,7 @@ Requires:	perl-LWP-Protocol-https
 Requires:	perl-Locale-Maketext >= %{perl_locale_maketext_ver}
 Requires:	perl-Locale-Maketext-Fuzzy
 Requires:	perl-Locale-Maketext-Lexicon >= %{perl_locale_maketext_lexicon_ver}
+Requires:	perl-Locale-PO
 Requires:	perl-Log-Dispatch >= %{perl_log_dispatch_ver}
 Requires:	perl-MIME-tools >= %{perl_mime_tools_ver}
 Requires:	perl-MailTools >= %{perl_mailtools_ver}
@@ -323,8 +322,6 @@ Pliki wspomagające używanie RT z Apache.
 %patch0 -p0
 %patch1 -p1
 %patch2 -p1
-%patch3 -p1
-%patch4 -p1
 
 mv aclocal.m4 acinclude.m4
 
