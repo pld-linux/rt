@@ -45,7 +45,7 @@ Summary:	Request Tracker
 Summary(pl.UTF-8):	Request Tracker - system do śledzenia zleceń
 Name:		rt
 Version:	4.4.4
-Release:	1
+Release:	2
 License:	GPL v2
 Group:		Applications
 Source0:	http://download.bestpractical.com/pub/rt/release/%{name}-%{version}.tar.gz
@@ -353,6 +353,8 @@ install -d $RPM_BUILD_ROOT{/etc/{logrotate.d,cron.daily},%{_libdir}} \
 	$RPM_BUILD_ROOT%{masonstatedir} \
 	$RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version} \
 	$RPM_BUILD_ROOT%{_webappsdir}
+
+install -d $RPM_BUILD_ROOT%{perl_vendorlib}/RT/Extension
 
 # this is make install minus fixperms
 %{__make} config-install dirs files-install instruct \
