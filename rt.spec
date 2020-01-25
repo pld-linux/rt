@@ -40,7 +40,6 @@
 #
 %bcond_with	testdeps	# used for checking dependencies
 #
-%include	/usr/lib/rpm/macros.perl
 Summary:	Request Tracker
 Summary(pl.UTF-8):	Request Tracker - system do śledzenia zleceń
 Name:		rt
