@@ -12,7 +12,7 @@
 %define	perl_css_squish_ver			0.06
 %define	perl_dbd_mysql				2.1018
 %define	perl_dbi_ver				1.37
-%define	perl_dbix_searchbuilder_ver		1.65
+%define	perl_dbix_searchbuilder_ver		1.68
 %define	perl_devel_stacktrace_ver		1.19
 %define	perl_digest_md5_ver			2.27
 %define	perl_gd_ver				1.48
@@ -43,12 +43,12 @@
 Summary:	Request Tracker
 Summary(pl.UTF-8):	Request Tracker - system do śledzenia zleceń
 Name:		rt
-Version:	4.4.4
-Release:	2
+Version:	5.0.0
+Release:	1
 License:	GPL v2
 Group:		Applications
 Source0:	http://download.bestpractical.com/pub/rt/release/%{name}-%{version}.tar.gz
-# Source0-md5:	4bb2ac970b70dfcb3b328472d1adc24e
+# Source0-md5:	4889fa7efc2a1821dd99f6ff859d0162
 Source1:	%{name}-apache_dir.conf
 Source2:	%{name}-apache_vhost.conf
 Source3:	%{name}-apache.conf
@@ -130,6 +130,7 @@ BuildRequires:	perl-MIME-Types
 BuildRequires:	perl-MIME-tools >= %{perl_mime_tools_ver}
 BuildRequires:	perl-MLDBM
 BuildRequires:	perl-MailTools >= %{perl_mailtools_ver}
+BuildRequires:	perl-Module-Path
 BuildRequires:	perl-Module-Versions-Report >= %{perl_module_versions_report_ver}
 BuildRequires:	perl-Mozilla-CA
 BuildRequires:	perl-Net-CIDR
@@ -137,6 +138,7 @@ BuildRequires:	perl-Net-IP
 BuildRequires:	perl-Net-Server >= 0.34
 BuildRequires:	perl-PSGI
 BuildRequires:	perl-Params-Validate >= 0.02
+BuildRequires:	perl-Path-Dispatcher
 BuildRequires:	perl-PerlIO-eol
 BuildRequires:	perl-Plack >= %{perl_plack_ver}
 BuildRequires:	perl-Regexp-Common
@@ -201,11 +203,12 @@ Requires:	perl-Devel-StackTrace >= %{perl_devel_stacktrace_ver}
 Requires:	perl-Digest-MD5 >= %{perl_digest_md5_ver}
 Requires:	perl-Email-Address-List
 Requires:	perl-Encode >= 1:2.64
+Requires:	perl-Encode-HanExtra
 Requires:	perl-FCGI-ProcManager
 Requires:	perl-File-Which
 Requires:	perl-GD >= %{perl_gd_ver}
 Requires:	perl-GD-Graph
-Requires:	perl-GnuPG-Interface
+Requires:	perl-GnuPG-Interface >= 1.00
 Requires:	perl-GraphViz
 Requires:	perl-HTML-FormatExternal
 Requires:	perl-HTML-FormatText-WithLinks-AndTables
@@ -229,12 +232,15 @@ Requires:	perl-Locale-PO
 Requires:	perl-Log-Dispatch >= %{perl_log_dispatch_ver}
 Requires:	perl-MIME-tools >= %{perl_mime_tools_ver}
 Requires:	perl-MailTools >= %{perl_mailtools_ver}
+Requires:	perl-Module-Path
 Requires:	perl-Module-Versions-Report >= %{perl_module_versions_report_ver}
 Requires:	perl-Moose
+Requires:	perl-MooseX-NonMoose
 Requires:	perl-Mozilla-CA
 Requires:	perl-Net-CIDR
 Requires:	perl-Net-IP
 Requires:	perl-PSGI
+Requires:	perl-Path-Dispatcher >= 1.07
 Requires:	perl-PerlIO-eol
 Requires:	perl-Plack >= %{perl_plack_ver}
 Requires:	perl-Regexp-Common-net-CIDR
@@ -251,6 +257,7 @@ Requires:	perl-Text-WikiFormat >= %{perl_text_wikiformat_ver}
 Requires:	perl-Tree-Simple >= %{perl_tree_simple_ver}
 Requires:	perl-Type-Tiny
 Requires:	perl-UNIVERSAL-require
+Requires:	perl-Web-Machine
 Requires:	perl-XML-RSS >= %{perl_xml_rss_ver}
 Requires:	perl-base >= %{perl_ver}
 Requires:	webapps
