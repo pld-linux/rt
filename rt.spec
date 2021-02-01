@@ -43,12 +43,12 @@
 Summary:	Request Tracker
 Summary(pl.UTF-8):	Request Tracker - system do śledzenia zleceń
 Name:		rt
-Version:	5.0.0
+Version:	5.0.1
 Release:	1
 License:	GPL v2
 Group:		Applications
 Source0:	http://download.bestpractical.com/pub/rt/release/%{name}-%{version}.tar.gz
-# Source0-md5:	4889fa7efc2a1821dd99f6ff859d0162
+# Source0-md5:	0d7b559810041083f1a8f4b94b6de7e5
 Source1:	%{name}-apache_dir.conf
 Source2:	%{name}-apache_vhost.conf
 Source3:	%{name}-apache.conf
@@ -132,6 +132,9 @@ BuildRequires:	perl-MLDBM
 BuildRequires:	perl-MailTools >= %{perl_mailtools_ver}
 BuildRequires:	perl-Module-Path
 BuildRequires:	perl-Module-Versions-Report >= %{perl_module_versions_report_ver}
+BuildRequires:	perl-Moose
+BuildRequires:	perl-MooseX-NonMoose
+BuildRequires:	perl-MooseX-Role-Parameterized
 BuildRequires:	perl-Mozilla-CA
 BuildRequires:	perl-Net-CIDR
 BuildRequires:	perl-Net-IP
@@ -236,6 +239,7 @@ Requires:	perl-Module-Path
 Requires:	perl-Module-Versions-Report >= %{perl_module_versions_report_ver}
 Requires:	perl-Moose
 Requires:	perl-MooseX-NonMoose
+Requires:	perl-MooseX-Role-Parameterized
 Requires:	perl-Mozilla-CA
 Requires:	perl-Net-CIDR
 Requires:	perl-Net-IP
