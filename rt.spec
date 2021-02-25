@@ -329,7 +329,7 @@ Pliki wspomagające używanie RT z Apache.
 
 %prep
 %setup -q
-%patch0 -p0
+%patch0 -p1
 %patch1 -p1
 %patch2 -p1
 
@@ -362,7 +362,8 @@ rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{/etc/{logrotate.d,cron.daily},%{_libdir}} \
 	$RPM_BUILD_ROOT%{masonstatedir} \
 	$RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version} \
-	$RPM_BUILD_ROOT%{_webappsdir}
+	$RPM_BUILD_ROOT%{_webappsdir} \
+	$RPM_BUILD_ROOT%{_datadir}/rt/html/Callbacks
 
 install -d $RPM_BUILD_ROOT%{perl_vendorlib}/RT/Extension
 
