@@ -43,12 +43,12 @@
 Summary:	Request Tracker
 Summary(pl.UTF-8):	Request Tracker - system do śledzenia zleceń
 Name:		rt
-Version:	5.0.1
+Version:	5.0.2
 Release:	1
 License:	GPL v2
 Group:		Applications
 Source0:	http://download.bestpractical.com/pub/rt/release/%{name}-%{version}.tar.gz
-# Source0-md5:	0d7b559810041083f1a8f4b94b6de7e5
+# Source0-md5:	9885e05d251750672a8233c1c003fe90
 Source1:	%{name}-apache_dir.conf
 Source2:	%{name}-apache_vhost.conf
 Source3:	%{name}-apache.conf
@@ -61,6 +61,7 @@ URL:		http://www.bestpractical.com/rt/
 BuildRequires:	autoconf
 BuildRequires:	automake
 %if %{with testdeps}
+BuildRequires:	perl-Alien-Base
 BuildRequires:	perl-Apache-Session >= %{perl_apache_session_ver}
 BuildRequires:	perl-Business-Hours
 BuildRequires:	perl-CGI >= %{perl_cgi_ver}
@@ -93,6 +94,8 @@ BuildRequires:	perl-Devel-StackTrace >= %{perl_devel_stacktrace_ver}
 BuildRequires:	perl-Digest-MD5 >= %{perl_digest_md5_ver}
 BuildRequires:	perl-Email-Address
 BuildRequires:	perl-Email-Address-List
+BuildRequires:	perl-Encode-Detect
+BuildRequires:	perl-Encode-HanExtra
 BuildRequires:	perl-Exception-Class
 BuildRequires:	perl-FCGI
 BuildRequires:	perl-FCGI-ProcManager
@@ -140,6 +143,7 @@ BuildRequires:	perl-Net-CIDR
 BuildRequires:	perl-Net-IP
 BuildRequires:	perl-Net-Server >= 0.34
 BuildRequires:	perl-PSGI
+BuildRequires:	perl-Parallel-ForkManager
 BuildRequires:	perl-Params-Validate >= 0.02
 BuildRequires:	perl-Path-Dispatcher
 BuildRequires:	perl-PerlIO-eol
@@ -152,6 +156,7 @@ BuildRequires:	perl-Scope-Upper
 BuildRequires:	perl-Starlet >= %{perl_starlet_ver}
 BuildRequires:	perl-Storable >= %{perl_storable_ver}
 BuildRequires:	perl-String-ShellQuote
+BuildRequires:	perl-Sub-Identify
 BuildRequires:	perl-Symbol-Global-Name >= %{perl_symbol_global_name_ver}
 BuildRequires:	perl-Term-ReadKey
 BuildRequires:	perl-Test-Inline
@@ -160,6 +165,7 @@ BuildRequires:	perl-Text-Password-Pronounceable
 BuildRequires:	perl-Text-Quoted >= %{perl_text_quoted_ver}
 BuildRequires:	perl-Text-Template >= %{perl_text_template_ver}
 BuildRequires:	perl-Text-WikiFormat >= %{perl_text_wikiformat_ver}
+BuildRequires:	perl-Text-WordDiff
 BuildRequires:	perl-Text-Wrapper
 BuildRequires:	perl-Tie-IxHash
 BuildRequires:	perl-Time-HiRes
@@ -169,6 +175,7 @@ BuildRequires:	perl-Tree-Simple >= %{perl_tree_simple_ver}
 BuildRequires:	perl-Type-Tiny
 BuildRequires:	perl-UNIVERSAL-require
 BuildRequires:	perl-WWW-Mechanize
+BuildRequires:	perl-Web-Machine
 BuildRequires:	perl-XML-RSS >= %{perl_xml_rss_ver}
 BuildRequires:	perl-libnet
 %endif
@@ -211,7 +218,7 @@ Requires:	perl-FCGI-ProcManager
 Requires:	perl-File-Which
 Requires:	perl-GD >= %{perl_gd_ver}
 Requires:	perl-GD-Graph
-Requires:	perl-GnuPG-Interface >= 1.00
+Requires:	perl-GnuPG-Interface >= 1.02
 Requires:	perl-GraphViz
 Requires:	perl-HTML-FormatExternal
 Requires:	perl-HTML-FormatText-WithLinks-AndTables
@@ -376,7 +383,7 @@ install %{SOURCE3} $RPM_BUILD_ROOT%{_webappsdir}/httpd.conf
 install %{SOURCE5} $RPM_BUILD_ROOT%{_webappsdir}/lighttpd.conf
 install %{SOURCE4} $RPM_BUILD_ROOT/etc/logrotate.d/%{name}
 
-ln -s %{_sbindir}/rt-clean-sessions $RPM_BUILD_ROOT/etc/cron.daily/rt-clean-sessions
+ln -s ../../%{_sbindir}/rt-clean-sessions $RPM_BUILD_ROOT/etc/cron.daily/rt-clean-sessions
 
 # unneeded in installed copy
 rm $RPM_BUILD_ROOT%{_sbindir}/rt-test-dependencies

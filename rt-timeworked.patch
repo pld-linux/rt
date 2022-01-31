@@ -1,9 +1,7 @@
-diff --git a/share/html/Ticket/Update.html b/share/html/Ticket/Update.html
-index 6e73b50a81..ce81bf6c97 100644
---- a/share/html/Ticket/Update.html
-+++ b/share/html/Ticket/Update.html
-@@ -333,6 +333,15 @@ if ( $ARGS{'SubmitTicket'} ) {
-     $checks_failure = 1 unless $status;
+--- rt-5.0.2/share/html/Ticket/Update.html~	2021-09-14 23:42:01.000000000 +0200
++++ rt-5.0.2/share/html/Ticket/Update.html	2022-01-31 12:57:47.459829737 +0100
+@@ -410,6 +410,15 @@ if ( $ARGS{'SubmitTicket'} ) {
+     }
  }
  
 +if ( $ARGS{UpdateTimeWorked} ) {
