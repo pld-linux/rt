@@ -47,6 +47,7 @@ Version:	5.0.2
 Release:	2
 License:	GPL v2
 Group:		Applications
+# https://bestpractical.com/download-page
 Source0:	http://download.bestpractical.com/pub/rt/release/%{name}-%{version}.tar.gz
 # Source0-md5:	9885e05d251750672a8233c1c003fe90
 Source1:	%{name}-apache_dir.conf
