@@ -44,7 +44,7 @@ Summary:	Request Tracker
 Summary(pl.UTF-8):	Request Tracker - system do śledzenia zleceń
 Name:		rt
 Version:	5.0.3
-Release:	1
+Release:	2
 License:	GPL v2
 Group:		Applications
 # https://bestpractical.com/download-page
@@ -278,7 +278,7 @@ BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 # workarounds for bug in perl.req ("perl()") and ,,famous'' rpm's feature (RT::*)
-%define		_noautoreq		'perl().*' 'perl(RT.*)'
+%define		_noautoreq		perl().* perl(RT.*)
 %define		_noautoreq_perl		Encode::compat CGI::Fast Exception::Class::Base HTML::Mason::Request::PSGI
 
 %define         _webapps        /etc/webapps
