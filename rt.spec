@@ -10,9 +10,10 @@
 %define	perl_cgi_ver				4.00
 %define	perl_class_returnvalue_ver		0.40
 %define	perl_css_squish_ver			0.06
+%define perl_date_extract_ver                   0.07
 %define	perl_dbd_mysql				2.1018
 %define	perl_dbi_ver				1.37
-%define	perl_dbix_searchbuilder_ver		1.68
+%define	perl_dbix_searchbuilder_ver		1.76
 %define	perl_devel_stacktrace_ver		1.19
 %define	perl_digest_md5_ver			2.27
 %define	perl_gd_ver				1.48
@@ -43,13 +44,13 @@
 Summary:	Request Tracker
 Summary(pl.UTF-8):	Request Tracker - system do śledzenia zleceń
 Name:		rt
-Version:	5.0.3
-Release:	2
+Version:	5.0.4
+Release:	1
 License:	GPL v2
 Group:		Applications
 # https://bestpractical.com/download-page
 Source0:	http://download.bestpractical.com/pub/rt/release/%{name}-%{version}.tar.gz
-# Source0-md5:	ec8a8fc2fbbf1ccebb4825ca0e2aeac5
+# Source0-md5:	c1165d83363dd8c50c4e5aa9e5a84384
 Source1:	%{name}-apache_dir.conf
 Source2:	%{name}-apache_vhost.conf
 Source3:	%{name}-apache.conf
@@ -88,7 +89,9 @@ BuildRequires:	perl-Data-GUID
 BuildRequires:	perl-Data-ICal
 BuildRequires:	perl-Date-Extract
 BuildRequires:	perl-Date-Manip
+BuildRequires:  perl-Data-Page
 BuildRequires:	perl-Data-Page-Pageset
+BuildRequires:  perl-Date-Extract => %{perl_date_extract_ver}
 BuildRequires:	perl-DateTime-Format-Natural
 BuildRequires:	perl-Devel-GlobalDestruction
 BuildRequires:	perl-Devel-StackTrace >= %{perl_devel_stacktrace_ver}
@@ -108,7 +111,7 @@ BuildRequires:	perl-GD >= %{perl_gd_ver}
 BuildRequires:	perl-GD-Graph
 BuildRequires:	perl-GD-TextUtil
 BuildRequires:	perl-GnuPG-Interface
-BuildRequires:	perl-GraphViz
+BuildRequires:	perl-GraphViz2
 BuildRequires:	perl-HTML-FormatExternal
 BuildRequires:	perl-HTML-FormatText-WithLinks-AndTables
 BuildRequires:	perl-HTML-Gumbo
@@ -204,7 +207,7 @@ Requires:	perl-DBI >= %{perl_dbi_ver}
 Requires:	perl-DBIx-SearchBuilder >= %{perl_dbix_searchbuilder_ver}
 Requires:	perl-Data-GUID
 Requires:	perl-Data-ICal
-Requires:	perl-Date-Extract
+Requires:	perl-Date-Extract >= %{perl_date_extract_ver}
 Requires:	perl-Date-Manip
 Requires:	perl-Data-Page
 Requires:	perl-Data-Page-Pageset
@@ -220,7 +223,7 @@ Requires:	perl-File-Which
 Requires:	perl-GD >= %{perl_gd_ver}
 Requires:	perl-GD-Graph
 Requires:	perl-GnuPG-Interface >= 1.02
-Requires:	perl-GraphViz
+Requires:	perl-GraphViz2
 Requires:	perl-HTML-FormatExternal
 Requires:	perl-HTML-FormatText-WithLinks-AndTables
 Requires:	perl-HTML-Gumbo

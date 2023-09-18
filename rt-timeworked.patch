@@ -15,7 +15,7 @@
 +
  # check email addresses for RT's
  {
-     foreach my $field ( qw(UpdateCc UpdateBcc) ) {
+     my $recipient_check = RT::Ticket->new($session{'CurrentUser'});
 diff --git a/t/web/ticket_timeworked.t b/t/web/ticket_timeworked.t
 index dc52cebd84..16ad0f03a9 100644
 --- a/t/web/ticket_timeworked.t
