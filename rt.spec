@@ -13,7 +13,7 @@
 %define perl_date_extract_ver                   0.07
 %define	perl_dbd_mysql				2.1018
 %define	perl_dbi_ver				1.37
-%define	perl_dbix_searchbuilder_ver		1.76
+%define	perl_dbix_searchbuilder_ver		1.80
 %define	perl_devel_stacktrace_ver		1.19
 %define	perl_digest_md5_ver			2.27
 %define	perl_gd_ver				1.48
@@ -44,13 +44,13 @@
 Summary:	Request Tracker
 Summary(pl.UTF-8):	Request Tracker - system do śledzenia zleceń
 Name:		rt
-Version:	5.0.4
+Version:	5.0.7
 Release:	1
 License:	GPL v2
 Group:		Applications
 # https://bestpractical.com/download-page
 Source0:	http://download.bestpractical.com/pub/rt/release/%{name}-%{version}.tar.gz
-# Source0-md5:	c1165d83363dd8c50c4e5aa9e5a84384
+# Source0-md5:	3465862785bbecb827e5cab426a0d5eb
 Source1:	%{name}-apache_dir.conf
 Source2:	%{name}-apache_vhost.conf
 Source3:	%{name}-apache.conf
