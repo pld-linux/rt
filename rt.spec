@@ -43,13 +43,13 @@
 Summary:	Request Tracker
 Summary(pl.UTF-8):	Request Tracker - system do śledzenia zleceń
 Name:		rt
-Version:	4.4.6
+Version:	4.4.7
 Release:	1
 License:	GPL v2
 Group:		Applications
 # https://bestpractical.com/download-page
 Source0:	http://download.bestpractical.com/pub/rt/release/%{name}-%{version}.tar.gz
-# Source0-md5:	a34cde135dd5407df89d4a7ac752252f
+# Source0-md5:	5490c21a3841f8e53ccd30e7eaf482cd
 Source1:	%{name}-apache_dir.conf
 Source2:	%{name}-apache_vhost.conf
 Source3:	%{name}-apache.conf
@@ -58,6 +58,7 @@ Source5:	lighttpd.conf
 Patch0:		%{name}-layout.patch
 Patch1:		%{name}-config.patch
 Patch2:		rt-timeworked.patch
+Patch3:		searchbuilerver.patch
 URL:		http://www.bestpractical.com/rt/
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -322,6 +323,7 @@ Pliki wspomagające używanie RT z Apache.
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 
 mv aclocal.m4 acinclude.m4
 
