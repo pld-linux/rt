@@ -40,7 +40,7 @@
 %define	perl_text_template_ver			1.45
 %define	perl_xml_rss_ver			1.05
 #
-%bcond_with	testdeps	# used for checking dependencies
+%bcond_without	testdeps	# used for checking dependencies
 #
 Summary:	Request Tracker
 Summary(pl.UTF-8):	Request Tracker - system do śledzenia zleceń
