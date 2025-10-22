@@ -9,6 +9,7 @@
 %define	perl_apache_session_ver			1.53
 %define	perl_cgi_ver				4.00
 %define	perl_class_returnvalue_ver		0.40
+%define	perl_css_inliner_ver		4027
 %define	perl_css_squish_ver			0.06
 %define perl_date_extract_ver                   0.07
 %define	perl_dbd_mysql				2.1018
@@ -44,13 +45,13 @@
 Summary:	Request Tracker
 Summary(pl.UTF-8):	Request Tracker - system do śledzenia zleceń
 Name:		rt
-Version:	6.0.1
+Version:	6.0.2
 Release:	1
 License:	GPL v2
 Group:		Applications
 # https://bestpractical.com/download-page
 Source0:	http://download.bestpractical.com/pub/rt/release/%{name}-%{version}.tar.gz
-# Source0-md5:	f5de05f7503553d8935340217070dc8b
+# Source0-md5:	a6dad4dbddc40d0b68458345eb0d401d
 Source1:	%{name}-apache_dir.conf
 Source2:	%{name}-apache_vhost.conf
 Source3:	%{name}-apache.conf
@@ -70,6 +71,7 @@ BuildRequires:	perl-CGI >= %{perl_cgi_ver}
 BuildRequires:	perl-CGI-Emulate-PSGI
 BuildRequires:	perl-CGI-PSGI >= %{perl_cgi_psgi}
 BuildRequires:	perl-CGI-SpeedyCGI
+BuildRequires:	perl-CSS-Inliner >= %{perl_css_inliner_ver}
 BuildRequires:	perl-CSS-Minifier
 BuildRequires:	perl-CSS-Minifier-XS
 BuildRequires:	perl-CSS-Squish >= %{perl_css_squish_ver}
@@ -93,6 +95,7 @@ BuildRequires:  perl-Data-Page
 BuildRequires:	perl-Data-Page-Pageset
 BuildRequires:  perl-Date-Extract => %{perl_date_extract_ver}
 BuildRequires:	perl-DateTime-Format-Natural
+BuildRequires:	perl-DateTime-Set
 BuildRequires:	perl-Devel-GlobalDestruction
 BuildRequires:	perl-Devel-StackTrace >= %{perl_devel_stacktrace_ver}
 BuildRequires:	perl-Digest-MD5 >= %{perl_digest_md5_ver}
@@ -124,7 +127,10 @@ BuildRequires:	perl-HTML-Scrubber >= %{perl_html_scrubber_ver}
 BuildRequires:	perl-HTML-Tree
 BuildRequires:	perl-HTTP-Server-Simple >= %{perl_http_server_simple_ver}
 BuildRequires:	perl-HTTP-Server-Simple-Mason >= %{perl_http_server_simple_mason_ver}
+BuildRequires:	perl-Hash-Merge
+BuildRequires:	perl-Hash-Merge-Extra
 BuildRequires:	perl-IPC-Run3
+BuildRequires:	perl-Imager
 BuildRequires:	perl-JSON
 BuildRequires:	perl-JavaScript-Minifier
 BuildRequires:	perl-JavaScript-Minifier-XS
@@ -191,6 +197,7 @@ Requires:	perl-Business-Hours
 Requires:	perl-CGI >= %{perl_cgi_ver}
 Requires:	perl-CGI-Emulate-PSGI
 Requires:	perl-CGI-PSGI >= %{perl_cgi_psgi}
+Requires:	perl-CSS-Inliner >= %{perl_css_inliner_ver}
 Requires:	perl-CSS-Minifier
 Requires:	perl-CSS-Minifier-XS
 Requires:	perl-CSS-Squish >= %{perl_css_squish_ver}
@@ -212,6 +219,7 @@ Requires:	perl-Date-Manip
 Requires:	perl-Data-Page
 Requires:	perl-Data-Page-Pageset
 Requires:	perl-DateTime-Format-Natural
+Requires:	perl-DateTime-Set
 Requires:	perl-Devel-GlobalDestruction
 Requires:	perl-Devel-StackTrace >= %{perl_devel_stacktrace_ver}
 Requires:	perl-Digest-MD5 >= %{perl_digest_md5_ver}
@@ -234,7 +242,10 @@ Requires:	perl-HTML-RewriteAttributes >= %{perl_html_rewriteattributes_ver}
 Requires:	perl-HTML-Scrubber >= %{perl_html_scrubber_ver}
 Requires:	perl-HTTP-Server-Simple >= %{perl_http_server_simple_ver}
 Requires:	perl-HTTP-Server-Simple-Mason >= %{perl_http_server_simple_mason_ver}
+Requires:	perl-Hash-Merge
+Requires:	perl-Hash-Merge-Extra
 Requires:	perl-IPC-Run3
+Requires:	perl-Imager
 Requires:	perl-JSON
 Requires:	perl-JavaScript-Minifier
 Requires:	perl-JavaScript-Minifier-XS
