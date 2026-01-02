@@ -288,6 +288,7 @@ Requires:	perl-XML-RSS >= %{perl_xml_rss_ver}
 Requires:	perl-base >= %{perl_ver}
 Requires:	webapps
 Suggests:	perl-FCGI
+Obsoletes:	perl-RT-Authen-Token
 BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
