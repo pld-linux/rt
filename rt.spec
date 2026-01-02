@@ -18,6 +18,7 @@
 %define	perl_devel_stacktrace_ver		1.19
 %define	perl_digest_md5_ver			2.27
 %define	perl_gd_ver				1.48
+%define	perl_hash_merge_ver		0.302
 %define	perl_html_mason_ver			3:1.43
 %define	perl_html_rewriteattributes_ver		0.06
 %define	perl_html_scrubber_ver			0.08
@@ -127,7 +128,7 @@ BuildRequires:	perl-HTML-Scrubber >= %{perl_html_scrubber_ver}
 BuildRequires:	perl-HTML-Tree
 BuildRequires:	perl-HTTP-Server-Simple >= %{perl_http_server_simple_ver}
 BuildRequires:	perl-HTTP-Server-Simple-Mason >= %{perl_http_server_simple_mason_ver}
-BuildRequires:	perl-Hash-Merge
+BuildRequires:	perl-Hash-Merge >= %{perl_hash_merge_ver}
 BuildRequires:	perl-Hash-Merge-Extra
 BuildRequires:	perl-IPC-Run3
 BuildRequires:	perl-Imager
@@ -242,7 +243,7 @@ Requires:	perl-HTML-RewriteAttributes >= %{perl_html_rewriteattributes_ver}
 Requires:	perl-HTML-Scrubber >= %{perl_html_scrubber_ver}
 Requires:	perl-HTTP-Server-Simple >= %{perl_http_server_simple_ver}
 Requires:	perl-HTTP-Server-Simple-Mason >= %{perl_http_server_simple_mason_ver}
-Requires:	perl-Hash-Merge
+Requires:	perl-Hash-Merge >= %{perl_hash_merge_ver}
 Requires:	perl-Hash-Merge-Extra
 Requires:	perl-IPC-Run3
 Requires:	perl-Imager
