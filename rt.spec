@@ -37,7 +37,7 @@
 %define	perl_symbol_global_name_ver		0.05
 %define	perl_text_quoted_ver			2.07
 %define	perl_text_wikiformat_ver		0.76
-%define	perl_tree_simple_ver			1.18
+%define	perl_tree_simple_ver			1.34
 %define	perl_text_template_ver			1.45
 %define	perl_xml_rss_ver			1.05
 #
