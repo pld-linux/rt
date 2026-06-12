@@ -46,13 +46,13 @@
 Summary:	Request Tracker
 Summary(pl.UTF-8):	Request Tracker - system do śledzenia zleceń
 Name:		rt
-Version:	6.0.2
+Version:	6.0.3
 Release:	1
 License:	GPL v2
 Group:		Applications
 # https://bestpractical.com/download-page
 Source0:	http://download.bestpractical.com/pub/rt/release/%{name}-%{version}.tar.gz
-# Source0-md5:	a6dad4dbddc40d0b68458345eb0d401d
+# Source0-md5:	f13c084fd08ebcf799cee47ac1b82d3b
 Source1:	%{name}-apache_dir.conf
 Source2:	%{name}-apache_vhost.conf
 Source3:	%{name}-apache.conf
@@ -90,7 +90,7 @@ BuildRequires:	perl-DBIx-DataSource >= 0.02
 BuildRequires:	perl-DBIx-SearchBuilder >= %{perl_dbix_searchbuilder_ver}
 BuildRequires:	perl-Data-GUID
 BuildRequires:	perl-Data-ICal
-BuildRequires:	perl-Date-Extract
+BuildRequires:	perl-Date-Extract >= %{perl_date_extract_ver}
 BuildRequires:	perl-Date-Manip
 BuildRequires:  perl-Data-Page
 BuildRequires:	perl-Data-Page-Pageset
