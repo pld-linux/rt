@@ -1,0 +1,88 @@
+diff -urN rt-4.4.9.orig/docs/full_text_indexing.pod rt-4.4.9/docs/full_text_indexing.pod
+--- rt-4.4.9.orig/docs/full_text_indexing.pod	2025-10-22 18:58:20.000000000 +0200
++++ rt-4.4.9/docs/full_text_indexing.pod	2026-08-03 21:43:19.859745768 +0200
+@@ -107,12 +107,14 @@
+ 
+ =head3 Caveats
+ 
+-Searching is done in "boolean mode."  As such, the TicketSQL query
+-C<Content LIKE 'winter 2014'> will return tickets with transactions that
+-contain I<either> word.  To find transactions which contain both (but
+-not necessarily adjacent), use C<Content LIKE '+winter +2014'>.  To find
+-transactions containing the precise phrase, use C<Content LIKE '"winter
+-2014">.
++Searching is done in "boolean mode."  A query that uses no boolean syntax
++of its own is wrapped in double quotes, so the TicketSQL query C<Content
++LIKE 'winter 2014'> returns tickets with transactions containing that
++precise phrase, and C<Content LIKE 'example.com'> matches that domain
++rather than every occurrence of C<example>.  To find transactions which
++contain both words, but not necessarily adjacent, use C<Content LIKE
++'+winter +2014'>.  Queries that already contain quotes, wildcards, or a
++leading operator are passed to mysql unchanged.
+ 
+ See the mysql documentation, at
+ L<http://dev.mysql.com/doc/refman/5.6/en/fulltext-boolean.html>, for a
+diff -urN rt-4.4.9.orig/lib/RT/Tickets.pm rt-4.4.9/lib/RT/Tickets.pm
+--- rt-4.4.9.orig/lib/RT/Tickets.pm	2025-10-22 18:58:20.000000000 +0200
++++ rt-4.4.9/lib/RT/Tickets.pm	2026-08-03 21:56:30.079745801 +0200
+@@ -1025,11 +1025,20 @@
+         }
+         elsif ( $db_type eq 'mysql' and not $config->{Sphinx}) {
+             my $dbh = $RT::Handle->dbh;
++            # Wrap in double quotes so the value matches as a phrase instead of
++            # an implicit OR of the tokens mysql splits it into; without this
++            # 'example.com' matches every 'example'. Values already using
++            # boolean-mode syntax are left alone: quotes and wildcards
++            # anywhere, and +-<>~( in operator position (start of a word).
++            my $search_value = $value =~ /\W/
++                            && $value !~ /["*]/
++                            && $value !~ /(?:^|\s)[-+<>~(]/
++                ? qq{"$value"} : $value;
+             $self->Limit(
+                 %rest,
+                 FUNCTION    => "MATCH($alias.Content)",
+                 OPERATOR    => 'AGAINST',
+-                VALUE       => "(". $dbh->quote($value) ." IN BOOLEAN MODE)",
++                VALUE       => "(". $dbh->quote($search_value) ." IN BOOLEAN MODE)",
+                 QUOTEVALUE  => 0,
+             );
+             # As with Oracle, above, this forces the LEFT JOINs into
+diff -urN rt-4.4.9.orig/t/fts/indexed_mysql.t rt-4.4.9/t/fts/indexed_mysql.t
+--- rt-4.4.9.orig/t/fts/indexed_mysql.t	2025-10-22 18:58:20.000000000 +0200
++++ rt-4.4.9/t/fts/indexed_mysql.t	2026-08-03 21:56:38.876412469 +0200
+@@ -78,6 +78,35 @@
+     "Content LIKE 'french'" => { first => 0, second => 1, third => 0, fourth => 0 },
+ );
+ 
++@tickets = RT::Test->create_tickets(
++    { Queue => $q->id },
++    { Subject => 'phrase', Content => 'winter 2014 report' },
++    { Subject => 'scattered', Content => '2014 summer winter' },
++);
++sync_index();
++
++run_tests(
++    # multi-word values match as a phrase, not as an OR of the words
++    "Content LIKE 'winter 2014'" => { phrase => 1, scattered => 0 },
++    # values carrying boolean syntax must reach mysql unchanged
++    "Content LIKE '+winter +2014'" => { phrase => 1, scattered => 1 },
++    "Content LIKE '\"winter 2014\" report'" => { phrase => 1, scattered => 0 },
++);
++
++@tickets = RT::Test->create_tickets(
++    { Queue => $q->id },
++    { Subject => 'dotcom', Content => 'contact example.com expires' },
++    { Subject => 'dotorg', Content => 'contact example.org expires' },
++    { Subject => 'bare', Content => 'just example without a domain' },
++);
++sync_index();
++
++run_tests(
++    # a value the tokenizer would split must not decay into its tokens
++    "Content LIKE 'example.com'" => { dotcom => 1, dotorg => 0, bare => 0 },
++    "Content LIKE 'example'" => { dotcom => 1, dotorg => 1, bare => 1 },
++);
++
+ @tickets = ();
+ 
+ done_testing;
