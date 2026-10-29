@@ -1,0 +1,38 @@
+# RSS feeds: OrderBy must start with a letter, so text cut off the signed Query cannot move into it
+From bcec66f977efbf933b735023d4c8805cc871eda8 Mon Sep 17 00:00:00 2001
+From: PLD backport <claude.domena@gmail.com>
+Date: Thu, 29 Oct 2026 22:00:10 +0100
+Subject: [PATCH] Require RSS feed sort fields to start with a letter
+
+The CVE-2026-108278 fix checks that the argument after Query looks like
+a sort argument, but with Order empty the OrderBy pattern also accepts a
+leading digit. Digits trimmed off the end of a signed Query therefore
+still validate: a feed signed for Query "id > 1000", Order "", OrderBy
+"Created" is accepted as Query "id > 1", OrderBy "000Created". Today the
+database rejects the resulting ORDER BY main.000Created and the feed
+comes back empty, so nothing leaks, but the signature check should not
+rely on that.
+
+Every RT sort field (core columns, CustomField.{..}, CF.{..}, role and
+custom role columns, Custom.Ownership) starts with a letter, so require
+that.
+
+PLD hardening beyond upstream: RT 5.0.11 and 6.0.4 carry the same check.
+
+CVE: CVE-2026-108278
+
+diff --git a/share/html/NoAuth/rss/dhandler b/share/html/NoAuth/rss/dhandler
+index ba8581fc4..55282c802 100644
+--- a/share/html/NoAuth/rss/dhandler
++++ b/share/html/NoAuth/rss/dhandler
+@@ -79,7 +79,9 @@ my @search_args = qw(Query Order OrderBy);
+ # a sort argument keeps the split where it was signed.
+ my %sort_format = (
+     Order   => qr{^(?:ASC|DESC)?$}i,
+-    OrderBy => qr{^[\w.]*(?:\{[^{}]*\}[\w.]*)*$},
++    # Sort fields start with a letter; digits trimmed off the end of the
++    # Query (e.g. "id > 1000" replayed as "id > 1") must not pass as one
++    OrderBy => qr{^(?:[A-Za-z_][\w.]*(?:\{[^{}]*\}[\w.]*)*)?$},
+ );
+ 
+ for my $arg (qw(Order OrderBy)) {

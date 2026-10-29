@@ -44,7 +44,7 @@ Summary:	Request Tracker
 Summary(pl.UTF-8):	Request Tracker - system do śledzenia zleceń
 Name:		rt
 Version:	4.4.9
-Release:	2
+Release:	3
 License:	GPL v2
 Group:		Applications
 # https://bestpractical.com/download-page
@@ -59,6 +59,40 @@ Patch0:		%{name}-layout.patch
 Patch1:		%{name}-config.patch
 Patch2:		rt-timeworked.patch
 Patch3:		%{name}-fts-phrase.patch
+# security fixes from RT 5.0.10 and 5.0.11 backported to 4.4, which upstream
+# no longer releases; each part carries its upstream cherry-pick line
+Patch100:	%{name}-CVE-2026-41073.patch
+Patch101:	%{name}-tsv-cells.patch
+Patch102:	%{name}-CVE-2026-41075.patch
+Patch103:	%{name}-CVE-2026-41076.patch
+Patch104:	%{name}-CVE-2026-6841.patch
+Patch105:	%{name}-CVE-2026-44229.patch
+Patch106:	%{name}-CVE-2026-44231.patch
+Patch107:	%{name}-CVE-2026-108270.patch
+Patch108:	%{name}-CVE-2026-108271.patch
+Patch109:	%{name}-attribute-links.patch
+Patch110:	%{name}-CVE-2026-108272.patch
+Patch111:	%{name}-CVE-2026-108273.patch
+Patch112:	%{name}-CVE-2026-108274.patch
+Patch113:	%{name}-CVE-2026-108275.patch
+Patch114:	%{name}-CVE-2026-108276.patch
+Patch115:	%{name}-CVE-2026-108278.patch
+Patch116:	%{name}-rss-orderby.patch
+Patch117:	%{name}-CVE-2026-108280.patch
+Patch118:	%{name}-CVE-2026-108281.patch
+Patch119:	%{name}-CVE-2026-108282.patch
+Patch120:	%{name}-CVE-2026-108342.patch
+Patch121:	%{name}-CVE-2026-108343.patch
+Patch122:	%{name}-CVE-2026-108344.patch
+Patch123:	%{name}-CVE-2026-108346.patch
+Patch124:	%{name}-CVE-2026-108347.patch
+Patch125:	%{name}-CVE-2026-108348.patch
+Patch126:	%{name}-CVE-2026-108349.patch
+Patch127:	%{name}-CVE-2026-108350.patch
+Patch128:	%{name}-CVE-2026-108351.patch
+Patch129:	%{name}-CVE-2026-108352.patch
+Patch130:	%{name}-CVE-2026-108353.patch
+Patch131:	%{name}-CVE-2026-108371.patch
 URL:		http://www.bestpractical.com/rt/
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -79,6 +113,7 @@ BuildRequires:	perl-Class-ReturnValue >= %{perl_class_returnvalue_ver}
 BuildRequires:	perl-Convert-Color
 BuildRequires:	perl-Crypt-Eksblowfish
 BuildRequires:	perl-Crypt-SSLeay
+BuildRequires:	perl-Crypt-URandom
 BuildRequires:	perl-Crypt-X509
 BuildRequires:	perl-DBD-mysql >= %{perl_dbd_mysql}
 BuildRequires:	perl-DBI >= %{perl_dbi_ver}
@@ -109,7 +144,7 @@ BuildRequires:	perl-GnuPG-Interface
 BuildRequires:	perl-GraphViz
 BuildRequires:	perl-HTML-FormatExternal
 BuildRequires:	perl-HTML-FormatText-WithLinks-AndTables
-BuildRequires:	perl-HTML-Gumbo
+BuildRequires:	perl-HTML-Gumbo >= 0.19
 BuildRequires:	perl-HTML-Mason >= %{perl_html_mason_ver}
 BuildRequires:	perl-HTML-Mason-PSGIHandler
 BuildRequires:	perl-HTML-Parser
@@ -211,7 +246,7 @@ Requires:	perl-GnuPG-Interface
 Requires:	perl-GraphViz
 Requires:	perl-HTML-FormatExternal
 Requires:	perl-HTML-FormatText-WithLinks-AndTables
-Requires:	perl-HTML-Gumbo
+Requires:	perl-HTML-Gumbo >= 0.19
 Requires:	perl-HTML-Mason >= %{perl_html_mason_ver}
 Requires:	perl-HTML-Mason-PSGIHandler
 Requires:	perl-HTML-Quoted
@@ -324,6 +359,38 @@ Pliki wspomagające używanie RT z Apache.
 %patch -P1 -p1
 %patch -P2 -p1
 %patch -P3 -p1
+%patch -P100 -p1
+%patch -P101 -p1
+%patch -P102 -p1
+%patch -P103 -p1
+%patch -P104 -p1
+%patch -P105 -p1
+%patch -P106 -p1
+%patch -P107 -p1
+%patch -P108 -p1
+%patch -P109 -p1
+%patch -P110 -p1
+%patch -P111 -p1
+%patch -P112 -p1
+%patch -P113 -p1
+%patch -P114 -p1
+%patch -P115 -p1
+%patch -P116 -p1
+%patch -P117 -p1
+%patch -P118 -p1
+%patch -P119 -p1
+%patch -P120 -p1
+%patch -P121 -p1
+%patch -P122 -p1
+%patch -P123 -p1
+%patch -P124 -p1
+%patch -P125 -p1
+%patch -P126 -p1
+%patch -P127 -p1
+%patch -P128 -p1
+%patch -P129 -p1
+%patch -P130 -p1
+%patch -P131 -p1
 
 mv aclocal.m4 acinclude.m4
 

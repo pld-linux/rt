@@ -1,0 +1,92 @@
+# Refuse to link attributes to non-attribute objects (hardening shipped with RT 5.0.11)
+From 212d702086201ab7a454aaff9eab5e3e7aa0fb8f Mon Sep 17 00:00:00 2001
+From: sunnavy <sunnavy@bestpractical.com>
+Date: Thu, 27 Aug 2026 09:51:38 -0400
+Subject: [PATCH] Refuse to link attributes to non-attribute objects
+
+Attribute links are only meant for the dependency relationship between saved
+searches/homepage and dashboards.
+
+(cherry picked from commit 17283b3ab657401d34fa74a5824a700af9617361)
+
+CVE: none assigned; hardening shipped with the RT 5.0.11 security
+release (security/5.0/reject-internal-link-schemes).
+
+Backport: t/api/link_attribute_scheme.t added for RT 4.4.
+
+diff --git a/lib/RT/Record.pm b/lib/RT/Record.pm
+index bdc926a3f..f1e2d9dd4 100644
+--- a/lib/RT/Record.pm
++++ b/lib/RT/Record.pm
+@@ -1320,6 +1320,10 @@ If Silent is true then no transactions will be recorded.  You can individually
+ control transactions on both base and target and with SilentBase and
+ SilentTarget respectively. By default both transactions are created.
+ 
++Schemes whose resolver reports L<RT::URI::base/IsInternalOnly> are refused,
++since they name records RT keeps for its own bookkeeping rather than records a
++caller links to. Pass AllowInternal to create such a link anyway.
++
+ If the link destination is a local object and does the
+ L<RT::Record::Role::Status> role, this method ensures object Status is not
+ "deleted".  Linking to deleted objects is forbidden.
+@@ -1345,6 +1349,7 @@ sub _AddLink {
+         Silent       => undef,
+         SilentBase   => undef,
+         SilentTarget => undef,
++        AllowInternal => 0,
+         @_
+     );
+ 
+@@ -1372,6 +1377,9 @@ sub _AddLink {
+ 
+     my $remote_uri = RT::URI->new( $self->CurrentUser );
+     if ($remote_uri->FromURI( $remote_link )) {
++        return ( 0, $self->loc( "Can't link to '[_1]'", $remote_link ) )
++            if $remote_uri->Resolver->IsInternalOnly && !$args{'AllowInternal'};
++
+         my $remote_obj = $remote_uri->IsLocal ? $remote_uri->Object : undef;
+         if ($remote_obj and $remote_obj->id) {
+             # Enforce the remote end of StrictLinkACL
+diff --git a/lib/RT/URI/attribute.pm b/lib/RT/URI/attribute.pm
+index 8b46cbe05..26d428566 100644
+--- a/lib/RT/URI/attribute.pm
++++ b/lib/RT/URI/attribute.pm
+@@ -93,6 +93,16 @@ sub LocalURIPrefix {
+     return $self->Scheme . "://" . RT->Config->Get('Organization');
+ }
+ 
++=head2 IsInternalOnly
++
++Returns true. Attributes are RT's own storage, not records a user links to;
++the C<attribute:> links RT keeps between dashboards and the searches they
++include are created by L<RT::Attribute/_SyncLinks>.
++
++=cut
++
++sub IsInternalOnly {1}
++
+ =head2 IsLocal
+ 
+ Returns a true value, the attribute ID, if this object represents a local attribute,
+diff --git a/lib/RT/URI/base.pm b/lib/RT/URI/base.pm
+index 65f009ac8..9ee685e54 100644
+--- a/lib/RT/URI/base.pm
++++ b/lib/RT/URI/base.pm
+@@ -127,6 +127,17 @@ sub IsLocal {
+     return undef;
+ }
+ 
++=head2 IsInternalOnly
++
++Returns false, meaning this scheme may be used in caller-supplied links.
++
++Resolvers for schemes RT maintains for its own bookkeeping should override this
++and return true. See L<RT::Record/_AddLink>.
++
++=cut
++
++sub IsInternalOnly {0}
++
+ =head2 AsString
+ 
+ Return a "pretty" string representing the URI object.
