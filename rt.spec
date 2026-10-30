@@ -46,7 +46,7 @@ Summary:	Request Tracker
 Summary(pl.UTF-8):	Request Tracker - system do śledzenia zleceń
 Name:		rt
 Version:	4.4.9
-Release:	3
+Release:	4
 License:	GPL v2
 Group:		Applications
 # https://bestpractical.com/download-page

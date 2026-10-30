@@ -2,7 +2,7 @@ diff --git a/share/html/Ticket/Update.html b/share/html/Ticket/Update.html
 index 6e73b50a81..ce81bf6c97 100644
 --- a/share/html/Ticket/Update.html
 +++ b/share/html/Ticket/Update.html
-@@ -333,6 +333,15 @@ if ( $ARGS{'SubmitTicket'} ) {
+@@ -387,6 +387,15 @@ if ( $ARGS{'SubmitTicket'} ) {
      }
  }
  
