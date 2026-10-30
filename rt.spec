@@ -25,11 +25,11 @@
 %define	perl_locale_maketext_ver		1.06
 %define	perl_log_dispatch_ver			2.30
 %define	perl_mailtools_ver			2.12
-%define	perl_mime_tools_ver			5.425
+%define	perl_mime_tools_ver			5.522
 %define	perl_module_versions_report_ver		1.05
 %define	perl_cgi_psgi				0.12
 %define	perl_plack_ver				1.0002
-%define	perl_starlet_ver			0.20
+%define	perl_starlet_ver			0.33
 %define	perl_storable_ver			2.08
 %define	perl_symbol_global_name_ver		0.05
 %define	perl_text_quoted_ver			2.07
@@ -38,7 +38,7 @@
 %define	perl_text_template_ver			1.45
 %define	perl_xml_rss_ver			1.05
 #
-%bcond_with	testdeps	# used for checking dependencies
+%bcond_without	testdeps	# used for checking dependencies
 #
 Summary:	Request Tracker
 Summary(pl.UTF-8):	Request Tracker - system do śledzenia zleceń
@@ -113,7 +113,7 @@ BuildRequires:	perl-Class-ReturnValue >= %{perl_class_returnvalue_ver}
 BuildRequires:	perl-Convert-Color
 BuildRequires:	perl-Crypt-Eksblowfish
 BuildRequires:	perl-Crypt-SSLeay
-BuildRequires:	perl-Crypt-URandom
+BuildRequires:	perl-Crypt-URandom >= 0.55
 BuildRequires:	perl-Crypt-X509
 BuildRequires:	perl-DBD-mysql >= %{perl_dbd_mysql}
 BuildRequires:	perl-DBI >= %{perl_dbi_ver}
@@ -222,6 +222,7 @@ Requires:	perl-Class-ReturnValue >= %{perl_class_returnvalue_ver}
 Requires:	perl-Convert-Color
 Requires:	perl-Crypt-Eksblowfish
 Requires:	perl-Crypt-SSLeay
+Requires:	perl-Crypt-URandom >= 0.55
 Requires:	perl-Crypt-X509
 Requires:	perl-DBD-mysql >= %{perl_dbd_mysql}
 Requires:	perl-DBI >= %{perl_dbi_ver}
