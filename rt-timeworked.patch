@@ -1,6 +1,6 @@
---- rt-5.0.2/share/html/Ticket/Update.html~	2021-09-14 23:42:01.000000000 +0200
-+++ rt-5.0.2/share/html/Ticket/Update.html	2022-01-31 12:57:47.459829737 +0100
-@@ -410,6 +410,15 @@ if ( $ARGS{'SubmitTicket'} ) {
+--- rt-6.0.4/share/html/Ticket/Update.html.orig	2026-10-30 08:44:49.059999999 +0100
++++ rt-6.0.4/share/html/Ticket/Update.html	2026-10-30 08:44:49.069999999 +0100
+@@ -184,6 +184,15 @@
      }
  }
  
@@ -16,12 +16,10 @@
  # check email addresses for RT's
  {
      foreach my $field ( qw(UpdateCc UpdateBcc) ) {
-diff --git a/t/web/ticket_timeworked.t b/t/web/ticket_timeworked.t
-index dc52cebd84..16ad0f03a9 100644
---- a/t/web/ticket_timeworked.t
-+++ b/t/web/ticket_timeworked.t
-@@ -146,4 +146,70 @@ diag "checking child ticket 2 for expected timeworked data"; {
-     );
+--- rt-6.0.4/t/web/ticket_timeworked.t.orig	2026-10-30 08:44:49.066666666 +0100
++++ rt-6.0.4/t/web/ticket_timeworked.t	2026-10-30 08:45:00.826808347 +0100
+@@ -196,4 +196,70 @@
+             { %{ $root->Preferences($RT::System) || {} }, AutocompleteQueues => 0 } );
  }
  
 +diag "checking invalid and edge cased worked time on update";
