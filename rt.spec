@@ -9,6 +9,7 @@
 %define	perl_apache_session_ver			1.53
 %define	perl_cgi_ver				4.00
 %define	perl_class_returnvalue_ver		0.40
+%define	perl_crypt_urandom_ver			0.55
 %define	perl_css_squish_ver			0.06
 %define	perl_dbd_mysql				2.1018
 %define	perl_dbi_ver				1.37
@@ -16,6 +17,7 @@
 %define	perl_devel_stacktrace_ver		1.19
 %define	perl_digest_md5_ver			2.27
 %define	perl_gd_ver				1.48
+%define	perl_html_gumbo_ver			0.19
 %define	perl_html_mason_ver			3:1.43
 %define	perl_html_rewriteattributes_ver		0.05
 %define	perl_html_scrubber_ver			0.08
@@ -113,7 +115,7 @@ BuildRequires:	perl-Class-ReturnValue >= %{perl_class_returnvalue_ver}
 BuildRequires:	perl-Convert-Color
 BuildRequires:	perl-Crypt-Eksblowfish
 BuildRequires:	perl-Crypt-SSLeay
-BuildRequires:	perl-Crypt-URandom >= 0.55
+BuildRequires:	perl-Crypt-URandom >= %{perl_crypt_urandom_ver}
 BuildRequires:	perl-Crypt-X509
 BuildRequires:	perl-DBD-mysql >= %{perl_dbd_mysql}
 BuildRequires:	perl-DBI >= %{perl_dbi_ver}
@@ -144,7 +146,7 @@ BuildRequires:	perl-GnuPG-Interface
 BuildRequires:	perl-GraphViz
 BuildRequires:	perl-HTML-FormatExternal
 BuildRequires:	perl-HTML-FormatText-WithLinks-AndTables
-BuildRequires:	perl-HTML-Gumbo >= 0.19
+BuildRequires:	perl-HTML-Gumbo >= %{perl_html_gumbo_ver}
 BuildRequires:	perl-HTML-Mason >= %{perl_html_mason_ver}
 BuildRequires:	perl-HTML-Mason-PSGIHandler
 BuildRequires:	perl-HTML-Parser
@@ -222,7 +224,7 @@ Requires:	perl-Class-ReturnValue >= %{perl_class_returnvalue_ver}
 Requires:	perl-Convert-Color
 Requires:	perl-Crypt-Eksblowfish
 Requires:	perl-Crypt-SSLeay
-Requires:	perl-Crypt-URandom >= 0.55
+Requires:	perl-Crypt-URandom >= %{perl_crypt_urandom_ver}
 Requires:	perl-Crypt-X509
 Requires:	perl-DBD-mysql >= %{perl_dbd_mysql}
 Requires:	perl-DBI >= %{perl_dbi_ver}
@@ -247,7 +249,7 @@ Requires:	perl-GnuPG-Interface
 Requires:	perl-GraphViz
 Requires:	perl-HTML-FormatExternal
 Requires:	perl-HTML-FormatText-WithLinks-AndTables
-Requires:	perl-HTML-Gumbo >= 0.19
+Requires:	perl-HTML-Gumbo >= %{perl_html_gumbo_ver}
 Requires:	perl-HTML-Mason >= %{perl_html_mason_ver}
 Requires:	perl-HTML-Mason-PSGIHandler
 Requires:	perl-HTML-Quoted
