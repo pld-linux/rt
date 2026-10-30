@@ -1,0 +1,186 @@
+# MySQL utf8 columns cannot store characters above U+FFFF (emoji): replace them with U+FFFD
+# instead of losing the whole message, ticket or user, and index such messages too
+diff -urN rt-4.4.9.orig/lib/RT/Handle.pm rt-4.4.9/lib/RT/Handle.pm
+--- rt-4.4.9.orig/lib/RT/Handle.pm	2025-10-22 18:58:20.000000000 +0200
++++ rt-4.4.9/lib/RT/Handle.pm	2026-10-30 22:08:18.626666666 +0100
+@@ -141,6 +141,24 @@
+     $self->dbh->{'LongReadLen'} = RT->Config->Get('MaxAttachmentSize');
+ }
+ 
++=head2 ReplaceUnstorableCharacters VALUE
++
++The MySQL connection and text columns use the 3-byte C<utf8> character
++set, which has no room for characters above U+FFFF, such as emoji; MySQL
++rejects the whole row that carries one.  Returns VALUE with each such
++character replaced by U+FFFD.  Other databases get VALUE unchanged.
++
++=cut
++
++sub ReplaceUnstorableCharacters {
++    my $self  = shift;
++    my $value = shift;
++
++    $value =~ s/[^\x{0}-\x{FFFF}]/\x{FFFD}/g
++        if defined $value and RT->Config->Get('DatabaseType') eq 'mysql';
++    return $value;
++}
++
+ =head2 BuildDSN
+ 
+ Build the DSN for the RT database. Doesn't take any parameters, draws all that
+diff -urN rt-4.4.9.orig/lib/RT/Record.pm rt-4.4.9/lib/RT/Record.pm
+--- rt-4.4.9.orig/lib/RT/Record.pm	2026-10-30 22:10:47.799414041 +0100
++++ rt-4.4.9/lib/RT/Record.pm	2026-10-30 22:08:21.179999999 +0100
+@@ -632,6 +632,18 @@
+ 
+ }
+ 
++# DBIx::SearchBuilder passes every column through TruncateValue in Create
++# and _Set; binary columns hold bytes and keep them as they are
++sub TruncateValue {
++    my $self  = shift;
++    my $key   = shift;
++    my $value = shift;
++
++    $value = $self->_Handle->ReplaceUnstorableCharacters($value)
++        unless ( $self->_Accessible( $key, 'type' ) // '' ) =~ /blob|binary/i;
++    return $self->SUPER::TruncateValue( $key, $value );
++}
++
+ # Set up defaults for DBIx::SearchBuilder::Record::Cachable
+ 
+ sub _CacheConfig {
+diff -urN rt-4.4.9.orig/sbin/rt-fulltext-indexer.in rt-4.4.9/sbin/rt-fulltext-indexer.in
+--- rt-4.4.9.orig/sbin/rt-fulltext-indexer.in	2025-10-22 18:58:20.000000000 +0200
++++ rt-4.4.9/sbin/rt-fulltext-indexer.in	2026-10-30 22:08:22.546666666 +0100
+@@ -220,7 +220,8 @@
+ 
+             my $text = $a->Content // "";
+             HTML::Entities::decode_entities($text) if $a->ContentType eq "text/html";
+-            push @insert, join("\n", $a->Subject // "", $text), $a->id;
++            push @insert, $RT::Handle->ReplaceUnstorableCharacters(
++                join("\n", $a->Subject // "", $text) ), $a->id;
+             $found++;
+         }
+         return unless $found;
+diff -urN rt-4.4.9.orig/t/fts/indexed_mysql.t rt-4.4.9/t/fts/indexed_mysql.t
+--- rt-4.4.9.orig/t/fts/indexed_mysql.t	2026-10-30 22:10:47.741480744 +0100
++++ rt-4.4.9/t/fts/indexed_mysql.t	2026-10-30 22:07:48.456666666 +0100
+@@ -107,6 +107,17 @@
+     "Content LIKE 'example'" => { dotcom => 1, dotorg => 1, bare => 1 },
+ );
+ 
++@tickets = RT::Test->create_tickets(
++    { Queue => $q->id },
++    { Subject => 'emoji', Content => "saved to floppy \x{1F4BE} today" },
++);
++sync_index();
++
++run_tests(
++    # a character mysql cannot store must not keep the rest out of the index
++    "Content LIKE 'floppy'" => { emoji => 1 },
++);
++
+ @tickets = ();
+ 
+ done_testing;
+diff -urN rt-4.4.9.orig/t/mail/non-bmp-characters.t rt-4.4.9/t/mail/non-bmp-characters.t
+--- rt-4.4.9.orig/t/mail/non-bmp-characters.t	1970-01-01 01:00:00.000000000 +0100
++++ rt-4.4.9/t/mail/non-bmp-characters.t	1970-01-01 01:00:00.000000000 +0100
+@@ -0,0 +1,96 @@
++use strict;
++use warnings;
++
++use RT::Test tests => undef;
++
++# MySQL text columns are 3-byte utf8, which cannot hold characters above
++# U+FFFF; RT stores U+FFFD in their place and keeps the rest of the message
++my $floppy = "\x{1F4BE}";
++my $stored = RT->Config->Get('DatabaseType') eq 'mysql' ? "\x{FFFD}" : $floppy;
++
++ok( RT::Test->set_rights(
++    { Principal => 'Everyone', Right => [qw(CreateTicket ReplyToTicket)] },
++), 'granted rights' );
++
++sub mail {
++    my %args = @_;
++    return MIME::Entity->build(
++        From    => Encode::encode( 'MIME-Header', "$floppy $args{Name}" ) . " <$args{Address}>",
++        To      => 'rt@example.com',
++        Subject => Encode::encode( 'MIME-Header', $args{Subject} ),
++        Type    => 'text/plain',
++        Charset => 'UTF-8',
++        Data    => [ Encode::encode( 'UTF-8', $args{Body} ) ],
++    )->stringify;
++}
++
++diag 'A new ticket from a new sender, with the character in the name, subject and body';
++{
++    my ( $status, $id ) = RT::Test->send_via_mailgate( mail(
++        Name    => 'Jan',
++        Address => 'jan@example.com',
++        Subject => "$floppy backup report",
++        Body    => "backup $floppy done\n",
++    ) );
++    is $status >> 8, 0, 'the mail gateway exited normally';
++
++    my $ticket = RT::Ticket->new( RT->SystemUser );
++    $ticket->Load($id);
++    ok $ticket->id, 'created a ticket';
++    is $ticket->Subject, "$stored backup report", 'ticket subject';
++
++    my $user = RT::User->new( RT->SystemUser );
++    $user->LoadByEmail('jan@example.com');
++    is $user->RealName, "$stored Jan", 'requestor name';
++
++    my $create = $ticket->Transactions->First;
++    ok $create && $create->Type eq 'Create', 'recorded the create transaction';
++    like $create && $create->Content, qr/backup $floppy done/, 'the body keeps the character';
++}
++
++diag 'A reply from a known sender with the character in the From header';
++{
++    my $user = RT::Test->load_or_create_user( EmailAddress => 'ola@example.com' );
++    my $ticket = RT::Test->create_ticket( Queue => 'General', Subject => 'storage report' );
++    my $tag = '[' . RT->Config->Get('rtname') . ' #' . $ticket->id . ']';
++
++    my ($status) = RT::Test->send_via_mailgate( mail(
++        Name    => 'Ola',
++        Address => 'ola@example.com',
++        Subject => "Re: $tag storage report",
++        Body    => "thanks $floppy\n",
++    ) );
++    is $status >> 8, 0, 'the mail gateway exited normally';
++
++    my $replies = $ticket->Transactions;
++    $replies->Limit( FIELD => 'Type', VALUE => 'Correspond' );
++    my $reply = $replies->First;
++    my $attachment = $reply && $reply->Attachments->First;
++    like $reply && $reply->Content, qr/thanks $floppy/, 'the reply keeps its body';
++    like $attachment && $attachment->Headers, qr/^From: "\Q$stored\E Ola"/m,
++        'the reply keeps its headers';
++
++    # the transaction itself stores the subject
++    ($status) = RT::Test->send_via_mailgate( mail(
++        Name    => 'Ola',
++        Address => 'ola@example.com',
++        Subject => "Re: $tag $floppy storage report",
++        Body    => "again $floppy\n",
++    ) );
++    is $status >> 8, 0, 'the mail gateway exited normally';
++    $replies->RedoSearch;
++    my $second = $replies->ItemsArrayRef->[1];
++    ok $second, 'recorded the reply with the character in its subject';
++    like $second && $second->Content, qr/again $floppy/, 'that reply keeps its body';
++
++    my $errors = $ticket->Transactions;
++    $errors->Limit( FIELD => 'Type', VALUE => 'AttachmentError' );
++    is $errors->Count, 0, 'no transaction lost its content';
++
++    my ( $ok, $msg ) = $ticket->SetSubject("$floppy renamed");
++    ok $ok, "set the subject: $msg";
++    $ticket->Load( $ticket->id );
++    is $ticket->Subject, "$stored renamed", 'new ticket subject';
++}
++
++done_testing;

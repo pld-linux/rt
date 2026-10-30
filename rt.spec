@@ -61,6 +61,7 @@ Patch0:		%{name}-layout.patch
 Patch1:		%{name}-config.patch
 Patch2:		rt-timeworked.patch
 Patch3:		%{name}-fts-phrase.patch
+Patch4:		%{name}-mysql-non-bmp.patch
 # security fixes from RT 5.0.10 and 5.0.11 backported to 4.4, which upstream
 # no longer releases; each part carries its upstream cherry-pick line
 Patch100:	%{name}-CVE-2026-41073.patch
@@ -362,6 +363,7 @@ Pliki wspomagające używanie RT z Apache.
 %patch -P1 -p1
 %patch -P2 -p1
 %patch -P3 -p1
+%patch -P4 -p1
 %patch -P100 -p1
 %patch -P101 -p1
 %patch -P102 -p1

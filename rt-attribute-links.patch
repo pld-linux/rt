@@ -18,7 +18,7 @@ diff --git a/lib/RT/Record.pm b/lib/RT/Record.pm
 index bdc926a3f..f1e2d9dd4 100644
 --- a/lib/RT/Record.pm
 +++ b/lib/RT/Record.pm
-@@ -1320,6 +1320,10 @@ If Silent is true then no transactions will be recorded.  You can individually
+@@ -1332,6 +1332,10 @@ If Silent is true then no transactions will be recorded.  You can individually
  control transactions on both base and target and with SilentBase and
  SilentTarget respectively. By default both transactions are created.
  
@@ -29,7 +29,7 @@ index bdc926a3f..f1e2d9dd4 100644
  If the link destination is a local object and does the
  L<RT::Record::Role::Status> role, this method ensures object Status is not
  "deleted".  Linking to deleted objects is forbidden.
-@@ -1345,6 +1349,7 @@ sub _AddLink {
+@@ -1357,6 +1361,7 @@ sub _AddLink {
          Silent       => undef,
          SilentBase   => undef,
          SilentTarget => undef,
@@ -37,7 +37,7 @@ index bdc926a3f..f1e2d9dd4 100644
          @_
      );
  
-@@ -1372,6 +1377,9 @@ sub _AddLink {
+@@ -1384,6 +1389,9 @@ sub _AddLink {
  
      my $remote_uri = RT::URI->new( $self->CurrentUser );
      if ($remote_uri->FromURI( $remote_link )) {
