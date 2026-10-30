@@ -7,8 +7,11 @@
 #
 %define	perl_ver				5.8.3
 %define	perl_apache_session_ver			1.53
+%define	perl_auth_googleauth_ver		1.09
 %define	perl_cgi_ver				4.00
 %define	perl_class_returnvalue_ver		0.40
+%define	perl_crypt_urandom_ver			0.55
+%define	perl_css_inliner_ver			4027
 %define	perl_css_squish_ver			0.06
 %define perl_date_extract_ver                   0.07
 %define	perl_dbd_mysql				2.1018
@@ -17,6 +20,7 @@
 %define	perl_devel_stacktrace_ver		1.19
 %define	perl_digest_md5_ver			2.27
 %define	perl_gd_ver				1.48
+%define	perl_html_gumbo_ver			0.19
 %define	perl_html_mason_ver			3:1.43
 %define	perl_html_rewriteattributes_ver		0.06
 %define	perl_html_scrubber_ver			0.08
@@ -26,11 +30,12 @@
 %define	perl_locale_maketext_ver		1.06
 %define	perl_log_dispatch_ver			2.30
 %define	perl_mailtools_ver			2.12
-%define	perl_mime_tools_ver			5.425
+%define	perl_mime_tools_ver			5.522
 %define	perl_module_versions_report_ver		1.05
 %define	perl_cgi_psgi				0.12
+%define	perl_mozilla_ca_ver			20261020
 %define	perl_plack_ver				1.0002
-%define	perl_starlet_ver			0.20
+%define	perl_starlet_ver			0.33
 %define	perl_storable_ver			2.08
 %define	perl_symbol_global_name_ver		0.05
 %define	perl_text_quoted_ver			2.07
@@ -39,18 +44,18 @@
 %define	perl_text_template_ver			1.45
 %define	perl_xml_rss_ver			1.05
 #
-%bcond_with	testdeps	# used for checking dependencies
+%bcond_without	testdeps	# used for checking dependencies
 #
 Summary:	Request Tracker
 Summary(pl.UTF-8):	Request Tracker - system do śledzenia zleceń
 Name:		rt
-Version:	5.0.9
-Release:	2
+Version:	5.0.11
+Release:	1
 License:	GPL v2
 Group:		Applications
 # https://bestpractical.com/download-page
-Source0:	http://download.bestpractical.com/pub/rt/release/%{name}-%{version}.tar.gz
-# Source0-md5:	d3c00d9a71d94e9c84a35d4a88d78969
+Source0:	https://download.bestpractical.com/pub/rt/release/%{name}-%{version}.tar.gz
+# Source0-md5:	f925ef71f3c8b557287eeacddb43ffd8
 Source1:	%{name}-apache_dir.conf
 Source2:	%{name}-apache_vhost.conf
 Source3:	%{name}-apache.conf
@@ -66,39 +71,47 @@ BuildRequires:	automake
 %if %{with testdeps}
 BuildRequires:	perl-Alien-Base
 BuildRequires:	perl-Apache-Session >= %{perl_apache_session_ver}
+BuildRequires:	perl-Auth-GoogleAuth >= %{perl_auth_googleauth_ver}
 BuildRequires:	perl-Business-Hours
 BuildRequires:	perl-CGI >= %{perl_cgi_ver}
 BuildRequires:	perl-CGI-Emulate-PSGI
 BuildRequires:	perl-CGI-PSGI >= %{perl_cgi_psgi}
 BuildRequires:	perl-CGI-SpeedyCGI
+BuildRequires:	perl-CSS-Inliner >= %{perl_css_inliner_ver}
 BuildRequires:	perl-CSS-Minifier
 BuildRequires:	perl-CSS-Minifier-XS
 BuildRequires:	perl-CSS-Squish >= %{perl_css_squish_ver}
 BuildRequires:	perl-Cache-Cache
 BuildRequires:	perl-Calendar-Simple
+BuildRequires:	perl-Class-Accessor
 BuildRequires:	perl-Class-ISA
 BuildRequires:	perl-Class-ReturnValue >= %{perl_class_returnvalue_ver}
+BuildRequires:	perl-Clone
 BuildRequires:	perl-Convert-Color
 BuildRequires:	perl-Crypt-Eksblowfish
 BuildRequires:	perl-Crypt-SSLeay
+BuildRequires:	perl-Crypt-URandom >= %{perl_crypt_urandom_ver}
 BuildRequires:	perl-Crypt-X509
+BuildRequires:	perl-CryptX
 BuildRequires:	perl-DBD-mysql >= %{perl_dbd_mysql}
 BuildRequires:	perl-DBI >= %{perl_dbi_ver}
 BuildRequires:	perl-DBIx-DataSource >= 0.02
 BuildRequires:	perl-DBIx-SearchBuilder >= %{perl_dbix_searchbuilder_ver}
 BuildRequires:	perl-Data-GUID
 BuildRequires:	perl-Data-ICal
-BuildRequires:	perl-Date-Extract
+BuildRequires:	perl-Date-Extract >= %{perl_date_extract_ver}
 BuildRequires:	perl-Date-Manip
 BuildRequires:  perl-Data-Page
 BuildRequires:	perl-Data-Page-Pageset
-BuildRequires:  perl-Date-Extract => %{perl_date_extract_ver}
+BuildRequires:	perl-DateTime
 BuildRequires:	perl-DateTime-Format-Natural
+BuildRequires:	perl-DateTime-Locale
 BuildRequires:	perl-Devel-GlobalDestruction
 BuildRequires:	perl-Devel-StackTrace >= %{perl_devel_stacktrace_ver}
 BuildRequires:	perl-Digest-MD5 >= %{perl_digest_md5_ver}
 BuildRequires:	perl-Email-Address
 BuildRequires:	perl-Email-Address-List
+BuildRequires:	perl-Encode
 BuildRequires:	perl-Encode-Detect
 BuildRequires:	perl-Encode-HanExtra
 BuildRequires:	perl-Exception-Class
@@ -114,8 +127,9 @@ BuildRequires:	perl-GD-TextUtil
 BuildRequires:	perl-GnuPG-Interface
 BuildRequires:	perl-GraphViz2
 BuildRequires:	perl-HTML-FormatExternal
+BuildRequires:	perl-HTML-FormatText-WithLinks
 BuildRequires:	perl-HTML-FormatText-WithLinks-AndTables
-BuildRequires:	perl-HTML-Gumbo
+BuildRequires:	perl-HTML-Gumbo >= %{perl_html_gumbo_ver}
 BuildRequires:	perl-HTML-Mason >= %{perl_html_mason_ver}
 BuildRequires:	perl-HTML-Mason-PSGIHandler
 BuildRequires:	perl-HTML-Parser
@@ -123,13 +137,16 @@ BuildRequires:	perl-HTML-Quoted
 BuildRequires:	perl-HTML-RewriteAttributes >= %{perl_html_rewriteattributes_ver}
 BuildRequires:	perl-HTML-Scrubber >= %{perl_html_scrubber_ver}
 BuildRequires:	perl-HTML-Tree
+BuildRequires:	perl-HTTP-Message
 BuildRequires:	perl-HTTP-Server-Simple >= %{perl_http_server_simple_ver}
 BuildRequires:	perl-HTTP-Server-Simple-Mason >= %{perl_http_server_simple_mason_ver}
+BuildRequires:	perl-IPC-Run
 BuildRequires:	perl-IPC-Run3
 BuildRequires:	perl-JSON
 BuildRequires:	perl-JavaScript-Minifier
 BuildRequires:	perl-JavaScript-Minifier-XS
 BuildRequires:	perl-LWP-Protocol-https
+BuildRequires:	perl-List-MoreUtils
 BuildRequires:	perl-Locale-Maketext >= %{perl_locale_maketext_ver}
 BuildRequires:	perl-Locale-Maketext-Fuzzy
 BuildRequires:	perl-Locale-Maketext-Lexicon >= %{perl_locale_maketext_lexicon_ver}
@@ -139,11 +156,13 @@ BuildRequires:	perl-MIME-tools >= %{perl_mime_tools_ver}
 BuildRequires:	perl-MLDBM
 BuildRequires:	perl-MailTools >= %{perl_mailtools_ver}
 BuildRequires:	perl-Module-Path
+BuildRequires:	perl-Module-Refresh
+BuildRequires:	perl-Module-Runtime
 BuildRequires:	perl-Module-Versions-Report >= %{perl_module_versions_report_ver}
 BuildRequires:	perl-Moose
 BuildRequires:	perl-MooseX-NonMoose
 BuildRequires:	perl-MooseX-Role-Parameterized
-BuildRequires:	perl-Mozilla-CA
+BuildRequires:	perl-Mozilla-CA >= %{perl_mozilla_ca_ver}
 BuildRequires:	perl-Net-CIDR
 BuildRequires:	perl-Net-IP
 BuildRequires:	perl-Net-Server >= 0.34
@@ -157,16 +176,19 @@ BuildRequires:	perl-Regexp-Common
 BuildRequires:	perl-Regexp-Common-net-CIDR
 BuildRequires:	perl-Regexp-IPv6
 BuildRequires:	perl-Role-Basic
+BuildRequires:	perl-Scalar-List-Utils
 BuildRequires:	perl-Scope-Upper
 BuildRequires:	perl-Starlet >= %{perl_starlet_ver}
 BuildRequires:	perl-Storable >= %{perl_storable_ver}
 BuildRequires:	perl-String-ShellQuote
+BuildRequires:	perl-Sub-Exporter
 BuildRequires:	perl-Sub-Identify
 BuildRequires:	perl-Symbol-Global-Name >= %{perl_symbol_global_name_ver}
 BuildRequires:	perl-Term-ReadKey
 BuildRequires:	perl-Test-Inline
 BuildRequires:	perl-Text-Autoformat
 BuildRequires:	perl-Text-Password-Pronounceable
+BuildRequires:	perl-Text-QRCode
 BuildRequires:	perl-Text-Quoted >= %{perl_text_quoted_ver}
 BuildRequires:	perl-Text-Template >= %{perl_text_template_ver}
 BuildRequires:	perl-Text-WikiFormat >= %{perl_text_wikiformat_ver}
@@ -179,19 +201,24 @@ BuildRequires:	perl-TimeDate
 BuildRequires:	perl-Tree-Simple >= %{perl_tree_simple_ver}
 BuildRequires:	perl-Type-Tiny
 BuildRequires:	perl-UNIVERSAL-require
+BuildRequires:	perl-URI
 BuildRequires:	perl-WWW-Mechanize
 BuildRequires:	perl-Web-Machine
 BuildRequires:	perl-XML-RSS >= %{perl_xml_rss_ver}
 BuildRequires:	perl-libnet
+BuildRequires:	perl-libwww
+BuildRequires:	perl-namespace-autoclean
 %endif
 BuildRequires:	perl-base >= %{perl_ver}
 BuildRequires:	rpm-perlprov
 Requires:	fonts-TTF-Google-Droid
 Requires:	perl-Apache-Session >= %{perl_apache_session_ver}
+Requires:	perl-Auth-GoogleAuth >= %{perl_auth_googleauth_ver}
 Requires:	perl-Business-Hours
 Requires:	perl-CGI >= %{perl_cgi_ver}
 Requires:	perl-CGI-Emulate-PSGI
 Requires:	perl-CGI-PSGI >= %{perl_cgi_psgi}
+Requires:	perl-CSS-Inliner >= %{perl_css_inliner_ver}
 Requires:	perl-CSS-Minifier
 Requires:	perl-CSS-Minifier-XS
 Requires:	perl-CSS-Squish >= %{perl_css_squish_ver}
@@ -202,6 +229,7 @@ Requires:	perl-Class-ReturnValue >= %{perl_class_returnvalue_ver}
 Requires:	perl-Convert-Color
 Requires:	perl-Crypt-Eksblowfish
 Requires:	perl-Crypt-SSLeay
+Requires:	perl-Crypt-URandom >= %{perl_crypt_urandom_ver}
 Requires:	perl-Crypt-X509
 Requires:	perl-DBD-mysql >= %{perl_dbd_mysql}
 Requires:	perl-DBI >= %{perl_dbi_ver}
@@ -227,7 +255,7 @@ Requires:	perl-GnuPG-Interface >= 1.02
 Requires:	perl-GraphViz2
 Requires:	perl-HTML-FormatExternal
 Requires:	perl-HTML-FormatText-WithLinks-AndTables
-Requires:	perl-HTML-Gumbo
+Requires:	perl-HTML-Gumbo >= %{perl_html_gumbo_ver}
 Requires:	perl-HTML-Mason >= %{perl_html_mason_ver}
 Requires:	perl-HTML-Mason-PSGIHandler
 Requires:	perl-HTML-Quoted
@@ -252,7 +280,7 @@ Requires:	perl-Module-Versions-Report >= %{perl_module_versions_report_ver}
 Requires:	perl-Moose
 Requires:	perl-MooseX-NonMoose
 Requires:	perl-MooseX-Role-Parameterized
-Requires:	perl-Mozilla-CA
+Requires:	perl-Mozilla-CA >= %{perl_mozilla_ca_ver}
 Requires:	perl-Net-CIDR
 Requires:	perl-Net-IP
 Requires:	perl-PSGI
@@ -365,6 +393,7 @@ USER=$(id -un) \
 	masonstatedir=%{masonstatedir} \
 	masonsessiondir=%{masonstatedir} \
 	--with-my-user-group \
+	--enable-mfa \
 	--with-db-type=mysql \
 	--with-web-handler=fastcgi,modperl2
 
